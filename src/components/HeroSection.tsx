@@ -19,6 +19,39 @@ export const HeroSection = () => {
       {/* Floating Particles */}
       <FloatingParticles />
       
+      {/* Decorative Corner Frames */}
+      <div className="absolute top-24 left-4 md:left-8 w-16 md:w-24 h-16 md:h-24 border-t-2 border-l-2 border-primary/40" />
+      <div className="absolute top-24 right-4 md:right-8 w-16 md:w-24 h-16 md:h-24 border-t-2 border-r-2 border-primary/40" />
+      <div className="absolute bottom-24 left-4 md:left-8 w-16 md:w-24 h-16 md:h-24 border-b-2 border-l-2 border-primary/40" />
+      <div className="absolute bottom-24 right-4 md:right-8 w-16 md:w-24 h-16 md:h-24 border-b-2 border-r-2 border-primary/40" />
+      
+      {/* Decorative Stars */}
+      <motion.div 
+        className="absolute top-32 left-12 md:left-20"
+        animate={{ rotate: 360, opacity: [0.3, 0.6, 0.3] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+      >
+        <Star className="w-3 h-3 md:w-4 md:h-4 text-primary fill-primary" />
+      </motion.div>
+      <motion.div 
+        className="absolute top-40 right-16 md:right-28"
+        animate={{ rotate: -360, opacity: [0.4, 0.7, 0.4] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+      >
+        <Star className="w-2 h-2 md:w-3 md:h-3 text-primary fill-primary" />
+      </motion.div>
+      <motion.div 
+        className="absolute bottom-40 left-20 md:left-32"
+        animate={{ rotate: 360, opacity: [0.2, 0.5, 0.2] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+      >
+        <Star className="w-2 h-2 md:w-3 md:h-3 text-primary fill-primary" />
+      </motion.div>
+      
+      {/* Side Decorative Lines */}
+      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-32 bg-gradient-to-b from-transparent via-primary/50 to-transparent hidden md:block" />
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-px h-32 bg-gradient-to-b from-transparent via-primary/50 to-transparent hidden md:block" />
+      
       {/* Subtle Glow Orbs */}
       <motion.div
         className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[150px]"
@@ -58,6 +91,18 @@ export const HeroSection = () => {
             <span className="text-foreground">STAR</span>
           </motion.h1>
           
+          {/* Decorative divider under title */}
+          <motion.div 
+            className="flex items-center justify-center gap-3 mb-6 md:mb-8"
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            <div className="h-px w-12 md:w-20 bg-gradient-to-r from-transparent to-primary/60" />
+            <Star className="w-3 h-3 text-primary fill-primary" />
+            <div className="h-px w-12 md:w-20 bg-gradient-to-l from-transparent to-primary/60" />
+          </motion.div>
+          
           <motion.p
             className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground mb-8 md:mb-10 max-w-2xl mx-auto px-4"
             initial={{ opacity: 0, y: 30 }}
@@ -94,7 +139,7 @@ export const HeroSection = () => {
             y: { repeat: Infinity, duration: 2, ease: "easeInOut" }
           }}
         >
-          <div className="w-6 h-10 rounded-full border-2 border-muted-foreground/50 flex justify-center pt-2">
+          <div className="w-6 h-10 rounded-full border-2 border-primary/50 flex justify-center pt-2">
             <div className="w-1.5 h-3 rounded-full bg-primary animate-pulse" />
           </div>
         </motion.div>

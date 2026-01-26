@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-import { DollarSign, Users, Globe, Award } from "lucide-react";
+import { DollarSign, Users, Globe, Award, Star } from "lucide-react";
+import { DecorativeFrame } from "./DecorativeFrame";
+import { DecorativeDivider } from "./DecorativeDivider";
 
 const stats = [
   { icon: DollarSign, value: 15, suffix: "M+", label: "Paid to Partners" },
@@ -51,7 +53,15 @@ export const StatsSection = () => {
       {/* Gradient background */}
       <div className="absolute inset-0 bg-gradient-to-b from-muted/30 to-transparent" />
       
+      {/* Decorative corner elements */}
+      <div className="absolute top-8 left-8 w-16 h-16 border-t-2 border-l-2 border-primary/30 hidden lg:block" />
+      <div className="absolute top-8 right-8 w-16 h-16 border-t-2 border-r-2 border-primary/30 hidden lg:block" />
+      <div className="absolute bottom-8 left-8 w-16 h-16 border-b-2 border-l-2 border-primary/30 hidden lg:block" />
+      <div className="absolute bottom-8 right-8 w-16 h-16 border-b-2 border-r-2 border-primary/30 hidden lg:block" />
+      
       <div className="container mx-auto px-4 md:px-8 relative">
+        <DecorativeDivider variant="star" className="mb-8 md:mb-12" />
+        
         <div 
           ref={ref}
           className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-4"
@@ -64,16 +74,20 @@ export const StatsSection = () => {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               className="text-center group"
             >
-              <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300">
-                <stat.icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-primary" />
-              </div>
-              <div className="mb-2">
-                <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-              </div>
-              <p className="text-muted-foreground font-medium text-xs sm:text-sm md:text-base">{stat.label}</p>
+              <DecorativeFrame variant="subtle" className="p-4 md:p-6">
+                <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <stat.icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-primary" />
+                </div>
+                <div className="mb-2">
+                  <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+                </div>
+                <p className="text-muted-foreground font-medium text-xs sm:text-sm md:text-base">{stat.label}</p>
+              </DecorativeFrame>
             </motion.div>
           ))}
         </div>
+        
+        <DecorativeDivider variant="diamond" className="mt-8 md:mt-12" />
       </div>
     </section>
   );

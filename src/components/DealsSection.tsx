@@ -70,7 +70,7 @@ export const DealsSection = () => {
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-foreground mb-4 md:mb-6 px-2">
             DEALS THAT
             <br />
-            <span className="text-gradient-gold">MAKE YOU RICH</span>
+            <span className="text-gradient-cyan">MAKE YOU RICH</span>
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
             Choose the commission model that works best for your traffic
@@ -87,7 +87,7 @@ export const DealsSection = () => {
             >
               <GlowCard 
                 className="p-5 sm:p-6 md:p-8 h-full"
-                glowColor="gold"
+                glowColor="cyan"
               >
                 <div className="flex items-center gap-3 mb-3 md:mb-4">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
@@ -98,7 +98,7 @@ export const DealsSection = () => {
                   </h3>
                 </div>
                 
-                <p className="font-display text-3xl sm:text-4xl md:text-5xl text-gradient-gold mb-3 md:mb-4">
+                <p className="font-display text-3xl sm:text-4xl md:text-5xl text-gradient-cyan mb-3 md:mb-4">
                   {plan.highlight}
                 </p>
                 <p className="text-muted-foreground mb-6 md:mb-8 text-sm sm:text-base">

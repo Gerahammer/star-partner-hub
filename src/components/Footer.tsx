@@ -35,7 +35,7 @@ export const Footer = () => {
           <div className="col-span-2 md:col-span-1">
             <Link to="/" className="flex items-center gap-2 mb-3 md:mb-4">
               <img src={starIcon} alt="Partnerstar" className="w-8 h-8 md:w-10 md:h-10" />
-              <span className="font-display text-xl md:text-2xl text-gradient-gold">PARTNERSTAR</span>
+              <span className="font-display text-xl md:text-2xl text-gradient-cyan">PARTNERSTAR</span>
             </Link>
             <p className="text-muted-foreground text-xs sm:text-sm">
               Premium iGaming affiliate program with industry-leading commission rates and dedicated support.

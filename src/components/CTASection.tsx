@@ -26,7 +26,7 @@ export const CTASection = () => {
           <h2 className="font-display text-4xl md:text-6xl lg:text-7xl text-foreground mb-6">
             READY TO BECOME
             <br />
-            <span className="text-gradient-gold">A STAR?</span>
+            <span className="text-gradient-cyan">A STAR?</span>
           </h2>
           <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
             Join Partnerstar today and start earning with premium iGaming brands. 

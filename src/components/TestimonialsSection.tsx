@@ -202,19 +202,19 @@ export const TestimonialsSection = () => {
     : testimonials;
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-background to-muted/20">
+    <section className="py-16 sm:py-20 md:py-24 px-4 bg-gradient-to-b from-background to-muted/20">
       <div className="container mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-10 md:mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 md:mb-4 px-2">
             What Our <span className="text-primary">Partners</span> Say
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto px-4">
             Hear from successful affiliates who have grown their business with us
           </p>
         </motion.div>
@@ -327,19 +327,19 @@ export const TestimonialsSection = () => {
             </p>
           </div>
         ) : (
-          <div className="relative">
+          <div className="relative px-8 sm:px-12 md:px-0">
             {showCarousel && (
               <Button
                 variant="outline"
                 size="icon"
-                className="absolute -left-4 md:-left-12 top-1/2 -translate-y-1/2 z-10 rounded-full"
+                className="absolute left-0 md:-left-12 top-1/2 -translate-y-1/2 z-10 rounded-full h-8 w-8 sm:h-10 sm:w-10"
                 onClick={prevSlide}
               >
                 <ChevronLeft className="h-4 w-4" />
               </Button>
             )}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
               {visibleTestimonials.map((testimonial, index) => (
                 <motion.div
                   key={testimonial.id}
@@ -348,7 +348,7 @@ export const TestimonialsSection = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   viewport={{ once: true }}
                 >
-                  <GlowCard className="p-6 h-full flex flex-col min-h-[280px]">
+                  <GlowCard className="p-4 sm:p-5 md:p-6 h-full flex flex-col min-h-[240px] sm:min-h-[260px] md:min-h-[280px]">
                     {/* Admin actions */}
                     {isAdmin && (
                       <div className="flex justify-end gap-2 mb-4">
@@ -368,22 +368,22 @@ export const TestimonialsSection = () => {
                     )}
 
                     {/* Logo */}
-                    <div className="flex items-center gap-4 mb-4">
+                    <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
                       {testimonial.logo_url ? (
                         <img
                           src={testimonial.logo_url}
                           alt={`${testimonial.site_name} logo`}
-                          className="w-12 h-12 object-contain rounded-lg border border-border bg-background"
+                          className="w-10 h-10 sm:w-12 sm:h-12 object-contain rounded-lg border border-border bg-background"
                         />
                       ) : (
-                        <div className="w-12 h-12 rounded-lg border border-border bg-primary/10 flex items-center justify-center">
-                          <span className="text-primary font-bold text-lg">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg border border-border bg-primary/10 flex items-center justify-center">
+                          <span className="text-primary font-bold text-base sm:text-lg">
                             {testimonial.site_name.charAt(0).toUpperCase()}
                           </span>
                         </div>
                       )}
                       <div>
-                        <p className="font-semibold text-foreground">
+                        <p className="font-semibold text-foreground text-sm sm:text-base">
                           {testimonial.site_name}
                         </p>
                         {testimonial.site_url && (
@@ -391,7 +391,7 @@ export const TestimonialsSection = () => {
                             href={testimonial.site_url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-sm text-primary hover:underline flex items-center gap-1"
+                            className="text-xs sm:text-sm text-primary hover:underline flex items-center gap-1"
                           >
                             Visit site
                             <ExternalLink className="w-3 h-3" />
@@ -402,7 +402,7 @@ export const TestimonialsSection = () => {
 
                     {/* Content */}
                     <div className="flex-1">
-                      <p className="text-foreground/90 leading-relaxed line-clamp-5">
+                      <p className="text-foreground/90 leading-relaxed line-clamp-4 sm:line-clamp-5 text-sm sm:text-base">
                         "{testimonial.content}"
                       </p>
                     </div>
@@ -415,7 +415,7 @@ export const TestimonialsSection = () => {
               <Button
                 variant="outline"
                 size="icon"
-                className="absolute -right-4 md:-right-12 top-1/2 -translate-y-1/2 z-10 rounded-full"
+                className="absolute right-0 md:-right-12 top-1/2 -translate-y-1/2 z-10 rounded-full h-8 w-8 sm:h-10 sm:w-10"
                 onClick={nextSlide}
               >
                 <ChevronRight className="h-4 w-4" />
@@ -424,7 +424,7 @@ export const TestimonialsSection = () => {
 
             {/* Pagination dots */}
             {showCarousel && (
-              <div className="flex justify-center gap-2 mt-8">
+              <div className="flex justify-center gap-2 mt-6 md:mt-8">
                 {Array.from({ length: totalSlides }).map((_, index) => (
                   <button
                     key={index}

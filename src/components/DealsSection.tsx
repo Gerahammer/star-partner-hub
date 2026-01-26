@@ -52,7 +52,7 @@ export const DealsSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="deals" className="py-24 md:py-32 section-pattern relative">
+    <section id="deals" className="py-16 sm:py-20 md:py-28 lg:py-32 section-pattern relative">
       {/* Background accent */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[150px]" />
       
@@ -64,20 +64,20 @@ export const DealsSection = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="text-primary font-semibold uppercase tracking-wider text-sm mb-4 block">
+          <span className="text-primary font-semibold uppercase tracking-wider text-xs sm:text-sm mb-3 md:mb-4 block">
             Commission Plans
           </span>
-          <h2 className="font-display text-4xl md:text-6xl lg:text-7xl text-foreground mb-6">
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-foreground mb-4 md:mb-6 px-2">
             DEALS THAT
             <br />
             <span className="text-gradient-gold">MAKE YOU RICH</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
             Choose the commission model that works best for your traffic
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-6xl mx-auto">
           {plans.map((plan, index) => (
             <motion.div
               key={plan.name}
@@ -86,22 +86,22 @@ export const DealsSection = () => {
               transition={{ duration: 0.8, delay: index * 0.15 }}
             >
               <GlowCard 
-                className="p-8 h-full"
+                className="p-5 sm:p-6 md:p-8 h-full"
                 glowColor="gold"
               >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                    <plan.icon className="w-6 h-6 text-primary" />
+                <div className="flex items-center gap-3 mb-3 md:mb-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                    <plan.icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                   </div>
-                  <h3 className="font-display text-3xl text-foreground">
+                  <h3 className="font-display text-2xl sm:text-3xl text-foreground">
                     {plan.name}
                   </h3>
                 </div>
                 
-                <p className="font-display text-5xl text-gradient-gold mb-4">
+                <p className="font-display text-3xl sm:text-4xl md:text-5xl text-gradient-gold mb-3 md:mb-4">
                   {plan.highlight}
                 </p>
-                <p className="text-muted-foreground mb-8">
+                <p className="text-muted-foreground mb-6 md:mb-8 text-sm sm:text-base">
                   {plan.description}
                 </p>
                 

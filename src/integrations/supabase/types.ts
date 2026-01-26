@@ -16,39 +16,33 @@ export type Database = {
     Tables: {
       testimonials: {
         Row: {
-          avatar_url: string | null
-          company: string | null
           content: string
           created_at: string
           id: string
           is_visible: boolean | null
-          name: string
-          rating: number | null
-          role: string
+          logo_url: string | null
+          site_name: string
+          site_url: string | null
           updated_at: string
         }
         Insert: {
-          avatar_url?: string | null
-          company?: string | null
           content: string
           created_at?: string
           id?: string
           is_visible?: boolean | null
-          name: string
-          rating?: number | null
-          role: string
+          logo_url?: string | null
+          site_name: string
+          site_url?: string | null
           updated_at?: string
         }
         Update: {
-          avatar_url?: string | null
-          company?: string | null
           content?: string
           created_at?: string
           id?: string
           is_visible?: boolean | null
-          name?: string
-          rating?: number | null
-          role?: string
+          logo_url?: string | null
+          site_name?: string
+          site_url?: string | null
           updated_at?: string
         }
         Relationships: []

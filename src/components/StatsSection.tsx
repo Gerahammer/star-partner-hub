@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import { DollarSign, Users, Globe, Award } from "lucide-react";
 
 const stats = [
-  { icon: DollarSign, value: 50, suffix: "M+", label: "Paid to Partners" },
+  { icon: DollarSign, value: 15, suffix: "M+", label: "Paid to Partners" },
   { icon: Users, value: 1000, suffix: "+", label: "Active Affiliates" },
   { icon: Globe, value: 150, suffix: "+", label: "Countries" },
   { icon: Award, value: 10, suffix: "+", label: "Years Experience" },

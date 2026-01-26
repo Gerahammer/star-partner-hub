@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,18 @@ const navLinks = [
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    if (location.pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      navigate("/");
+      setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 100);
+    }
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
@@ -22,7 +34,11 @@ export const Header = () => {
       <nav className="relative container mx-auto px-4 md:px-8 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
+          <a 
+            href="/" 
+            onClick={handleLogoClick}
+            className="flex items-center gap-2 group cursor-pointer"
+          >
             <img 
               src={starIcon} 
               alt="Partnerstar" 
@@ -31,7 +47,7 @@ export const Header = () => {
             <span className="font-display text-2xl md:text-3xl text-gradient-gold">
               PARTNERSTAR
             </span>
-          </Link>
+          </a>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">

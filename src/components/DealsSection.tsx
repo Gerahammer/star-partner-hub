@@ -86,16 +86,9 @@ export const DealsSection = () => {
               transition={{ duration: 0.8, delay: index * 0.15 }}
             >
               <GlowCard 
-                className={`p-8 h-full ${plan.popular ? 'ring-2 ring-primary' : ''}`}
-                glowColor={plan.popular ? "cyan" : "gold"}
+                className="p-8 h-full"
+                glowColor="gold"
               >
-                {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-gradient-to-r from-cyan to-cyan-light text-primary-foreground rounded-full text-sm font-bold flex items-center gap-1.5 shadow-lg">
-                    <Star className="w-4 h-4 fill-current" />
-                    Most Popular
-                  </div>
-                )}
-                
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
                     <plan.icon className="w-6 h-6 text-primary" />
@@ -112,7 +105,7 @@ export const DealsSection = () => {
                   {plan.description}
                 </p>
                 
-                <ul className="space-y-4 mb-8">
+                <ul className="space-y-4">
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-center gap-3 text-foreground/90">
                       <div className="w-5 h-5 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center shrink-0">
@@ -122,14 +115,6 @@ export const DealsSection = () => {
                     </li>
                   ))}
                 </ul>
-                
-                <Button 
-                  variant={plan.popular ? "hero" : "heroOutline"} 
-                  size="lg" 
-                  className="w-full"
-                >
-                  Get Started
-                </Button>
               </GlowCard>
             </motion.div>
           ))}

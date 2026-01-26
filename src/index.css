@@ -18,7 +18,7 @@
     --primary: 45 100% 50%;
     --primary-foreground: 220 20% 6%;
 
-    --secondary: 180 100% 45%;
+    --secondary: 35 100% 45%;
     --secondary-foreground: 220 20% 6%;
 
     --muted: 220 15% 18%;
@@ -40,19 +40,19 @@
     --gold: 45 100% 50%;
     --gold-light: 45 100% 65%;
     --gold-dark: 45 100% 35%;
-    --cyan: 180 100% 45%;
-    --cyan-light: 180 100% 60%;
-    --cyan-glow: 180 100% 50%;
+    --cyan: 35 100% 45%;
+    --cyan-light: 40 100% 55%;
+    --cyan-glow: 45 100% 50%;
     
     /* Gradients */
     --gradient-gold: linear-gradient(135deg, hsl(45 100% 50%), hsl(35 100% 45%));
-    --gradient-cyan: linear-gradient(135deg, hsl(180 100% 45%), hsl(170 100% 40%));
+    --gradient-cyan: linear-gradient(135deg, hsl(40 100% 50%), hsl(35 100% 45%));
     --gradient-dark: linear-gradient(180deg, hsl(220 20% 8%) 0%, hsl(220 20% 4%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(220 18% 12%) 0%, hsl(220 18% 8%) 100%);
     
     /* Shadows */
     --shadow-gold: 0 0 40px hsl(45 100% 50% / 0.3);
-    --shadow-cyan: 0 0 40px hsl(180 100% 45% / 0.4);
+    --shadow-cyan: 0 0 40px hsl(45 100% 50% / 0.4);
     --shadow-card: 0 20px 60px hsl(0 0% 0% / 0.4);
 
     --sidebar-background: 220 18% 10%;
@@ -94,7 +94,7 @@
 
   .text-gradient-cyan {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(180 100% 50%), hsl(170 100% 45%));
+    background-image: linear-gradient(135deg, hsl(40 100% 55%), hsl(30 100% 50%));
   }
 
   .glow-gold {
@@ -102,7 +102,7 @@
   }
 
   .glow-cyan {
-    box-shadow: 0 0 40px hsl(180 100% 50% / 0.4), 0 0 80px hsl(180 100% 50% / 0.2);
+    box-shadow: 0 0 40px hsl(45 100% 50% / 0.4), 0 0 80px hsl(45 100% 50% / 0.2);
   }
 
   .bg-gradient-radial-gold {
@@ -110,7 +110,7 @@
   }
 
   .bg-gradient-radial-cyan {
-    background: radial-gradient(ellipse at center, hsl(180 100% 50% / 0.1) 0%, transparent 70%);
+    background: radial-gradient(ellipse at center, hsl(45 100% 50% / 0.1) 0%, transparent 70%);
   }
 
   .card-premium {
@@ -132,7 +132,7 @@
   .section-pattern {
     background-image: 
       radial-gradient(circle at 20% 50%, hsl(45 100% 50% / 0.03) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, hsl(180 100% 50% / 0.02) 0%, transparent 40%);
+      radial-gradient(circle at 80% 20%, hsl(45 100% 50% / 0.02) 0%, transparent 40%);
   }
 }
 

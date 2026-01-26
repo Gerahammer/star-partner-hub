@@ -32,7 +32,7 @@ export const AboutSection = () => {
   return (
     <section id="about" className="py-24 md:py-32 section-pattern relative">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-radial-cyan opacity-15" />
+      <div className="absolute inset-0 bg-gradient-radial-gold opacity-15" />
       
       <div className="container mx-auto px-4 md:px-8 relative">
         <motion.div
@@ -48,7 +48,7 @@ export const AboutSection = () => {
           <h2 className="font-display text-4xl md:text-6xl lg:text-7xl text-foreground mb-6">
             WE BRING THE REAL
             <br />
-            <span className="text-gradient-cyan">AFFILIATE FLOW</span>
+            <span className="text-gradient-gold">AFFILIATE FLOW</span>
           </h2>
         </motion.div>
 
@@ -65,7 +65,7 @@ export const AboutSection = () => {
                   <stat.icon className="w-7 h-7 text-primary" />
                 </div>
                 
-                <h3 className="font-display text-5xl md:text-6xl text-gradient-cyan mb-2">
+                <h3 className="font-display text-5xl md:text-6xl text-gradient-gold mb-2">
                   {stat.value}
                 </h3>
                 <p className="text-foreground font-semibold text-lg mb-2">

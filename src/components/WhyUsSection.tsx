@@ -49,7 +49,7 @@ export const WhyUsSection = () => {
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-foreground px-2">
             MAXIMIZE YOUR
             <br />
-            <span className="text-gradient-cyan">EARNINGS</span>
+            <span className="text-gradient-gold">EARNINGS</span>
           </h2>
         </motion.div>
 

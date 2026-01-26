@@ -54,7 +54,7 @@ export const HeroSection = () => {
           >
             <span className="text-foreground">BECOME A</span>
             <br />
-            <span className="text-gradient-cyan">PARTNER</span>
+            <span className="text-gradient-gold">PARTNER</span>
             <span className="text-foreground">STAR</span>
           </motion.h1>
           

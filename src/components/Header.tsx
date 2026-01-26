@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Star } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ContactFormModal } from "./ContactFormModal";
 import partnerstarLogo from "@/assets/partnerstar-logo.png";
 
 const navLinks = [
@@ -14,6 +15,7 @@ const navLinks = [
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -61,7 +63,7 @@ export const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden lg:block">
-            <Button variant="hero" size="lg">
+            <Button variant="hero" size="lg" onClick={() => setIsContactOpen(true)}>
               Contact Us
             </Button>
           </div>
@@ -95,7 +97,7 @@ export const Header = () => {
                     {link.name}
                   </a>
                 ))}
-                <Button variant="hero" size="lg" className="mt-4 w-full">
+                <Button variant="hero" size="lg" className="mt-4 w-full" onClick={() => { setIsContactOpen(true); setIsMenuOpen(false); }}>
                   Contact Us
                 </Button>
               </div>
@@ -103,6 +105,8 @@ export const Header = () => {
           )}
         </AnimatePresence>
       </nav>
+
+      <ContactFormModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
     </header>
   );
 };

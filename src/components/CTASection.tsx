@@ -1,13 +1,15 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Mail, MessageCircle, Star } from "lucide-react";
 import { DecorativeDivider } from "./DecorativeDivider";
+import { ContactFormModal } from "./ContactFormModal";
 
 export const CTASection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [isContactOpen, setIsContactOpen] = useState(false);
 
   return (
     <section className="py-24 md:py-32 relative overflow-hidden">
@@ -60,11 +62,11 @@ export const CTASection = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Button variant="hero" size="xl" className="group">
+            <Button variant="hero" size="xl" className="group" onClick={() => setIsContactOpen(true)}>
               Start Partnership
               <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
             </Button>
-            <Button variant="heroOutline" size="xl">
+            <Button variant="heroOutline" size="xl" onClick={() => setIsContactOpen(true)}>
               <MessageCircle className="w-5 h-5" />
               Contact Us
             </Button>
@@ -86,6 +88,8 @@ export const CTASection = () => {
           </motion.div>
         </motion.div>
       </div>
+
+      <ContactFormModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
     </section>
   );
 };

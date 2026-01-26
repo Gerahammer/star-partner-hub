@@ -15,7 +15,7 @@ const footerLinks = [
     links: [
       { name: "FAQs", href: "#", isRoute: false },
       { name: "Terms & Conditions", href: "/terms", isRoute: true },
-      { name: "Privacy Policy", href: "#", isRoute: false },
+      { name: "Privacy Policy", href: "/privacy", isRoute: true },
     ],
   },
   {

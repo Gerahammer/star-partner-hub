@@ -2,7 +2,8 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Mail, MessageCircle } from "lucide-react";
+import { ArrowRight, Mail, MessageCircle, Star } from "lucide-react";
+import { DecorativeDivider } from "./DecorativeDivider";
 
 export const CTASection = () => {
   const ref = useRef(null);
@@ -14,6 +15,28 @@ export const CTASection = () => {
       <div className="absolute inset-0 bg-gradient-radial-gold opacity-20" />
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" />
+      
+      {/* Decorative frame corners */}
+      <div className="absolute top-8 left-8 w-20 h-20 border-t-2 border-l-2 border-primary/30 hidden lg:block" />
+      <div className="absolute top-8 right-8 w-20 h-20 border-t-2 border-r-2 border-primary/30 hidden lg:block" />
+      <div className="absolute bottom-8 left-8 w-20 h-20 border-b-2 border-l-2 border-primary/30 hidden lg:block" />
+      <div className="absolute bottom-8 right-8 w-20 h-20 border-b-2 border-r-2 border-primary/30 hidden lg:block" />
+      
+      {/* Decorative stars */}
+      <motion.div 
+        className="absolute top-16 left-16 hidden lg:block"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+      >
+        <Star className="w-4 h-4 text-primary/40 fill-primary/40" />
+      </motion.div>
+      <motion.div 
+        className="absolute bottom-16 right-16 hidden lg:block"
+        animate={{ rotate: -360 }}
+        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+      >
+        <Star className="w-3 h-3 text-primary/30 fill-primary/30" />
+      </motion.div>
       
       <div className="container mx-auto px-4 md:px-8 relative">
         <motion.div
@@ -28,6 +51,9 @@ export const CTASection = () => {
             <br />
             <span className="text-gradient-gold">A STAR?</span>
           </h2>
+          
+          <DecorativeDivider variant="star" className="max-w-xs mx-auto mb-6" />
+          
           <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
             Join Partnerstar today and start earning with premium iGaming brands. 
             Our team is ready to help you succeed.

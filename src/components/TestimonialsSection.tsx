@@ -1,23 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { Star, Plus, Trash2, Edit2, X, Check } from "lucide-react";
+import { Plus, Trash2, Edit2, ExternalLink, ChevronLeft, ChevronRight, Upload } from "lucide-react";
 import { GlowCard } from "./GlowCard";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 interface Testimonial {
   id: string;
-  name: string;
-  role: string;
-  company: string | null;
+  site_name: string;
   content: string;
-  avatar_url: string | null;
-  rating: number;
+  site_url: string | null;
+  logo_url: string | null;
 }
 
 export const TestimonialsSection = () => {
@@ -25,15 +22,20 @@ export const TestimonialsSection = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [uploadingLogo, setUploadingLogo] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState({
-    name: "",
-    role: "",
-    company: "",
+    site_name: "",
     content: "",
-    avatar_url: "",
-    rating: 5,
+    site_url: "",
+    logo_url: "",
   });
   const { toast } = useToast();
+
+  const itemsPerPage = 3;
+  const totalSlides = Math.ceil(testimonials.length / itemsPerPage);
+  const showCarousel = testimonials.length > 3;
 
   useEffect(() => {
     fetchTestimonials();
@@ -70,16 +72,48 @@ export const TestimonialsSection = () => {
     setIsAdmin(!!data && !error);
   };
 
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingLogo(true);
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Date.now()}.${fileExt}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from('testimonial-logos')
+      .upload(fileName, file);
+
+    if (uploadError) {
+      toast({
+        title: "Upload failed",
+        description: uploadError.message,
+        variant: "destructive",
+      });
+      setUploadingLogo(false);
+      return;
+    }
+
+    const { data: { publicUrl } } = supabase.storage
+      .from('testimonial-logos')
+      .getPublicUrl(fileName);
+
+    setFormData({ ...formData, logo_url: publicUrl });
+    setUploadingLogo(false);
+    toast({
+      title: "Logo uploaded",
+      description: "The logo has been uploaded successfully.",
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const payload = {
-      name: formData.name,
-      role: formData.role,
-      company: formData.company || null,
+      site_name: formData.site_name,
       content: formData.content,
-      avatar_url: formData.avatar_url || null,
-      rating: formData.rating,
+      site_url: formData.site_url || null,
+      logo_url: formData.logo_url || null,
     };
 
     let error;
@@ -116,12 +150,10 @@ export const TestimonialsSection = () => {
 
   const handleEdit = (testimonial: Testimonial) => {
     setFormData({
-      name: testimonial.name,
-      role: testimonial.role,
-      company: testimonial.company || "",
+      site_name: testimonial.site_name,
       content: testimonial.content,
-      avatar_url: testimonial.avatar_url || "",
-      rating: testimonial.rating,
+      site_url: testimonial.site_url || "",
+      logo_url: testimonial.logo_url || "",
     });
     setEditingId(testimonial.id);
     setIsDialogOpen(true);
@@ -148,25 +180,26 @@ export const TestimonialsSection = () => {
 
   const resetForm = () => {
     setFormData({
-      name: "",
-      role: "",
-      company: "",
+      site_name: "",
       content: "",
-      avatar_url: "",
-      rating: 5,
+      site_url: "",
+      logo_url: "",
     });
     setEditingId(null);
     setIsDialogOpen(false);
   };
 
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase()
-      .slice(0, 2);
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % totalSlides);
   };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+  };
+
+  const visibleTestimonials = showCarousel
+    ? testimonials.slice(currentSlide * itemsPerPage, (currentSlide + 1) * itemsPerPage)
+    : testimonials;
 
   return (
     <section className="py-20 px-4 bg-gradient-to-b from-background to-muted/20">
@@ -210,31 +243,12 @@ export const TestimonialsSection = () => {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
                     <Input
-                      placeholder="Name"
-                      value={formData.name}
+                      placeholder="Site Name"
+                      value={formData.site_name}
                       onChange={(e) =>
-                        setFormData({ ...formData, name: e.target.value })
+                        setFormData({ ...formData, site_name: e.target.value })
                       }
                       required
-                    />
-                  </div>
-                  <div>
-                    <Input
-                      placeholder="Role (e.g., Affiliate Manager)"
-                      value={formData.role}
-                      onChange={(e) =>
-                        setFormData({ ...formData, role: e.target.value })
-                      }
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Input
-                      placeholder="Company (optional)"
-                      value={formData.company}
-                      onChange={(e) =>
-                        setFormData({ ...formData, company: e.target.value })
-                      }
                     />
                   </div>
                   <div>
@@ -250,36 +264,42 @@ export const TestimonialsSection = () => {
                   </div>
                   <div>
                     <Input
-                      placeholder="Avatar URL (optional)"
-                      value={formData.avatar_url}
+                      placeholder="Site URL (e.g., https://example.com)"
+                      value={formData.site_url}
                       onChange={(e) =>
-                        setFormData({ ...formData, avatar_url: e.target.value })
+                        setFormData({ ...formData, site_url: e.target.value })
                       }
                     />
                   </div>
                   <div>
                     <label className="text-sm text-muted-foreground mb-2 block">
-                      Rating
+                      Site Logo
                     </label>
-                    <div className="flex gap-1">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <button
-                          key={star}
-                          type="button"
-                          onClick={() =>
-                            setFormData({ ...formData, rating: star })
-                          }
-                          className="focus:outline-none"
-                        >
-                          <Star
-                            className={`w-6 h-6 ${
-                              star <= formData.rating
-                                ? "fill-primary text-primary"
-                                : "text-muted-foreground"
-                            }`}
-                          />
-                        </button>
-                      ))}
+                    <div className="flex gap-2 items-center">
+                      <input
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={handleFileUpload}
+                        accept="image/*"
+                        className="hidden"
+                      />
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => fileInputRef.current?.click()}
+                        disabled={uploadingLogo}
+                        className="flex-1"
+                      >
+                        <Upload className="w-4 h-4 mr-2" />
+                        {uploadingLogo ? "Uploading..." : "Upload Logo"}
+                      </Button>
+                      {formData.logo_url && (
+                        <img
+                          src={formData.logo_url}
+                          alt="Logo preview"
+                          className="w-10 h-10 object-contain rounded border border-border"
+                        />
+                      )}
                     </div>
                   </div>
                   <div className="flex gap-2 justify-end">
@@ -307,76 +327,117 @@ export const TestimonialsSection = () => {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={testimonial.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
+          <div className="relative">
+            {showCarousel && (
+              <Button
+                variant="outline"
+                size="icon"
+                className="absolute -left-4 md:-left-12 top-1/2 -translate-y-1/2 z-10 rounded-full"
+                onClick={prevSlide}
               >
-                <GlowCard className="p-6 h-full flex flex-col min-h-[320px]">
-                  {/* Admin actions */}
-                  {isAdmin && (
-                    <div className="flex justify-end gap-2 mb-4">
-                      <button
-                        onClick={() => handleEdit(testimonial)}
-                        className="p-1.5 rounded-full hover:bg-muted transition-colors"
-                      >
-                        <Edit2 className="w-4 h-4 text-muted-foreground hover:text-primary" />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(testimonial.id)}
-                        className="p-1.5 rounded-full hover:bg-destructive/10 transition-colors"
-                      >
-                        <Trash2 className="w-4 h-4 text-muted-foreground hover:text-destructive" />
-                      </button>
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+            )}
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {visibleTestimonials.map((testimonial, index) => (
+                <motion.div
+                  key={testimonial.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <GlowCard className="p-6 h-full flex flex-col min-h-[280px]">
+                    {/* Admin actions */}
+                    {isAdmin && (
+                      <div className="flex justify-end gap-2 mb-4">
+                        <button
+                          onClick={() => handleEdit(testimonial)}
+                          className="p-1.5 rounded-full hover:bg-muted transition-colors"
+                        >
+                          <Edit2 className="w-4 h-4 text-muted-foreground hover:text-primary" />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(testimonial.id)}
+                          className="p-1.5 rounded-full hover:bg-destructive/10 transition-colors"
+                        >
+                          <Trash2 className="w-4 h-4 text-muted-foreground hover:text-destructive" />
+                        </button>
+                      </div>
+                    )}
+
+                    {/* Logo */}
+                    <div className="flex items-center gap-4 mb-4">
+                      {testimonial.logo_url ? (
+                        <img
+                          src={testimonial.logo_url}
+                          alt={`${testimonial.site_name} logo`}
+                          className="w-12 h-12 object-contain rounded-lg border border-border bg-background"
+                        />
+                      ) : (
+                        <div className="w-12 h-12 rounded-lg border border-border bg-primary/10 flex items-center justify-center">
+                          <span className="text-primary font-bold text-lg">
+                            {testimonial.site_name.charAt(0).toUpperCase()}
+                          </span>
+                        </div>
+                      )}
+                      <div>
+                        <p className="font-semibold text-foreground">
+                          {testimonial.site_name}
+                        </p>
+                        {testimonial.site_url && (
+                          <a
+                            href={testimonial.site_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm text-primary hover:underline flex items-center gap-1"
+                          >
+                            Visit site
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        )}
+                      </div>
                     </div>
-                  )}
 
-                  {/* Stars */}
-                  <div className="flex gap-1 mb-4">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`w-5 h-5 ${
-                          i < testimonial.rating
-                            ? "fill-primary text-primary"
-                            : "text-muted-foreground/30"
-                        }`}
-                      />
-                    ))}
-                  </div>
-
-                  {/* Content - fixed height with overflow */}
-                  <div className="flex-1 mb-6">
-                    <p className="text-foreground/90 leading-relaxed line-clamp-5">
-                      "{testimonial.content}"
-                    </p>
-                  </div>
-
-                  {/* Author info - always at bottom */}
-                  <div className="flex items-center gap-4 mt-auto pt-4 border-t border-border/50">
-                    <Avatar className="h-12 w-12 border-2 border-primary/20">
-                      <AvatarImage src={testimonial.avatar_url || undefined} />
-                      <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-                        {getInitials(testimonial.name)}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="font-semibold text-foreground">
-                        {testimonial.name}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        {testimonial.role}
-                        {testimonial.company && ` at ${testimonial.company}`}
+                    {/* Content */}
+                    <div className="flex-1">
+                      <p className="text-foreground/90 leading-relaxed line-clamp-5">
+                        "{testimonial.content}"
                       </p>
                     </div>
-                  </div>
-                </GlowCard>
-              </motion.div>
-            ))}
+                  </GlowCard>
+                </motion.div>
+              ))}
+            </div>
+
+            {showCarousel && (
+              <Button
+                variant="outline"
+                size="icon"
+                className="absolute -right-4 md:-right-12 top-1/2 -translate-y-1/2 z-10 rounded-full"
+                onClick={nextSlide}
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            )}
+
+            {/* Pagination dots */}
+            {showCarousel && (
+              <div className="flex justify-center gap-2 mt-8">
+                {Array.from({ length: totalSlides }).map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentSlide(index)}
+                    className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                      index === currentSlide
+                        ? "bg-primary"
+                        : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>

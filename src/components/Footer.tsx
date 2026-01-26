@@ -33,10 +33,10 @@ export const Footer = () => {
         <div className="grid md:grid-cols-4 gap-12 mb-12">
           {/* Logo & Description */}
           <div className="md:col-span-1">
-            <a href="#" className="flex items-center gap-2 mb-4">
+            <Link to="/" className="flex items-center gap-2 mb-4">
               <img src={starIcon} alt="Partnerstar" className="w-10 h-10" />
               <span className="font-display text-2xl text-gradient-gold">PARTNERSTAR</span>
-            </a>
+            </Link>
             <p className="text-muted-foreground text-sm">
               Premium iGaming affiliate program with industry-leading commission rates and dedicated support.
             </p>

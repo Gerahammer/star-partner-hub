@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import starIcon from "@/assets/star-icon.png";
+import partnerstarLogo from "@/assets/partnerstar-logo.png";
 
 const navLinks = [
   { name: "About", href: "#about" },
@@ -40,13 +40,10 @@ export const Header = () => {
             className="flex items-center gap-2 group cursor-pointer"
           >
             <img 
-              src={starIcon} 
+              src={partnerstarLogo} 
               alt="Partnerstar" 
-              className="w-10 h-10 transition-transform duration-300 group-hover:rotate-12" 
+              className="h-10 md:h-12 w-auto transition-transform duration-300 group-hover:scale-105" 
             />
-            <span className="font-display text-2xl md:text-3xl text-gradient-cyan">
-              PARTNERSTAR
-            </span>
           </a>
 
           {/* Desktop Navigation */}

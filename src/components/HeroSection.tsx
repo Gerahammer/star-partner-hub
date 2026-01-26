@@ -47,7 +47,7 @@ export const HeroSection = () => {
           </motion.div>
           
           <motion.h1
-            className="font-display text-6xl md:text-8xl lg:text-9xl leading-none mb-6"
+            className="font-display text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl leading-none mb-4 md:mb-6 px-2"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -59,7 +59,7 @@ export const HeroSection = () => {
           </motion.h1>
           
           <motion.p
-            className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-2xl mx-auto"
+            className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground mb-8 md:mb-10 max-w-2xl mx-auto px-4"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -69,16 +69,16 @@ export const HeroSection = () => {
           </motion.p>
           
           <motion.div
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            <Button variant="hero" size="xl" className="group shadow-[0_0_30px_hsl(180_100%_50%/0.3)]">
+            <Button variant="hero" size="lg" className="group shadow-[0_0_30px_hsl(180_100%_50%/0.3)] w-full sm:w-auto text-sm sm:text-base">
               Start Earning Now
-              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1" />
             </Button>
-            <Button variant="heroOutline" size="xl" className="backdrop-blur-sm">
+            <Button variant="heroOutline" size="lg" className="backdrop-blur-sm w-full sm:w-auto text-sm sm:text-base">
               Learn More
             </Button>
           </motion.div>

@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Clock, Wrench, Headphones } from "lucide-react";
+import { GlowCard } from "./GlowCard";
 
 const stats = [
   {
@@ -29,8 +30,11 @@ export const AboutSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="about" className="py-24 md:py-32 section-pattern">
-      <div className="container mx-auto px-4 md:px-8">
+    <section id="about" className="py-24 md:py-32 section-pattern relative">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-radial-gold opacity-20" />
+      
+      <div className="container mx-auto px-4 md:px-8 relative">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
@@ -55,21 +59,22 @@ export const AboutSection = () => {
               initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: index * 0.2 }}
-              className="card-premium p-8 group"
             >
-              <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
-                <stat.icon className="w-7 h-7 text-primary" />
-              </div>
-              
-              <h3 className="font-display text-5xl md:text-6xl text-gradient-gold mb-2">
-                {stat.value}
-              </h3>
-              <p className="text-foreground font-semibold text-lg mb-2">
-                {stat.label}
-              </p>
-              <p className="text-muted-foreground">
-                {stat.description}
-              </p>
+              <GlowCard className="p-8 h-full">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center mb-6 border border-primary/20">
+                  <stat.icon className="w-7 h-7 text-primary" />
+                </div>
+                
+                <h3 className="font-display text-5xl md:text-6xl text-gradient-gold mb-2">
+                  {stat.value}
+                </h3>
+                <p className="text-foreground font-semibold text-lg mb-2">
+                  {stat.label}
+                </p>
+                <p className="text-muted-foreground">
+                  {stat.description}
+                </p>
+              </GlowCard>
             </motion.div>
           ))}
         </div>

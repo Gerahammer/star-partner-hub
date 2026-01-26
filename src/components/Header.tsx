@@ -44,7 +44,7 @@ export const Header = () => {
               alt="Partnerstar" 
               className="w-10 h-10 transition-transform duration-300 group-hover:rotate-12" 
             />
-            <span className="font-display text-2xl md:text-3xl text-gradient-gold">
+            <span className="font-display text-2xl md:text-3xl text-gradient-cyan">
               PARTNERSTAR
             </span>
           </a>

@@ -8,8 +8,8 @@ interface GlowCardProps {
 
 export const GlowCard = ({ children, className = "", glowColor = "gold" }: GlowCardProps) => {
   const glowClass = glowColor === "gold" 
-    ? "before:from-primary/20 before:via-primary/5 before:to-transparent hover:shadow-[0_0_40px_hsl(45_100%_50%/0.15)]" 
-    : "before:from-secondary/20 before:via-secondary/5 before:to-transparent hover:shadow-[0_0_40px_hsl(180_100%_50%/0.15)]";
+    ? "before:from-secondary/10 before:via-secondary/5 before:to-transparent hover:shadow-[0_0_30px_hsl(45_90%_55%/0.1)]" 
+    : "before:from-primary/10 before:via-primary/5 before:to-transparent hover:shadow-[0_0_30px_hsl(168_100%_45%/0.15)]";
 
   return (
     <motion.div
@@ -26,9 +26,9 @@ export const GlowCard = ({ children, className = "", glowColor = "gold" }: GlowC
         ${className}
       `}
     >
-      {/* Animated gradient border */}
+      {/* Subtle animated gradient border */}
       <div className="absolute inset-0 rounded-2xl opacity-0 hover:opacity-100 transition-opacity duration-500">
-        <div className="absolute inset-[-1px] rounded-2xl bg-gradient-to-r from-primary/50 via-transparent to-primary/50 animate-[spin_8s_linear_infinite]" style={{ background: `conic-gradient(from 0deg, hsl(var(--primary) / 0.3), transparent, hsl(var(--primary) / 0.3))` }} />
+        <div className="absolute inset-[-1px] rounded-2xl" style={{ background: `conic-gradient(from 0deg, hsl(var(--primary) / 0.15), transparent, hsl(var(--primary) / 0.15))` }} />
       </div>
       
       <div className="relative z-10">

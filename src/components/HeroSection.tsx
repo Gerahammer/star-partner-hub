@@ -19,16 +19,16 @@ export const HeroSection = () => {
       {/* Floating Particles */}
       <FloatingParticles />
       
-      {/* Animated Glow Orbs */}
+      {/* Subtle Glow Orbs */}
       <motion.div
-        className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[120px]"
-        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[150px]"
+        animate={{ scale: [1, 1.1, 1], opacity: [0.15, 0.25, 0.15] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-[120px]"
-        animate={{ scale: [1.2, 1, 1.2], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/5 rounded-full blur-[150px]"
+        animate={{ scale: [1.1, 1, 1.1], opacity: [0.1, 0.2, 0.1] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
       />
       
       {/* Content */}
@@ -54,7 +54,7 @@ export const HeroSection = () => {
           >
             <span className="text-foreground">BECOME A</span>
             <br />
-            <span className="text-gradient-gold drop-shadow-[0_0_30px_hsl(45_100%_50%/0.3)]">PARTNER</span>
+            <span className="text-gradient-cyan">PARTNER</span>
             <span className="text-foreground">STAR</span>
           </motion.h1>
           
@@ -74,7 +74,7 @@ export const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            <Button variant="hero" size="lg" className="group shadow-[0_0_30px_hsl(180_100%_50%/0.3)] w-full sm:w-auto text-sm sm:text-base">
+            <Button variant="hero" size="lg" className="group w-full sm:w-auto text-sm sm:text-base">
               Start Earning Now
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1" />
             </Button>

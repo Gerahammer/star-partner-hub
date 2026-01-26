@@ -62,8 +62,8 @@ export const WhyUsSection = () => {
               transition={{ duration: 0.8, delay: index * 0.15 }}
               className="flex gap-5 p-6 rounded-2xl bg-card/50 border border-border/50 hover:border-primary/30 transition-colors group"
             >
-              <div className="w-14 h-14 shrink-0 rounded-xl bg-secondary/50 flex items-center justify-center group-hover:bg-secondary transition-colors">
-                <feature.icon className="w-7 h-7 text-secondary" />
+              <div className="w-14 h-14 shrink-0 rounded-xl bg-secondary/20 flex items-center justify-center group-hover:bg-secondary transition-colors">
+                <feature.icon className="w-7 h-7 text-secondary group-hover:text-primary-foreground transition-colors" />
               </div>
               <div>
                 <h3 className="font-display text-2xl text-foreground mb-2">

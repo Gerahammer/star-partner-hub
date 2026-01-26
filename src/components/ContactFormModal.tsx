@@ -81,9 +81,9 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", duration: 0.5 }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-lg mx-4"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
           >
-            <div className="relative bg-card border border-border rounded-lg shadow-2xl overflow-hidden">
+            <div className="relative w-full max-w-lg bg-card border border-border rounded-lg shadow-2xl overflow-hidden">
               {/* Decorative corner frames */}
               <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-primary/60" />
               <div className="absolute top-0 right-0 w-12 h-12 border-t-2 border-r-2 border-primary/60" />

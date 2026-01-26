@@ -17,10 +17,9 @@ export const GlowCard = ({ children, className = "", glowColor = "gold" }: GlowC
       transition={{ duration: 0.3 }}
       className={`
         relative overflow-hidden rounded-2xl 
-        bg-gradient-to-br from-card to-card/80
-        border border-border/50 hover:border-primary/30
+        bg-card border border-border/50
         before:absolute before:inset-0 before:bg-gradient-to-br before:opacity-0 before:transition-opacity before:duration-500
-        hover:before:opacity-100
+        hover:before:opacity-100 hover:border-primary/30
         transition-all duration-500
         ${glowClass}
         ${className}

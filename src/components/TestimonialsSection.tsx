@@ -352,7 +352,7 @@ export const TestimonialsSection = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
                 >
-                  <GlowCard className="p-4 sm:p-5 md:p-6 h-full flex flex-col min-h-[220px] sm:min-h-[260px] md:min-h-[280px] bg-card border-border/50" glowColor="cyan">
+                  <GlowCard className="p-4 sm:p-5 md:p-6 h-full flex flex-col min-h-[220px] sm:min-h-[260px] md:min-h-[280px] bg-card border-border/50" glowColor="gold">
                     {/* Admin actions */}
                     {isAdmin && (
                       <div className="flex justify-end gap-2 mb-4">

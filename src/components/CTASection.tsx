@@ -11,7 +11,7 @@ export const CTASection = () => {
   return (
     <section className="py-24 md:py-32 relative overflow-hidden">
       {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-radial-cyan opacity-20" />
+      <div className="absolute inset-0 bg-gradient-radial-gold opacity-20" />
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" />
       
@@ -26,7 +26,7 @@ export const CTASection = () => {
           <h2 className="font-display text-4xl md:text-6xl lg:text-7xl text-foreground mb-6">
             READY TO BECOME
             <br />
-            <span className="text-gradient-cyan">A STAR?</span>
+            <span className="text-gradient-gold">A STAR?</span>
           </h2>
           <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
             Join Partnerstar today and start earning with premium iGaming brands. 

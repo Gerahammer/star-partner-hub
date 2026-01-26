@@ -1,26 +1,27 @@
+import { Link } from "react-router-dom";
 import starIcon from "@/assets/star-icon.png";
 
 const footerLinks = [
   {
     title: "Company",
     links: [
-      { name: "About", href: "#about" },
-      { name: "Our Brands", href: "#brands" },
-      { name: "Deals", href: "#deals" },
+      { name: "About", href: "#about", isRoute: false },
+      { name: "Our Brands", href: "#brands", isRoute: false },
+      { name: "Deals", href: "#deals", isRoute: false },
     ],
   },
   {
     title: "Resources",
     links: [
-      { name: "FAQs", href: "#" },
-      { name: "Terms & Conditions", href: "#" },
-      { name: "Privacy Policy", href: "#" },
+      { name: "FAQs", href: "#", isRoute: false },
+      { name: "Terms & Conditions", href: "/terms", isRoute: true },
+      { name: "Privacy Policy", href: "#", isRoute: false },
     ],
   },
   {
     title: "Contact",
     links: [
-      { name: "partners@partnerstar.com", href: "mailto:partners@partnerstar.com" },
+      { name: "partners@partnerstar.com", href: "mailto:partners@partnerstar.com", isRoute: false },
     ],
   },
 ];
@@ -48,12 +49,21 @@ export const Footer = () => {
               <ul className="space-y-3">
                 {section.links.map((link) => (
                   <li key={link.name}>
-                    <a 
-                      href={link.href}
-                      className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                    >
-                      {link.name}
-                    </a>
+                    {link.isRoute ? (
+                      <Link 
+                        to={link.href}
+                        className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                      >
+                        {link.name}
+                      </Link>
+                    ) : (
+                      <a 
+                        href={link.href}
+                        className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                      >
+                        {link.name}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>

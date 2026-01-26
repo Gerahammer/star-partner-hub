@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import starIcon from "@/assets/star-icon.png";
+import partnerstarLogo from "@/assets/partnerstar-logo.png";
 
 const footerLinks = [
   {
@@ -33,9 +33,8 @@ export const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
           {/* Logo & Description */}
           <div className="col-span-2 md:col-span-1">
-            <Link to="/" className="flex items-center gap-2 mb-3 md:mb-4">
-              <img src={starIcon} alt="Partnerstar" className="w-8 h-8 md:w-10 md:h-10" />
-              <span className="font-display text-xl md:text-2xl text-gradient-cyan">PARTNERSTAR</span>
+            <Link to="/" className="mb-3 md:mb-4 block">
+              <img src={partnerstarLogo} alt="Partnerstar" className="h-8 md:h-10 w-auto" />
             </Link>
             <p className="text-muted-foreground text-xs sm:text-sm">
               Premium iGaming affiliate program with industry-leading commission rates and dedicated support.

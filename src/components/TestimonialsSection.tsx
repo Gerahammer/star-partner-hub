@@ -8,6 +8,7 @@ import { Textarea } from "./ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface Testimonial {
   id: string;
@@ -25,6 +26,7 @@ export const TestimonialsSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const isMobile = useIsMobile();
   const [formData, setFormData] = useState({
     site_name: "",
     content: "",
@@ -33,9 +35,10 @@ export const TestimonialsSection = () => {
   });
   const { toast } = useToast();
 
-  const itemsPerPage = 3;
+  // On mobile show 1 item, on desktop show 3
+  const itemsPerPage = isMobile ? 1 : 3;
   const totalSlides = Math.ceil(testimonials.length / itemsPerPage);
-  const showCarousel = testimonials.length > 3;
+  const showCarousel = testimonials.length > itemsPerPage;
 
   useEffect(() => {
     fetchTestimonials();
@@ -327,28 +330,29 @@ export const TestimonialsSection = () => {
             </p>
           </div>
         ) : (
-          <div className="relative px-8 sm:px-12 md:px-0">
+          <div className="relative">
             {showCarousel && (
               <Button
                 variant="outline"
                 size="icon"
-                className="absolute left-0 md:-left-12 top-1/2 -translate-y-1/2 z-10 rounded-full h-8 w-8 sm:h-10 sm:w-10"
+                className="absolute -left-2 sm:left-0 md:-left-12 top-1/2 -translate-y-1/2 z-10 rounded-full h-8 w-8 sm:h-10 sm:w-10 bg-background/80 backdrop-blur-sm"
                 onClick={prevSlide}
               >
                 <ChevronLeft className="h-4 w-4" />
               </Button>
             )}
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+            <div className={`grid gap-4 sm:gap-6 md:gap-8 px-8 sm:px-12 md:px-0 ${
+              isMobile ? 'grid-cols-1' : 'sm:grid-cols-2 lg:grid-cols-3'
+            }`}>
               {visibleTestimonials.map((testimonial, index) => (
                 <motion.div
                   key={testimonial.id}
                   initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.05 }}
                 >
-                  <GlowCard className="p-4 sm:p-5 md:p-6 h-full flex flex-col min-h-[240px] sm:min-h-[260px] md:min-h-[280px]">
+                  <GlowCard className="p-4 sm:p-5 md:p-6 h-full flex flex-col min-h-[220px] sm:min-h-[260px] md:min-h-[280px]">
                     {/* Admin actions */}
                     {isAdmin && (
                       <div className="flex justify-end gap-2 mb-4">
@@ -415,7 +419,7 @@ export const TestimonialsSection = () => {
               <Button
                 variant="outline"
                 size="icon"
-                className="absolute right-0 md:-right-12 top-1/2 -translate-y-1/2 z-10 rounded-full h-8 w-8 sm:h-10 sm:w-10"
+                className="absolute -right-2 sm:right-0 md:-right-12 top-1/2 -translate-y-1/2 z-10 rounded-full h-8 w-8 sm:h-10 sm:w-10 bg-background/80 backdrop-blur-sm"
                 onClick={nextSlide}
               >
                 <ChevronRight className="h-4 w-4" />

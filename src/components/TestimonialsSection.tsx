@@ -237,7 +237,7 @@ export const TestimonialsSection = () => {
                   Add Testimonial
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-md">
+              <DialogContent className="sm:max-w-md bg-card border-border/50">
                 <DialogHeader>
                   <DialogTitle>
                     {editingId ? "Edit Testimonial" : "Add New Testimonial"}
@@ -352,7 +352,7 @@ export const TestimonialsSection = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
                 >
-                  <GlowCard className="p-4 sm:p-5 md:p-6 h-full flex flex-col min-h-[220px] sm:min-h-[260px] md:min-h-[280px]">
+                  <GlowCard className="p-4 sm:p-5 md:p-6 h-full flex flex-col min-h-[220px] sm:min-h-[260px] md:min-h-[280px] bg-card border-border/50" glowColor="cyan">
                     {/* Admin actions */}
                     {isAdmin && (
                       <div className="flex justify-end gap-2 mb-4">
@@ -377,7 +377,7 @@ export const TestimonialsSection = () => {
                         <img
                           src={testimonial.logo_url}
                           alt={`${testimonial.site_name} logo`}
-                          className="w-10 h-10 sm:w-12 sm:h-12 object-contain rounded-lg border border-border bg-background"
+                          className="w-10 h-10 sm:w-12 sm:h-12 object-contain rounded-lg border border-border/50 bg-muted/50 p-1"
                         />
                       ) : (
                         <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg border border-border bg-primary/10 flex items-center justify-center">

@@ -131,14 +131,14 @@ export const WhyUsMarquee = () => {
             transition={{ duration: 1, delay: 0.4, type: "spring", stiffness: 120 }}
           >
             <div className="relative">
-              {/* Glow effect */}
-              <div className="absolute inset-0 blur-[90px] bg-primary/60 scale-125" />
+              {/* Glow effect - reduced */}
+              <div className="absolute inset-0 blur-[50px] bg-primary/30 scale-100" />
               <img 
                 src={goldStar3d} 
                 alt="Gold star"
-                className="w-52 h-52 sm:w-72 sm:h-72 md:w-96 md:h-96 lg:w-[550px] lg:h-[550px] relative z-10 object-contain origin-top"
+                className="w-52 h-52 sm:w-72 sm:h-72 md:w-96 md:h-96 lg:w-[550px] lg:h-[550px] relative z-10 object-contain"
                 style={{
-                  filter: "drop-shadow(0 0 55px hsl(45 90% 55% / 0.8)) drop-shadow(0 0 120px hsl(45 90% 55% / 0.45))",
+                  filter: "drop-shadow(0 0 30px hsl(45 90% 55% / 0.5)) drop-shadow(0 0 60px hsl(45 90% 55% / 0.25))",
                 }}
               />
             </div>

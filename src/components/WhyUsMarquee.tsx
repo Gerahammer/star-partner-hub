@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useRef } from "react";
 import { useInView } from "framer-motion";
 import goldStar3d from "@/assets/gold-star-3d.png";
+import { DecorativeFrame } from "./DecorativeFrame";
 
 const marqueeRows = [
   {
@@ -120,7 +121,8 @@ export const WhyUsMarquee = () => {
           className="flex gap-3 md:gap-4 relative justify-center"
         >
           {/* Main content box - full width on mobile, 80% on desktop */}
-          <div className="relative w-full md:w-[80%] rounded-2xl md:rounded-3xl overflow-hidden bg-card border border-border/30">
+          <DecorativeFrame variant="gold" className="w-full md:w-[80%]">
+            <div className="relative rounded-2xl md:rounded-3xl overflow-hidden bg-card border border-border/30">
             {/* Gradient overlay for depth */}
             <div className="absolute inset-0 bg-gradient-to-br from-muted/30 via-card to-muted/20 pointer-events-none" />
             
@@ -146,9 +148,8 @@ export const WhyUsMarquee = () => {
 
             {/* Left fade */}
             <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-12 md:w-16 lg:w-20 bg-gradient-to-r from-card via-card/80 to-transparent pointer-events-none z-10" />
-          </div>
-
-
+            </div>
+          </DecorativeFrame>
           {/* Star with sparkles - hidden on mobile, visible on tablet+ */}
           <div
             className="hidden md:block absolute -bottom-24 md:-bottom-32 lg:-bottom-40 -right-12 md:-right-8 lg:right-8 z-30"

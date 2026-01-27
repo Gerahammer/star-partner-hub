@@ -79,7 +79,7 @@ export const WhyUsMarquee = () => {
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="flex gap-3 md:gap-4 relative"
+          className="flex gap-3 md:gap-4 relative justify-center"
         >
           {/* Main content box - 80% width */}
           <div className="relative w-[80%] rounded-2xl md:rounded-3xl overflow-hidden bg-card border border-border/30">

@@ -107,9 +107,9 @@ export const WhyUsMarquee = () => {
               </div>
             </div>
 
-            {/* Star image - positioned right side, vertically centered, extending outside */}
+            {/* Star image - positioned bottom-right, extending outside the card */}
             <motion.div
-              className="absolute top-1/2 -translate-y-1/2 -right-12 md:-right-16 lg:-right-20 z-30"
+              className="absolute bottom-0 right-4 md:right-8 lg:right-12 translate-y-1/3 z-30"
               initial={{ opacity: 0, scale: 0, rotate: -180 }}
               animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
               transition={{ duration: 1, delay: 0.5, type: "spring" }}
@@ -120,7 +120,7 @@ export const WhyUsMarquee = () => {
                 <img 
                   src={goldStar3d} 
                   alt="Gold star"
-                  className="w-48 h-48 md:w-72 md:h-72 lg:w-[400px] lg:h-[400px] relative z-10 object-contain"
+                  className="w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 relative z-10 object-contain"
                   style={{
                     filter: "drop-shadow(0 0 40px hsl(45 90% 55% / 0.7)) drop-shadow(0 0 80px hsl(45 90% 55% / 0.4))",
                   }}

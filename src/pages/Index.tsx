@@ -4,7 +4,7 @@ import { Marquee } from "@/components/Marquee";
 import { StatsSection } from "@/components/StatsSection";
 import { AboutSection } from "@/components/AboutSection";
 import { TrustBadges } from "@/components/TrustBadges";
-import { WhyUsSection } from "@/components/WhyUsSection";
+import { WhyUsMarquee } from "@/components/WhyUsMarquee";
 import { BrandsSection } from "@/components/BrandsSection";
 import { DealsSection } from "@/components/DealsSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
@@ -24,7 +24,7 @@ const Index = () => {
         <AboutSection />
         <TrustBadges />
         <BrandsSection />
-        <WhyUsSection />
+        <WhyUsMarquee />
         <DealsSection />
         <TestimonialsSection />
         <CTASection />

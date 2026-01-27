@@ -125,7 +125,7 @@ export const WhyUsMarquee = () => {
 
           {/* Star - positioned between the two boxes */}
           <motion.div
-            className="absolute bottom-0 right-10 sm:right-12 md:right-16 lg:right-20 translate-y-[22%] z-30"
+            className="absolute bottom-0 right-10 sm:right-12 md:right-16 lg:right-20 translate-y-[25%] z-30 origin-top"
             initial={{ opacity: 0, scale: 0, rotate: -180 }}
             animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
             transition={{ duration: 1, delay: 0.4, type: "spring", stiffness: 120 }}
@@ -136,7 +136,7 @@ export const WhyUsMarquee = () => {
               <img 
                 src={goldStar3d} 
                 alt="Gold star"
-                className="w-44 h-44 sm:w-60 sm:h-60 md:w-80 md:h-80 lg:w-[480px] lg:h-[480px] relative z-10 object-contain"
+                className="w-52 h-52 sm:w-72 sm:h-72 md:w-96 md:h-96 lg:w-[550px] lg:h-[550px] relative z-10 object-contain origin-top"
                 style={{
                   filter: "drop-shadow(0 0 55px hsl(45 90% 55% / 0.8)) drop-shadow(0 0 120px hsl(45 90% 55% / 0.45))",
                 }}

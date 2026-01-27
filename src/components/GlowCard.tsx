@@ -26,7 +26,7 @@ export const GlowCard = ({ children, className = "", glowColor = "gold" }: GlowC
       `}
     >
       {/* Subtle topographic pattern background */}
-      <div className="absolute inset-0 opacity-[0.08] pointer-events-none">
+      <div className="absolute inset-0 opacity-[0.18] pointer-events-none">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="topo-pattern" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">

@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Gamepad2, Users, Shield, Headphones, Star } from "lucide-react";
-import wintinoBrand from "@/assets/wintino-brand.webp";
+import wintinoCharacter from "@/assets/wintino-character.png";
 import { PremiumBorder } from "./PremiumBorder";
 import { DecorativeDivider } from "./DecorativeDivider";
 
@@ -57,29 +57,11 @@ export const BrandsSection = () => {
           <PremiumBorder glowing>
             <div className="overflow-hidden rounded-xl">
               <div className="grid lg:grid-cols-2 gap-0">
-                {/* Image */}
-                <div className="relative h-64 lg:h-auto overflow-hidden">
-                  <img 
-                    src={wintinoBrand} 
-                    alt="Wintino Casino" 
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-card lg:bg-gradient-to-t lg:from-transparent lg:to-transparent" />
-                  
-                  {/* Star decorations on image */}
-                  <div className="absolute top-4 left-4">
-                    <Star className="w-4 h-4 text-primary fill-primary opacity-60" />
-                  </div>
-                  <div className="absolute bottom-4 right-4">
-                    <Star className="w-3 h-3 text-primary fill-primary opacity-40" />
-                  </div>
-                </div>
-                
-                {/* Content */}
-                <div className="p-8 lg:p-12 flex flex-col justify-center relative">
+                {/* Content - Left Side */}
+                <div className="p-8 lg:p-12 flex flex-col justify-center relative order-2 lg:order-1">
                   {/* Decorative corner */}
-                  <div className="absolute top-4 right-4 w-8 h-8 border-t border-r border-primary/30" />
-                  <div className="absolute bottom-4 left-4 w-8 h-8 border-b border-l border-primary/30 hidden lg:block" />
+                  <div className="absolute top-4 left-4 w-8 h-8 border-t border-l border-primary/30" />
+                  <div className="absolute bottom-4 right-4 w-8 h-8 border-b border-r border-primary/30 hidden lg:block" />
                   
                   <h3 className="font-display text-5xl md:text-6xl text-gradient-gold mb-4">
                     WINTINO
@@ -107,6 +89,23 @@ export const BrandsSection = () => {
                         </div>
                       </motion.div>
                     ))}
+                  </div>
+                </div>
+                
+                {/* Image - Right Side with overflow */}
+                <div className="relative h-64 lg:h-auto overflow-visible order-1 lg:order-2 flex items-center justify-center lg:justify-start">
+                  <img 
+                    src={wintinoCharacter} 
+                    alt="Wintino Casino" 
+                    className="w-full h-full object-contain lg:absolute lg:-left-16 lg:top-1/2 lg:-translate-y-1/2 lg:w-[120%] lg:max-w-none"
+                  />
+                  
+                  {/* Star decorations on image */}
+                  <div className="absolute top-4 right-4">
+                    <Star className="w-4 h-4 text-primary fill-primary opacity-60" />
+                  </div>
+                  <div className="absolute bottom-4 left-4 lg:left-auto lg:right-8">
+                    <Star className="w-3 h-3 text-primary fill-primary opacity-40" />
                   </div>
                 </div>
               </div>

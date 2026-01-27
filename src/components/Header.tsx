@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ContactFormModal } from "./ContactFormModal";
 import partnerstarLogo from "@/assets/partnerstar-logo.png";
 
 const navLinks = [
@@ -15,7 +14,6 @@ const navLinks = [
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isContactOpen, setIsContactOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -61,10 +59,13 @@ export const Header = () => {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden lg:block">
-            <Button variant="hero" size="lg" onClick={() => setIsContactOpen(true)}>
-              Contact Us
+          {/* Auth Buttons */}
+          <div className="hidden lg:flex items-center gap-3">
+            <Button variant="heroOutline" size="lg" asChild>
+              <Link to="/auth">Log In</Link>
+            </Button>
+            <Button variant="hero" size="lg" asChild>
+              <Link to="/auth">Register</Link>
             </Button>
           </div>
 
@@ -97,16 +98,19 @@ export const Header = () => {
                     {link.name}
                   </a>
                 ))}
-                <Button variant="hero" size="lg" className="mt-4 w-full" onClick={() => { setIsContactOpen(true); setIsMenuOpen(false); }}>
-                  Contact Us
-                </Button>
+                <div className="flex gap-3 mt-4">
+                  <Button variant="heroOutline" size="lg" className="flex-1" asChild>
+                    <Link to="/auth" onClick={() => setIsMenuOpen(false)}>Log In</Link>
+                  </Button>
+                  <Button variant="hero" size="lg" className="flex-1" asChild>
+                    <Link to="/auth" onClick={() => setIsMenuOpen(false)}>Register</Link>
+                  </Button>
+                </div>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </nav>
-
-      <ContactFormModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
     </header>
   );
 };

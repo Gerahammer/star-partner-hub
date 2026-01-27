@@ -118,18 +118,11 @@ export const WhyUsMarquee = () => {
             animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
             transition={{ duration: 1, delay: 0.4, type: "spring", stiffness: 120 }}
           >
-            <div className="relative">
-              {/* Glow effect - reduced */}
-              <div className="absolute inset-0 blur-[50px] bg-primary/30 scale-100" />
-              <img 
-                src={goldStar3d} 
-                alt="Gold star"
-                className="w-52 h-52 sm:w-72 sm:h-72 md:w-96 md:h-96 lg:w-[550px] lg:h-[550px] relative z-10 object-contain"
-                style={{
-                  filter: "drop-shadow(0 0 30px hsl(45 90% 55% / 0.5)) drop-shadow(0 0 60px hsl(45 90% 55% / 0.25))",
-                }}
-              />
-            </div>
+            <img 
+              src={goldStar3d} 
+              alt="Gold star"
+              className="w-52 h-52 sm:w-72 sm:h-72 md:w-96 md:h-96 lg:w-[550px] lg:h-[550px] object-contain"
+            />
           </motion.div>
         </motion.div>
       </div>

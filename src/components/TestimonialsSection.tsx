@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef, TouchEvent } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Trash2, Edit2, ExternalLink, ChevronLeft, ChevronRight, Upload } from "lucide-react";
 import { GlowCard } from "./GlowCard";
 import { Button } from "./ui/button";
@@ -25,7 +25,10 @@ export const TestimonialsSection = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [uploadingLogo, setUploadingLogo] = useState(false);
+  const [slideDirection, setSlideDirection] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
   const isMobile = useIsMobile();
   const [formData, setFormData] = useState({
     site_name: "",
@@ -37,8 +40,6 @@ export const TestimonialsSection = () => {
 
   // On mobile show 1 item, on desktop show 3
   const itemsToShow = isMobile ? 1 : 3;
-  // Move one card at a time, not the entire page
-  const maxSlide = Math.max(0, testimonials.length - itemsToShow);
   const showCarousel = testimonials.length > itemsToShow;
 
   useEffect(() => {
@@ -194,15 +195,54 @@ export const TestimonialsSection = () => {
   };
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => Math.min(prev + 1, maxSlide));
+    setSlideDirection(1);
+    setCurrentSlide((prev) => (prev + 1) % testimonials.length);
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => Math.max(prev - 1, 0));
+    setSlideDirection(-1);
+    setCurrentSlide((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
-  // Show 3 cards starting from currentSlide (move 1 at a time)
-  const visibleTestimonials = testimonials.slice(currentSlide, currentSlide + itemsToShow);
+  // Get visible testimonials with circular wrapping
+  const getVisibleTestimonials = () => {
+    if (testimonials.length === 0) return [];
+    const result: Testimonial[] = [];
+    for (let i = 0; i < itemsToShow; i++) {
+      const index = (currentSlide + i) % testimonials.length;
+      result.push(testimonials[index]);
+    }
+    return result;
+  };
+
+  const visibleTestimonials = getVisibleTestimonials();
+
+  // Touch handlers for swipe
+  const handleTouchStart = (e: TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current === null || touchEndX.current === null) return;
+    
+    const diff = touchStartX.current - touchEndX.current;
+    const minSwipeDistance = 50;
+
+    if (Math.abs(diff) > minSwipeDistance) {
+      if (diff > 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    }
+
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
 
   return (
     <section className="py-16 sm:py-20 md:py-24 px-4 bg-gradient-to-b from-background to-muted/20">
@@ -342,15 +382,22 @@ export const TestimonialsSection = () => {
               </Button>
             )}
 
-            <div className={`grid gap-4 sm:gap-6 md:gap-8 px-8 sm:px-12 md:px-0 ${
+            <div 
+              className={`grid gap-4 sm:gap-6 md:gap-8 px-8 sm:px-12 md:px-0 ${
               isMobile ? 'grid-cols-1' : 'sm:grid-cols-2 lg:grid-cols-3'
-            }`}>
+            }`}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
+              <AnimatePresence mode="popLayout" initial={false}>
               {visibleTestimonials.map((testimonial, index) => (
                 <motion.div
-                  key={testimonial.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
+                  key={`${testimonial.id}-${currentSlide}-${index}`}
+                  initial={{ opacity: 0, x: slideDirection * 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -slideDirection * 50 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
                 >
                   <GlowCard className="p-4 sm:p-5 md:p-6 h-full flex flex-col min-h-[220px] sm:min-h-[260px] md:min-h-[280px] bg-card border-border/50" glowColor="gold">
                     {/* Admin actions */}
@@ -413,6 +460,7 @@ export const TestimonialsSection = () => {
                   </GlowCard>
                 </motion.div>
               ))}
+              </AnimatePresence>
             </div>
 
             {showCarousel && (
@@ -429,10 +477,13 @@ export const TestimonialsSection = () => {
             {/* Pagination dots */}
             {showCarousel && (
               <div className="flex justify-center gap-2 mt-6 md:mt-8">
-                {Array.from({ length: maxSlide + 1 }).map((_, index) => (
+                {testimonials.map((_, index) => (
                   <button
                     key={index}
-                    onClick={() => setCurrentSlide(index)}
+                    onClick={() => {
+                      setSlideDirection(index > currentSlide ? 1 : -1);
+                      setCurrentSlide(index);
+                    }}
                     className={`w-2.5 h-2.5 rounded-full transition-colors ${
                       index === currentSlide
                         ? "bg-primary"

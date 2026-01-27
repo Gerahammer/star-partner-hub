@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { ContactFormModal } from "./ContactFormModal";
 import partnerstarLogo from "@/assets/partnerstar-logo.png";
 
 const footerLinks = [
@@ -22,6 +24,8 @@ const footerLinks = [
 ];
 
 export const Footer = () => {
+  const [isContactOpen, setIsContactOpen] = useState(false);
+
   return (
     <footer className="bg-card/50 border-t border-border">
       <div className="container mx-auto px-4 md:px-8 py-10 md:py-16">
@@ -64,20 +68,15 @@ export const Footer = () => {
             </div>
           ))}
           
-          {/* Get Started Section */}
+          {/* Contact Section */}
           <div className="col-span-2 md:col-span-1">
-            <h4 className="font-display text-base md:text-lg text-foreground mb-2 md:mb-4">Get Started</h4>
+            <h4 className="font-display text-base md:text-lg text-foreground mb-2 md:mb-4">Get In Touch</h4>
             <p className="text-muted-foreground text-xs sm:text-sm mb-4">
-              Ready to start your partnership journey? Join us today.
+              Ready to start your partnership journey? We're here to help.
             </p>
-            <div className="flex gap-3">
-              <Button variant="hero" size="sm" asChild>
-                <Link to="/auth">Log In</Link>
-              </Button>
-              <Button variant="heroOutline" size="sm" asChild>
-                <Link to="/auth">Register</Link>
-              </Button>
-            </div>
+            <Button variant="hero" size="sm" onClick={() => setIsContactOpen(true)}>
+              Contact Us
+            </Button>
           </div>
         </div>
         
@@ -91,7 +90,7 @@ export const Footer = () => {
           </p>
         </div>
       </div>
-      
+      <ContactFormModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
     </footer>
   );
 };

@@ -18,12 +18,6 @@ const footerLinks = [
       { name: "Privacy Policy", href: "/privacy", isRoute: true },
     ],
   },
-  {
-    title: "Contact",
-    links: [
-      { name: "partners@partnerstar.com", href: "mailto:partners@partnerstar.com", isRoute: false },
-    ],
-  },
 ];
 
 export const Footer = () => {

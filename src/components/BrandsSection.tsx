@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Gamepad2, Users, Shield, Headphones, Star } from "lucide-react";
-import wintinoBrand from "@/assets/wintino-brand.jpg";
+import wintinoBrand from "@/assets/wintino-brand.webp";
 import { PremiumBorder } from "./PremiumBorder";
 import { DecorativeDivider } from "./DecorativeDivider";
 

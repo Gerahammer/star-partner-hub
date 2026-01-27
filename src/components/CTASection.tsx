@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Mail, MessageCircle, Star } from "lucide-react";
+import { ArrowRight, MessageCircle, Star } from "lucide-react";
 import { DecorativeDivider } from "./DecorativeDivider";
 import { ContactFormModal } from "./ContactFormModal";
 
@@ -72,20 +72,6 @@ export const CTASection = () => {
             </Button>
           </div>
           
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex items-center justify-center gap-2 text-muted-foreground"
-          >
-            <Mail className="w-5 h-5" />
-            <a 
-              href="mailto:partners@partnerstar.com" 
-              className="hover:text-primary transition-colors"
-            >
-              partners@partnerstar.com
-            </a>
-          </motion.div>
         </motion.div>
       </div>
 

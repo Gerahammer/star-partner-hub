@@ -16,7 +16,7 @@ export const GlowCard = ({ children, className = "", glowColor = "gold" }: GlowC
       whileHover={{ y: -5 }}
       transition={{ duration: 0.3 }}
       className={`
-        relative overflow-hidden rounded-2xl 
+        relative overflow-hidden rounded-3xl 
         bg-card border border-border/50
         before:absolute before:inset-0 before:bg-gradient-to-br before:opacity-0 before:transition-opacity before:duration-500
         hover:before:opacity-100 hover:border-primary/30
@@ -42,8 +42,8 @@ export const GlowCard = ({ children, className = "", glowColor = "gold" }: GlowC
       </div>
       
       {/* Subtle animated gradient border */}
-      <div className="absolute inset-0 rounded-2xl opacity-0 hover:opacity-100 transition-opacity duration-500">
-        <div className="absolute inset-[-1px] rounded-2xl" style={{ background: `conic-gradient(from 0deg, hsl(var(--primary) / 0.15), transparent, hsl(var(--primary) / 0.15))` }} />
+      <div className="absolute inset-0 rounded-3xl opacity-0 hover:opacity-100 transition-opacity duration-500">
+        <div className="absolute inset-[-1px] rounded-3xl" style={{ background: `conic-gradient(from 0deg, hsl(var(--primary) / 0.15), transparent, hsl(var(--primary) / 0.15))` }} />
       </div>
       
       <div className="relative z-10">

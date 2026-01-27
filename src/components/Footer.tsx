@@ -1,4 +1,7 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { ContactFormModal } from "./ContactFormModal";
 import partnerstarLogo from "@/assets/partnerstar-logo.png";
 
 const footerLinks = [
@@ -21,6 +24,8 @@ const footerLinks = [
 ];
 
 export const Footer = () => {
+  const [isContactOpen, setIsContactOpen] = useState(false);
+
   return (
     <footer className="bg-card/50 border-t border-border">
       <div className="container mx-auto px-4 md:px-8 py-10 md:py-16">
@@ -69,11 +74,17 @@ export const Footer = () => {
           <p className="text-muted-foreground text-xs sm:text-sm text-center md:text-left">
             © {new Date().getFullYear()} Partnerstar. All rights reserved.
           </p>
-          <p className="text-muted-foreground text-xs sm:text-sm">
-            18+ | Gamble Responsibly
-          </p>
+          <div className="flex items-center gap-4">
+            <p className="text-muted-foreground text-xs sm:text-sm">
+              18+ | Gamble Responsibly
+            </p>
+            <Button variant="hero" size="sm" onClick={() => setIsContactOpen(true)}>
+              Contact Us
+            </Button>
+          </div>
         </div>
       </div>
+      <ContactFormModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
     </footer>
   );
 };

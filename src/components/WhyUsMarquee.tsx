@@ -8,16 +8,19 @@ const marqueeRows = [
     text: "Up to 50% RevShare or custom CPA / Hybrid plans.",
     rotation: -3,
     direction: 1,
+    top: "20%",
   },
   {
     text: "Monthly, on-time payouts via wire, crypto, and e-wallets.",
     rotation: 1,
     direction: -1,
+    top: "45%",
   },
   {
     text: "Detailed API & post-back reporting — ZERO data lag.",
     rotation: -2,
     direction: 1,
+    top: "70%",
   },
 ];
 
@@ -25,17 +28,28 @@ const MarqueeRow = ({
   text, 
   rotation, 
   direction,
+  top,
+  isInView,
 }: { 
   text: string; 
   rotation: number; 
   direction: number;
+  top: string;
+  isInView: boolean;
 }) => {
   const items = Array(10).fill(text);
   
   return (
-    <div 
-      className="relative overflow-hidden py-2 md:py-3"
-      style={{ transform: `rotate(${rotation}deg)` }}
+    <motion.div 
+      className="absolute left-0 right-0 overflow-visible py-2 md:py-3"
+      style={{ 
+        top,
+        transform: `rotate(${rotation}deg)`,
+        transformOrigin: "right center",
+      }}
+      initial={{ opacity: 0, x: 100 }}
+      animate={isInView ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.8, delay: 0.3 }}
     >
       {/* Gold/cream background band */}
       <div className="absolute inset-0 bg-gradient-to-r from-primary via-gold-light to-primary" />
@@ -60,7 +74,7 @@ const MarqueeRow = ({
           </div>
         ))}
       </motion.div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -74,75 +88,62 @@ export const WhyUsMarquee = () => {
       <div className="absolute inset-0 bg-gradient-radial-gold opacity-10" />
       
       <div className="container mx-auto px-4 md:px-8 relative">
-        {/* Two-box layout */}
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="flex gap-4 md:gap-6"
+          className="relative"
         >
-          {/* Main content box */}
-          <div className="relative flex-1 rounded-2xl md:rounded-3xl overflow-hidden bg-card border border-border/30">
+          {/* Main card container */}
+          <div className="relative rounded-2xl md:rounded-3xl overflow-visible bg-card border border-border/30 min-h-[400px] md:min-h-[450px] lg:min-h-[500px]">
             {/* Subtle gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-muted/20 via-transparent to-muted/10 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-muted/20 via-transparent to-primary/10 pointer-events-none rounded-2xl md:rounded-3xl" />
             
-            {/* Content container */}
-            <div className="relative p-6 md:p-10 lg:p-12 min-h-[280px] md:min-h-[320px] lg:min-h-[380px]">
-              {/* WHY US Title - inside the box */}
-              <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-foreground mb-8 md:mb-12">
+            {/* WHY US Title */}
+            <div className="relative p-6 md:p-10 lg:p-12">
+              <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-foreground">
                 WHY US
               </h2>
-              
-              {/* Marquee Rows - positioned in the lower portion */}
-              <div className="space-y-3 md:space-y-4 pr-32 md:pr-48 lg:pr-64">
-                {marqueeRows.map((row, index) => (
-                  <MarqueeRow
-                    key={index}
-                    text={row.text}
-                    rotation={row.rotation}
-                    direction={row.direction}
-                  />
-                ))}
-              </div>
             </div>
 
-            {/* Star image - positioned bottom-right, extending outside the card */}
-            <motion.div
-              className="absolute bottom-0 right-4 md:right-8 lg:right-12 translate-y-1/3 z-30"
-              initial={{ opacity: 0, scale: 0, rotate: -180 }}
-              animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
-              transition={{ duration: 1, delay: 0.5, type: "spring" }}
-            >
-              <div className="relative">
-                {/* Glow effect behind star */}
-                <div className="absolute inset-0 blur-3xl bg-primary/50 scale-150" />
-                <img 
-                  src={goldStar3d} 
-                  alt="Gold star"
-                  className="w-[350px] h-[350px] md:w-[500px] md:h-[500px] lg:w-[650px] lg:h-[650px] relative z-10 object-contain"
-                  style={{
-                    filter: "drop-shadow(0 0 40px hsl(45 90% 55% / 0.7)) drop-shadow(0 0 80px hsl(45 90% 55% / 0.4))",
-                  }}
+            {/* Marquee Rows - emanating from the star */}
+            <div className="absolute inset-0 overflow-visible">
+              {marqueeRows.map((row, index) => (
+                <MarqueeRow
+                  key={index}
+                  text={row.text}
+                  rotation={row.rotation}
+                  direction={row.direction}
+                  top={row.top}
+                  isInView={isInView}
                 />
-              </div>
-            </motion.div>
+              ))}
+            </div>
 
             {/* Left fade effect */}
-            <div className="absolute left-0 top-0 bottom-0 w-12 md:w-20 bg-gradient-to-r from-card to-transparent pointer-events-none z-10" />
+            <div className="absolute left-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-r from-card to-transparent pointer-events-none z-20 rounded-l-2xl md:rounded-l-3xl" />
           </div>
 
-          {/* Decorative side box */}
+          {/* Star - positioned on the right, full height, extending outside */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="hidden md:block w-24 lg:w-32 rounded-2xl md:rounded-3xl overflow-hidden relative"
+            className="absolute top-1/2 -translate-y-1/2 -right-16 md:-right-24 lg:-right-32 z-30"
+            initial={{ opacity: 0, scale: 0, rotate: -180 }}
+            animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
+            transition={{ duration: 1.2, delay: 0.5, type: "spring", stiffness: 100 }}
           >
-            {/* Gold gradient background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-gold-light/20 to-primary/40" />
-            <div className="absolute inset-0 bg-card/80" />
-            <div className="absolute top-0 right-0 w-full h-1/2 bg-gradient-to-b from-primary/20 to-transparent" />
+            <div className="relative">
+              {/* Glow effect behind star */}
+              <div className="absolute inset-0 blur-[80px] bg-primary/60 scale-125" />
+              <img 
+                src={goldStar3d} 
+                alt="Gold star"
+                className="w-[300px] h-[300px] md:w-[450px] md:h-[450px] lg:w-[550px] lg:h-[550px] relative z-10 object-contain"
+                style={{
+                  filter: "drop-shadow(0 0 50px hsl(45 90% 55% / 0.8)) drop-shadow(0 0 100px hsl(45 90% 55% / 0.5))",
+                }}
+              />
+            </div>
           </motion.div>
         </motion.div>
       </div>

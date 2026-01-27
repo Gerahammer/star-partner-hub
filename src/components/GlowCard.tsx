@@ -25,6 +25,22 @@ export const GlowCard = ({ children, className = "", glowColor = "gold" }: GlowC
         ${className}
       `}
     >
+      {/* Subtle topographic pattern background */}
+      <div className="absolute inset-0 opacity-[0.08] pointer-events-none">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="topo-pattern" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
+              <path d="M0 80 Q50 60 100 80 T200 80" fill="none" stroke="hsl(45 90% 55%)" strokeWidth="1"/>
+              <path d="M0 100 Q50 80 100 100 T200 100" fill="none" stroke="hsl(45 90% 55%)" strokeWidth="1"/>
+              <path d="M0 120 Q50 100 100 120 T200 120" fill="none" stroke="hsl(45 90% 55%)" strokeWidth="1"/>
+              <path d="M0 140 Q50 120 100 140 T200 140" fill="none" stroke="hsl(45 90% 55%)" strokeWidth="1"/>
+              <path d="M0 160 Q50 140 100 160 T200 160" fill="none" stroke="hsl(45 90% 55%)" strokeWidth="1"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#topo-pattern)"/>
+        </svg>
+      </div>
+      
       {/* Subtle animated gradient border */}
       <div className="absolute inset-0 rounded-2xl opacity-0 hover:opacity-100 transition-opacity duration-500">
         <div className="absolute inset-[-1px] rounded-2xl" style={{ background: `conic-gradient(from 0deg, hsl(var(--primary) / 0.15), transparent, hsl(var(--primary) / 0.15))` }} />

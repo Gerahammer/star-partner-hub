@@ -81,8 +81,8 @@ export const WhyUsMarquee = () => {
           transition={{ duration: 0.8 }}
           className="flex gap-3 md:gap-4 relative justify-center"
         >
-          {/* Main content box - 80% width */}
-          <div className="relative w-[80%] rounded-2xl md:rounded-3xl overflow-hidden bg-card border border-border/30">
+          {/* Main content box - full width on mobile, 80% on desktop */}
+          <div className="relative w-full md:w-[80%] rounded-2xl md:rounded-3xl overflow-hidden bg-card border border-border/30">
             {/* Gradient overlay for depth */}
             <div className="absolute inset-0 bg-gradient-to-br from-muted/30 via-card to-muted/20 pointer-events-none" />
             
@@ -94,7 +94,7 @@ export const WhyUsMarquee = () => {
               </h2>
               
               {/* Marquee Rows Container */}
-              <div className="flex-1 flex flex-col justify-center space-y-4 sm:space-y-5 md:space-y-6 lg:space-y-8 -mx-5 sm:-mx-6 md:-mx-8 lg:-mx-10 pr-20 sm:pr-28 md:pr-40 lg:pr-52">
+              <div className="flex-1 flex flex-col justify-center space-y-4 sm:space-y-5 md:space-y-6 lg:space-y-8 -mx-5 sm:-mx-6 md:-mx-8 lg:-mx-10 pr-0 sm:pr-20 md:pr-36 lg:pr-48">
                 {marqueeRows.map((row, index) => (
                   <MarqueeRow
                     key={index}
@@ -111,14 +111,14 @@ export const WhyUsMarquee = () => {
           </div>
 
 
-          {/* Star - positioned on the right */}
+          {/* Star - hidden on mobile, visible on tablet+ */}
           <div
-            className="absolute -bottom-16 md:-bottom-24 lg:-bottom-32 right-10 sm:right-12 md:right-16 lg:right-20 z-30"
+            className="hidden sm:block absolute -bottom-16 md:-bottom-24 lg:-bottom-32 right-4 sm:right-8 md:right-16 lg:right-20 z-30"
           >
             <img 
               src={goldStar3d} 
               alt="Gold star"
-              className="w-52 h-52 sm:w-72 sm:h-72 md:w-96 md:h-96 lg:w-[550px] lg:h-[550px] object-contain"
+              className="w-48 h-48 sm:w-56 sm:h-56 md:w-80 md:h-80 lg:w-[500px] lg:h-[500px] object-contain"
             />
           </div>
         </motion.div>

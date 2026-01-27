@@ -67,6 +67,17 @@ export const Footer = () => {
               </ul>
             </div>
           ))}
+          
+          {/* Contact Section */}
+          <div className="col-span-2 md:col-span-1">
+            <h4 className="font-display text-base md:text-lg text-foreground mb-2 md:mb-4">Get In Touch</h4>
+            <p className="text-muted-foreground text-xs sm:text-sm mb-4">
+              Ready to start your partnership journey? We're here to help.
+            </p>
+            <Button variant="hero" size="sm" onClick={() => setIsContactOpen(true)}>
+              Contact Us
+            </Button>
+          </div>
         </div>
         
         {/* Bottom */}
@@ -74,14 +85,9 @@ export const Footer = () => {
           <p className="text-muted-foreground text-xs sm:text-sm text-center md:text-left">
             © {new Date().getFullYear()} Partnerstar. All rights reserved.
           </p>
-          <div className="flex items-center gap-4">
-            <p className="text-muted-foreground text-xs sm:text-sm">
-              18+ | Gamble Responsibly
-            </p>
-            <Button variant="hero" size="sm" onClick={() => setIsContactOpen(true)}>
-              Contact Us
-            </Button>
-          </div>
+          <p className="text-muted-foreground text-xs sm:text-sm">
+            18+ | Gamble Responsibly
+          </p>
         </div>
       </div>
       <ContactFormModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />

@@ -110,18 +110,6 @@ export const WhyUsMarquee = () => {
             <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-12 md:w-16 lg:w-20 bg-gradient-to-r from-card via-card/80 to-transparent pointer-events-none z-10" />
           </div>
 
-          {/* Right decorative box */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-16 sm:w-20 md:w-28 lg:w-36 rounded-2xl md:rounded-3xl overflow-hidden relative flex-shrink-0"
-          >
-            {/* Gold textured background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/40 via-gold-light/30 to-primary/50" />
-            <div className="absolute inset-0 bg-card/60" />
-            <div className="absolute top-0 right-0 w-full h-2/3 bg-gradient-to-b from-primary/30 to-transparent" />
-          </motion.div>
 
           {/* Star - positioned between the two boxes */}
           <motion.div

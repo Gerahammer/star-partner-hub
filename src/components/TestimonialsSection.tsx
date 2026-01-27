@@ -36,9 +36,10 @@ export const TestimonialsSection = () => {
   const { toast } = useToast();
 
   // On mobile show 1 item, on desktop show 3
-  const itemsPerPage = isMobile ? 1 : 3;
-  const totalSlides = Math.ceil(testimonials.length / itemsPerPage);
-  const showCarousel = testimonials.length > itemsPerPage;
+  const itemsToShow = isMobile ? 1 : 3;
+  // Move one card at a time, not the entire page
+  const maxSlide = Math.max(0, testimonials.length - itemsToShow);
+  const showCarousel = testimonials.length > itemsToShow;
 
   useEffect(() => {
     fetchTestimonials();
@@ -193,16 +194,15 @@ export const TestimonialsSection = () => {
   };
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % totalSlides);
+    setCurrentSlide((prev) => Math.min(prev + 1, maxSlide));
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+    setCurrentSlide((prev) => Math.max(prev - 1, 0));
   };
 
-  const visibleTestimonials = showCarousel
-    ? testimonials.slice(currentSlide * itemsPerPage, (currentSlide + 1) * itemsPerPage)
-    : testimonials;
+  // Show 3 cards starting from currentSlide (move 1 at a time)
+  const visibleTestimonials = testimonials.slice(currentSlide, currentSlide + itemsToShow);
 
   return (
     <section className="py-16 sm:py-20 md:py-24 px-4 bg-gradient-to-b from-background to-muted/20">
@@ -429,7 +429,7 @@ export const TestimonialsSection = () => {
             {/* Pagination dots */}
             {showCarousel && (
               <div className="flex justify-center gap-2 mt-6 md:mt-8">
-                {Array.from({ length: totalSlides }).map((_, index) => (
+                {Array.from({ length: maxSlide + 1 }).map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentSlide(index)}

@@ -6,21 +6,18 @@ import goldStar3d from "@/assets/gold-star-3d.png";
 const marqueeRows = [
   {
     text: "Up to 50% RevShare or custom CPA / Hybrid plans.",
-    rotation: -3,
+    rotation: -2,
     direction: 1,
-    top: "20%",
   },
   {
     text: "Monthly, on-time payouts via wire, crypto, and e-wallets.",
-    rotation: 1,
+    rotation: 1.5,
     direction: -1,
-    top: "45%",
   },
   {
     text: "Detailed API & post-back reporting — ZERO data lag.",
-    rotation: -2,
+    rotation: -1,
     direction: 1,
-    top: "70%",
   },
 ];
 
@@ -28,28 +25,17 @@ const MarqueeRow = ({
   text, 
   rotation, 
   direction,
-  top,
-  isInView,
 }: { 
   text: string; 
   rotation: number; 
   direction: number;
-  top: string;
-  isInView: boolean;
 }) => {
-  const items = Array(10).fill(text);
+  const items = Array(12).fill(text);
   
   return (
-    <motion.div 
-      className="absolute left-0 right-0 overflow-visible py-2 md:py-3"
-      style={{ 
-        top,
-        transform: `rotate(${rotation}deg)`,
-        transformOrigin: "right center",
-      }}
-      initial={{ opacity: 0, x: 100 }}
-      animate={isInView ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.8, delay: 0.3 }}
+    <div 
+      className="relative overflow-hidden py-2 md:py-3"
+      style={{ transform: `rotate(${rotation}deg)` }}
     >
       {/* Gold/cream background band */}
       <div className="absolute inset-0 bg-gradient-to-r from-primary via-gold-light to-primary" />
@@ -60,21 +46,21 @@ const MarqueeRow = ({
           x: direction > 0 ? ["0%", "-50%"] : ["-50%", "0%"]
         }}
         transition={{
-          duration: 20,
+          duration: 25,
           repeat: Infinity,
           ease: "linear",
         }}
       >
         {items.map((item, index) => (
           <div key={index} className="flex items-center gap-4 md:gap-8">
-            <span className="text-sm md:text-lg lg:text-xl font-bold uppercase tracking-wide text-background">
+            <span className="text-xs sm:text-sm md:text-base lg:text-lg font-bold uppercase tracking-wide text-background">
               {item}
             </span>
-            <span className="text-background text-lg md:text-xl">★</span>
+            <span className="text-background text-base md:text-lg">★</span>
           </div>
         ))}
       </motion.div>
-    </motion.div>
+    </div>
   );
 };
 
@@ -83,7 +69,7 @@ export const WhyUsMarquee = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="why-us" className="py-16 sm:py-20 md:py-28 lg:py-32 relative overflow-hidden">
+    <section id="why-us" className="py-12 sm:py-16 md:py-24 lg:py-28 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-radial-gold opacity-10" />
       
@@ -93,54 +79,66 @@ export const WhyUsMarquee = () => {
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="relative"
+          className="flex gap-3 md:gap-4 relative"
         >
-          {/* Main card container */}
-          <div className="relative rounded-2xl md:rounded-3xl overflow-visible bg-card border border-border/30 min-h-[400px] md:min-h-[450px] lg:min-h-[500px]">
-            {/* Subtle gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-muted/20 via-transparent to-primary/10 pointer-events-none rounded-2xl md:rounded-3xl" />
+          {/* Main content box */}
+          <div className="relative flex-1 rounded-2xl md:rounded-3xl overflow-hidden bg-card border border-border/30">
+            {/* Gradient overlay for depth */}
+            <div className="absolute inset-0 bg-gradient-to-br from-muted/30 via-card to-muted/20 pointer-events-none" />
             
-            {/* WHY US Title */}
-            <div className="relative p-6 md:p-10 lg:p-12">
-              <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-foreground">
+            {/* Content */}
+            <div className="relative p-5 sm:p-6 md:p-8 lg:p-10 min-h-[260px] sm:min-h-[280px] md:min-h-[320px] lg:min-h-[360px] flex flex-col">
+              {/* WHY US Title */}
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-foreground mb-6 sm:mb-8 md:mb-10 lg:mb-12">
                 WHY US
               </h2>
+              
+              {/* Marquee Rows Container */}
+              <div className="flex-1 flex flex-col justify-center space-y-4 sm:space-y-5 md:space-y-6 lg:space-y-8 -mx-5 sm:-mx-6 md:-mx-8 lg:-mx-10 pr-20 sm:pr-28 md:pr-40 lg:pr-52">
+                {marqueeRows.map((row, index) => (
+                  <MarqueeRow
+                    key={index}
+                    text={row.text}
+                    rotation={row.rotation}
+                    direction={row.direction}
+                  />
+                ))}
+              </div>
             </div>
 
-            {/* Marquee Rows - emanating from the star */}
-            <div className="absolute inset-0 overflow-visible">
-              {marqueeRows.map((row, index) => (
-                <MarqueeRow
-                  key={index}
-                  text={row.text}
-                  rotation={row.rotation}
-                  direction={row.direction}
-                  top={row.top}
-                  isInView={isInView}
-                />
-              ))}
-            </div>
-
-            {/* Left fade effect */}
-            <div className="absolute left-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-r from-card to-transparent pointer-events-none z-20 rounded-l-2xl md:rounded-l-3xl" />
+            {/* Left fade */}
+            <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-12 md:w-16 lg:w-20 bg-gradient-to-r from-card via-card/80 to-transparent pointer-events-none z-10" />
           </div>
 
-          {/* Star - positioned on the right, full height, extending outside */}
+          {/* Right decorative box */}
           <motion.div
-            className="absolute top-1/2 -translate-y-1/2 -right-16 md:-right-24 lg:-right-32 z-30"
+            initial={{ opacity: 0, x: 30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="w-16 sm:w-20 md:w-28 lg:w-36 rounded-2xl md:rounded-3xl overflow-hidden relative flex-shrink-0"
+          >
+            {/* Gold textured background */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/40 via-gold-light/30 to-primary/50" />
+            <div className="absolute inset-0 bg-card/60" />
+            <div className="absolute top-0 right-0 w-full h-2/3 bg-gradient-to-b from-primary/30 to-transparent" />
+          </motion.div>
+
+          {/* Star - positioned between the two boxes */}
+          <motion.div
+            className="absolute bottom-0 right-12 sm:right-14 md:right-20 lg:right-28 translate-y-[20%] z-30"
             initial={{ opacity: 0, scale: 0, rotate: -180 }}
             animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
-            transition={{ duration: 1.2, delay: 0.5, type: "spring", stiffness: 100 }}
+            transition={{ duration: 1, delay: 0.4, type: "spring", stiffness: 120 }}
           >
             <div className="relative">
-              {/* Glow effect behind star */}
-              <div className="absolute inset-0 blur-[80px] bg-primary/60 scale-125" />
+              {/* Glow effect */}
+              <div className="absolute inset-0 blur-[60px] bg-primary/50 scale-110" />
               <img 
                 src={goldStar3d} 
                 alt="Gold star"
-                className="w-[300px] h-[300px] md:w-[450px] md:h-[450px] lg:w-[550px] lg:h-[550px] relative z-10 object-contain"
+                className="w-32 h-32 sm:w-40 sm:h-40 md:w-56 md:h-56 lg:w-72 lg:h-72 relative z-10 object-contain"
                 style={{
-                  filter: "drop-shadow(0 0 50px hsl(45 90% 55% / 0.8)) drop-shadow(0 0 100px hsl(45 90% 55% / 0.5))",
+                  filter: "drop-shadow(0 0 40px hsl(45 90% 55% / 0.7)) drop-shadow(0 0 80px hsl(45 90% 55% / 0.4))",
                 }}
               />
             </div>

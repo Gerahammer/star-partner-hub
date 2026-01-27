@@ -127,7 +127,7 @@ export const WhyUsMarquee = () => {
             {/* Content */}
             <div className="relative p-5 sm:p-6 md:p-8 lg:p-10 min-h-[260px] sm:min-h-[280px] md:min-h-[320px] lg:min-h-[360px] flex flex-col">
               {/* WHY US Title */}
-              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-foreground mb-6 sm:mb-8 md:mb-10 lg:mb-12">
+              <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-foreground mb-6 sm:mb-8 md:mb-10 lg:mb-12">
                 WHY US
               </h2>
               

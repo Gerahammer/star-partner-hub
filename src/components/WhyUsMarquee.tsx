@@ -125,7 +125,7 @@ export const WhyUsMarquee = () => {
 
           {/* Star - positioned between the two boxes */}
           <motion.div
-            className="absolute bottom-0 right-10 sm:right-12 md:right-16 lg:right-20 translate-y-[40%] z-30"
+            className="absolute -bottom-16 md:-bottom-24 lg:-bottom-32 right-10 sm:right-12 md:right-16 lg:right-20 z-30"
             initial={{ opacity: 0, scale: 0, rotate: -180 }}
             animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
             transition={{ duration: 1, delay: 0.4, type: "spring", stiffness: 120 }}

@@ -61,10 +61,10 @@ export const Header = () => {
 
           {/* Auth Buttons */}
           <div className="hidden lg:flex items-center gap-3">
-            <Button variant="heroOutline" size="lg" asChild>
+            <Button variant="heroOutline" size="sm" asChild>
               <Link to="/auth">Log In</Link>
             </Button>
-            <Button variant="hero" size="lg" asChild>
+            <Button variant="hero" size="sm" asChild>
               <Link to="/auth">Register</Link>
             </Button>
           </div>

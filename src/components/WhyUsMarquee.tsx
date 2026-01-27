@@ -81,8 +81,8 @@ export const WhyUsMarquee = () => {
           transition={{ duration: 0.8 }}
           className="flex gap-3 md:gap-4 relative"
         >
-          {/* Main content box */}
-          <div className="relative flex-1 rounded-2xl md:rounded-3xl overflow-hidden bg-card border border-border/30">
+          {/* Main content box - 80% width */}
+          <div className="relative w-[80%] rounded-2xl md:rounded-3xl overflow-hidden bg-card border border-border/30">
             {/* Gradient overlay for depth */}
             <div className="absolute inset-0 bg-gradient-to-br from-muted/30 via-card to-muted/20 pointer-events-none" />
             

@@ -113,12 +113,12 @@ export const WhyUsMarquee = () => {
 
           {/* Star - hidden on mobile, visible on tablet+ */}
           <div
-            className="hidden md:block absolute -bottom-20 md:-bottom-28 lg:-bottom-32 -right-8 md:-right-4 lg:right-12 z-30"
+            className="hidden md:block absolute -bottom-24 md:-bottom-32 lg:-bottom-40 -right-12 md:-right-8 lg:right-8 z-30"
           >
             <img 
               src={goldStar3d} 
               alt="Gold star"
-              className="w-80 h-80 md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px] object-contain"
+              className="w-96 h-96 md:w-[480px] md:h-[480px] lg:w-[580px] lg:h-[580px] object-contain"
             />
           </div>
         </motion.div>

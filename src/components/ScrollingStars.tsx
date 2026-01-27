@@ -2,16 +2,16 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { Star } from "lucide-react";
 
 const stars = [
-  { id: 1, size: 12, left: "5%", speed: 0.3, opacity: 0.4, delay: 0 },
-  { id: 2, size: 8, left: "15%", speed: 0.5, opacity: 0.3, delay: 0.5 },
-  { id: 3, size: 10, left: "25%", speed: 0.2, opacity: 0.5, delay: 1 },
-  { id: 4, size: 6, left: "35%", speed: 0.4, opacity: 0.25, delay: 0.3 },
-  { id: 5, size: 14, left: "55%", speed: 0.35, opacity: 0.35, delay: 0.8 },
-  { id: 6, size: 8, left: "65%", speed: 0.45, opacity: 0.3, delay: 0.2 },
-  { id: 7, size: 10, left: "75%", speed: 0.25, opacity: 0.4, delay: 0.6 },
-  { id: 8, size: 12, left: "85%", speed: 0.5, opacity: 0.35, delay: 0.4 },
-  { id: 9, size: 6, left: "92%", speed: 0.3, opacity: 0.25, delay: 0.9 },
-  { id: 10, size: 8, left: "48%", speed: 0.4, opacity: 0.3, delay: 0.7 },
+  { id: 1, size: 24, left: "5%", speed: 0.3, opacity: 0.4, delay: 0 },
+  { id: 2, size: 18, left: "15%", speed: 0.5, opacity: 0.3, delay: 0.5 },
+  { id: 3, size: 20, left: "25%", speed: 0.2, opacity: 0.5, delay: 1 },
+  { id: 4, size: 14, left: "35%", speed: 0.4, opacity: 0.25, delay: 0.3 },
+  { id: 5, size: 28, left: "55%", speed: 0.35, opacity: 0.35, delay: 0.8 },
+  { id: 6, size: 16, left: "65%", speed: 0.45, opacity: 0.3, delay: 0.2 },
+  { id: 7, size: 22, left: "75%", speed: 0.25, opacity: 0.4, delay: 0.6 },
+  { id: 8, size: 24, left: "85%", speed: 0.5, opacity: 0.35, delay: 0.4 },
+  { id: 9, size: 14, left: "92%", speed: 0.3, opacity: 0.25, delay: 0.9 },
+  { id: 10, size: 18, left: "48%", speed: 0.4, opacity: 0.3, delay: 0.7 },
 ];
 
 export const ScrollingStars = () => {

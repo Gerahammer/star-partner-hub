@@ -49,8 +49,11 @@ export const ScrollingStars = () => {
           >
             <Star 
               size={star.size} 
-              className="text-primary fill-primary"
-              style={{ opacity: star.opacity }}
+              className="text-primary fill-primary drop-shadow-[0_0_8px_hsl(45_90%_55%/0.8)]"
+              style={{ 
+                opacity: star.opacity,
+                filter: `drop-shadow(0 0 ${star.size / 2}px hsl(45 90% 55% / 0.6))`,
+              }}
             />
           </motion.div>
         );

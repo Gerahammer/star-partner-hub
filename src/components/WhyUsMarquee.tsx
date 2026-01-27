@@ -125,20 +125,20 @@ export const WhyUsMarquee = () => {
 
           {/* Star - positioned between the two boxes */}
           <motion.div
-            className="absolute bottom-0 right-12 sm:right-14 md:right-20 lg:right-28 translate-y-[20%] z-30"
+            className="absolute bottom-0 right-10 sm:right-12 md:right-16 lg:right-20 translate-y-[22%] z-30"
             initial={{ opacity: 0, scale: 0, rotate: -180 }}
             animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
             transition={{ duration: 1, delay: 0.4, type: "spring", stiffness: 120 }}
           >
             <div className="relative">
               {/* Glow effect */}
-              <div className="absolute inset-0 blur-[60px] bg-primary/50 scale-110" />
+              <div className="absolute inset-0 blur-[90px] bg-primary/60 scale-125" />
               <img 
                 src={goldStar3d} 
                 alt="Gold star"
-                className="w-32 h-32 sm:w-40 sm:h-40 md:w-56 md:h-56 lg:w-72 lg:h-72 relative z-10 object-contain"
+                className="w-44 h-44 sm:w-60 sm:h-60 md:w-80 md:h-80 lg:w-[480px] lg:h-[480px] relative z-10 object-contain"
                 style={{
-                  filter: "drop-shadow(0 0 40px hsl(45 90% 55% / 0.7)) drop-shadow(0 0 80px hsl(45 90% 55% / 0.4))",
+                  filter: "drop-shadow(0 0 55px hsl(45 90% 55% / 0.8)) drop-shadow(0 0 120px hsl(45 90% 55% / 0.45))",
                 }}
               />
             </div>

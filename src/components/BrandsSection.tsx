@@ -3,6 +3,7 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Gamepad2, Users, Shield, Headphones, Star } from "lucide-react";
 import wintinoCharacter from "@/assets/wintino-character.png";
+import wintinoCharacterMobile from "@/assets/wintino-character-mobile.png";
 import { PremiumBorder } from "./PremiumBorder";
 import { DecorativeDivider } from "./DecorativeDivider";
 
@@ -94,10 +95,17 @@ export const BrandsSection = () => {
                 
                 {/* Image - Right Side with overflow */}
                 <div className="relative h-64 lg:h-auto overflow-visible order-1 lg:order-2 flex items-center justify-center lg:justify-start">
+                  {/* Mobile/Tablet image */}
+                  <img 
+                    src={wintinoCharacterMobile} 
+                    alt="Wintino Casino" 
+                    className="w-full h-full object-contain lg:hidden"
+                  />
+                  {/* Desktop image with overflow effect */}
                   <img 
                     src={wintinoCharacter} 
                     alt="Wintino Casino" 
-                    className="w-full h-full object-contain lg:absolute lg:-left-16 lg:top-1/2 lg:-translate-y-1/2 lg:w-[120%] lg:max-w-none"
+                    className="hidden lg:block lg:absolute lg:-left-16 lg:top-1/2 lg:-translate-y-1/2 lg:w-[120%] lg:max-w-none"
                   />
                   
                   {/* Star decorations on image */}

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useRef } from "react";
 import { useInView } from "framer-motion";
+import { Star } from "lucide-react";
 
 const marqueeRows = [
   {
@@ -106,7 +107,7 @@ export const WhyUsMarquee = () => {
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5 pointer-events-none" />
           
           {/* Marquee Rows */}
-          <div className="space-y-4 md:space-y-6 relative">
+          <div className="space-y-4 md:space-y-6 relative pr-24 md:pr-40 lg:pr-56">
             {marqueeRows.map((row, index) => (
               <MarqueeRow
                 key={index}
@@ -118,9 +119,35 @@ export const WhyUsMarquee = () => {
             ))}
           </div>
 
+          {/* Big decorative star on the right */}
+          <motion.div
+            className="absolute right-4 md:right-8 lg:right-12 top-1/2 -translate-y-1/2 z-20"
+            initial={{ opacity: 0, scale: 0, rotate: -180 }}
+            animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
+            transition={{ duration: 1, delay: 0.5, type: "spring" }}
+          >
+            <div className="relative">
+              {/* Glow effect behind star */}
+              <div className="absolute inset-0 blur-3xl bg-primary/40 scale-150" />
+              <Star 
+                size={120} 
+                className="w-20 h-20 md:w-32 md:h-32 lg:w-40 lg:h-40 text-primary fill-primary relative z-10"
+                style={{
+                  filter: "drop-shadow(0 0 30px hsl(45 90% 55% / 0.8)) drop-shadow(0 0 60px hsl(45 90% 55% / 0.4))",
+                }}
+              />
+              {/* Inner shine */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <Star 
+                  size={80} 
+                  className="w-12 h-12 md:w-20 md:h-20 lg:w-24 lg:h-24 text-gold-light fill-gold-light opacity-60"
+                />
+              </div>
+            </div>
+          </motion.div>
+
           {/* Side fade effects */}
           <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-card to-transparent pointer-events-none z-10" />
-          <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-card to-transparent pointer-events-none z-10" />
         </motion.div>
       </div>
     </section>

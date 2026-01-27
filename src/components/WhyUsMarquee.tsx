@@ -21,6 +21,44 @@ const marqueeRows = [
   },
 ];
 
+// Sparkle positions relative to the star
+const sparkles = [
+  { top: "15%", left: "50%", size: 8, delay: 0 },
+  { top: "30%", left: "20%", size: 6, delay: 0.3 },
+  { top: "25%", left: "75%", size: 7, delay: 0.6 },
+  { top: "45%", left: "10%", size: 5, delay: 0.9 },
+  { top: "40%", left: "85%", size: 6, delay: 0.4 },
+  { top: "55%", left: "30%", size: 8, delay: 0.7 },
+  { top: "50%", left: "65%", size: 5, delay: 0.2 },
+  { top: "70%", left: "45%", size: 7, delay: 0.5 },
+];
+
+const Sparkle = ({ top, left, size, delay }: { top: string; left: string; size: number; delay: number }) => (
+  <motion.div
+    className="absolute pointer-events-none"
+    style={{ top, left }}
+    initial={{ opacity: 0, scale: 0 }}
+    animate={{ 
+      opacity: [0, 1, 0],
+      scale: [0, 1, 0],
+    }}
+    transition={{
+      duration: 1.5,
+      delay,
+      repeat: Infinity,
+      repeatDelay: 1,
+      ease: "easeInOut",
+    }}
+  >
+    <svg width={size * 2} height={size * 2} viewBox="0 0 24 24" fill="none">
+      <path
+        d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z"
+        fill="hsl(45 90% 70%)"
+      />
+    </svg>
+  </motion.div>
+);
+
 const MarqueeRow = ({ 
   text, 
   rotation, 
@@ -111,15 +149,21 @@ export const WhyUsMarquee = () => {
           </div>
 
 
-          {/* Star - hidden on mobile, visible on tablet+ */}
+          {/* Star with sparkles - hidden on mobile, visible on tablet+ */}
           <div
             className="hidden md:block absolute -bottom-24 md:-bottom-32 lg:-bottom-40 -right-12 md:-right-8 lg:right-8 z-30"
           >
-            <img 
-              src={goldStar3d} 
-              alt="Gold star"
-              className="w-96 h-96 md:w-[480px] md:h-[480px] lg:w-[580px] lg:h-[580px] object-contain"
-            />
+            <div className="relative">
+              <img 
+                src={goldStar3d} 
+                alt="Gold star"
+                className="w-96 h-96 md:w-[480px] md:h-[480px] lg:w-[580px] lg:h-[580px] object-contain"
+              />
+              {/* Sparkles */}
+              {sparkles.map((sparkle, index) => (
+                <Sparkle key={index} {...sparkle} />
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>

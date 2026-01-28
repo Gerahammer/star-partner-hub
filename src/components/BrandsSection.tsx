@@ -23,7 +23,7 @@ export const BrandsSection = () => {
     <section id="brands" className="py-24 md:py-32 relative bg-transparent overflow-hidden">
       {/* Topo waves background */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-35"
         style={{ backgroundImage: `url(${topoWavesBg})` }}
       />
       {/* Decorative side lines */}

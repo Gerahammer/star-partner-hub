@@ -63,6 +63,13 @@
     --sidebar-accent-foreground: 0 0% 96%;
     --sidebar-border: 220 10% 24%;
     --sidebar-ring: 45 90% 55%;
+    
+    /* Light section tokens */
+    --background-light: 45 20% 96%;
+    --foreground-light: 220 15% 15%;
+    --muted-foreground-light: 220 12% 40%;
+    --card-light: 0 0% 100%;
+    --border-light: 45 20% 88%;
   }
 }
 

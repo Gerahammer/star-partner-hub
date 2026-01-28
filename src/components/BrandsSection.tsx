@@ -19,7 +19,7 @@ export const BrandsSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="brands" className="py-24 md:py-32 bg-muted/20 relative">
+    <section id="brands" className="py-24 md:py-32 relative bg-transparent">
       {/* Decorative side lines */}
       <div className="absolute left-0 top-1/4 w-px h-32 bg-gradient-to-b from-transparent via-primary/40 to-transparent hidden lg:block" />
       <div className="absolute right-0 top-1/4 w-px h-32 bg-gradient-to-b from-transparent via-primary/40 to-transparent hidden lg:block" />

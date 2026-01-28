@@ -17,7 +17,7 @@ export const TrustBadges = () => {
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
   return (
-    <section className="py-12 border-y border-border/50">
+    <section className="py-12 border-y border-border/30 bg-transparent">
       <div className="container mx-auto px-4 md:px-8">
         <motion.div
           ref={ref}

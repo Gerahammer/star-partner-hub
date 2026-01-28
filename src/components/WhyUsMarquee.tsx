@@ -108,9 +108,9 @@ export const WhyUsMarquee = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="why-us" className="py-12 sm:py-16 md:py-24 lg:py-28 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-radial-gold opacity-10" />
+    <section id="why-us" className="py-12 sm:py-16 md:py-24 lg:py-28 relative overflow-hidden bg-transparent">
+      {/* Subtle background accent */}
+      <div className="absolute inset-0 bg-gradient-radial-gold opacity-5" />
       
       <div className="container mx-auto px-4 md:px-8 relative">
         <motion.div

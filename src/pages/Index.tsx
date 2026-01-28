@@ -11,10 +11,12 @@ import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { CTASection } from "@/components/CTASection";
 import { Footer } from "@/components/Footer";
 import { ScrollingStars } from "@/components/ScrollingStars";
+import { ScrollBackground } from "@/components/ScrollBackground";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
+      <ScrollBackground />
       <ScrollingStars />
       <Header />
       <main>

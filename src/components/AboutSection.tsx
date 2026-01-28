@@ -3,6 +3,7 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Clock, Wrench, Headphones } from "lucide-react";
 import { GlowCard } from "./GlowCard";
+import topoWavesBg from "@/assets/topo-waves-bg.png";
 
 const stats = [
   {
@@ -30,7 +31,12 @@ export const AboutSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="about" className="py-24 md:py-32 relative bg-transparent">
+    <section id="about" className="py-24 md:py-32 relative bg-transparent overflow-hidden">
+      {/* Topo waves background */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
+        style={{ backgroundImage: `url(${topoWavesBg})` }}
+      />
       {/* Subtle radial accent */}
       <div className="absolute inset-0 bg-gradient-radial-gold opacity-10" />
       

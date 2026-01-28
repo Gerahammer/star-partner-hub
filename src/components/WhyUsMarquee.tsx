@@ -122,9 +122,9 @@ export const WhyUsMarquee = () => {
         >
           {/* Main content box - full width on mobile, 80% on desktop */}
           <DecorativeFrame variant="gold" className="w-full md:w-[80%]">
-            <div className="relative rounded-2xl md:rounded-3xl overflow-hidden bg-card border border-border/30">
+            <div className="relative rounded-2xl md:rounded-3xl overflow-hidden bg-transparent border border-border/30">
             {/* Gradient overlay for depth */}
-            <div className="absolute inset-0 bg-gradient-to-br from-muted/30 via-card to-muted/20 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-muted/10 via-transparent to-muted/10 pointer-events-none" />
             
             {/* Content */}
             <div className="relative p-5 sm:p-6 md:p-8 lg:p-10 min-h-[260px] sm:min-h-[280px] md:min-h-[320px] lg:min-h-[360px] flex flex-col">

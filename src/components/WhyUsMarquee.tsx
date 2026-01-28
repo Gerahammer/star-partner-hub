@@ -134,7 +134,7 @@ export const WhyUsMarquee = () => {
               </h2>
               
               {/* Marquee Rows Container */}
-              <div className="flex-1 flex flex-col justify-center space-y-4 sm:space-y-5 md:space-y-6 lg:space-y-8 -mx-5 sm:-mx-6 md:-mx-8 lg:-mx-10">
+              <div className="flex-1 flex flex-col justify-center space-y-4 sm:space-y-5 md:space-y-6 lg:space-y-8 -mx-5 sm:-mx-6 md:-mx-8 lg:-mx-10 pr-0 sm:pr-8 md:pr-16 lg:pr-24">
                 {marqueeRows.map((row, index) => (
                   <MarqueeRow
                     key={index}

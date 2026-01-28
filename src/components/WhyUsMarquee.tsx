@@ -138,7 +138,7 @@ export const WhyUsMarquee = () => {
                 {marqueeRows.map((row, index) => (
                   <div 
                     key={index} 
-                    className={index === 2 ? "md:pr-8 lg:pr-0" : ""}
+                    className={index === 2 ? "md:pr-10 lg:pr-0" : ""}
                   >
                     <MarqueeRow
                       text={row.text}

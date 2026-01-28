@@ -9,8 +9,8 @@ interface GlowCardProps {
 
 export const GlowCard = ({ children, className = "", glowColor = "gold", lightMode = false }: GlowCardProps) => {
   const glowClass = glowColor === "gold" 
-    ? "before:from-secondary/10 before:via-secondary/5 before:to-transparent hover:shadow-[0_0_30px_hsl(45_90%_55%/0.1)]" 
-    : "before:from-primary/10 before:via-primary/5 before:to-transparent hover:shadow-[0_0_30px_hsl(168_100%_45%/0.15)]";
+    ? "before:from-secondary/15 before:via-secondary/10 before:to-transparent shadow-[0_0_20px_hsl(45_90%_55%/0.08)] hover:shadow-[0_0_50px_hsl(45_90%_55%/0.25),0_0_80px_hsl(45_90%_55%/0.15)]" 
+    : "before:from-primary/15 before:via-primary/10 before:to-transparent shadow-[0_0_20px_hsl(168_100%_45%/0.08)] hover:shadow-[0_0_50px_hsl(168_100%_45%/0.2),0_0_80px_hsl(168_100%_45%/0.1)]";
 
   const lightModeClasses = lightMode 
     ? "bg-[hsl(var(--card-light))] border-[hsl(var(--border-light))] hover:border-[hsl(45_70%_70%)] hover:shadow-[0_10px_40px_hsl(45_30%_50%/0.15)]"

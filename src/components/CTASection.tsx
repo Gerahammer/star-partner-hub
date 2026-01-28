@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, MessageCircle, Star } from "lucide-react";
 import { DecorativeDivider } from "./DecorativeDivider";
 import { ContactFormModal } from "./ContactFormModal";
+import goldWavesBg from "@/assets/gold-waves-bg.png";
 
 export const CTASection = () => {
   const ref = useRef(null);
@@ -12,9 +13,14 @@ export const CTASection = () => {
   const [isContactOpen, setIsContactOpen] = useState(false);
 
   return (
-    <section className="py-24 md:py-32 relative overflow-hidden bg-transparent">
-      {/* Subtle Background Effects */}
-      <div className="absolute inset-0 bg-gradient-radial-gold opacity-10" />
+    <section className="py-24 md:py-32 relative overflow-hidden">
+      {/* Gold waves background */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-35"
+        style={{ backgroundImage: `url(${goldWavesBg})` }}
+      />
+      <div className="absolute inset-0 bg-background/60" />
+      {/* Subtle glow accents */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" />
       

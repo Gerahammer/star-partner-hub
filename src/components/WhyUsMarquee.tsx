@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { useRef } from "react";
 import { useInView } from "framer-motion";
 import goldStar3d from "@/assets/gold-star-3d.png";
-import darkTopoBg from "@/assets/dark-topo-bg.png";
 import { DecorativeFrame } from "./DecorativeFrame";
 
 const marqueeRows = [
@@ -110,11 +109,6 @@ export const WhyUsMarquee = () => {
 
   return (
     <section id="why-us" className="py-12 sm:py-16 md:py-24 lg:py-28 relative overflow-hidden bg-transparent">
-      {/* Dark topo background */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
-        style={{ backgroundImage: `url(${darkTopoBg})` }}
-      />
       {/* Subtle background accent */}
       <div className="absolute inset-0 bg-gradient-radial-gold opacity-5" />
       

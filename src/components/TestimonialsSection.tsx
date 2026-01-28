@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
+import topoWavesBg from "@/assets/topo-waves-bg.png";
 
 interface Testimonial {
   id: string;
@@ -245,8 +246,13 @@ export const TestimonialsSection = () => {
   };
 
   return (
-    <section className="py-16 sm:py-20 md:py-24 px-4 bg-transparent">
-      <div className="container mx-auto max-w-7xl">
+    <section className="py-16 sm:py-20 md:py-24 px-4 bg-transparent relative overflow-hidden">
+      {/* Topo waves background */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15"
+        style={{ backgroundImage: `url(${topoWavesBg})` }}
+      />
+      <div className="container mx-auto max-w-7xl relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

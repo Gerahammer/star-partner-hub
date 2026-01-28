@@ -5,6 +5,7 @@ import { Check, Star, Crown, Zap, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GlowCard } from "./GlowCard";
 import goldWavesBg from "@/assets/gold-waves-bg.png";
+import topoWavesBg from "@/assets/topo-waves-bg.png";
 
 const plans = [
   {
@@ -54,6 +55,11 @@ export const DealsSection = () => {
 
   return (
     <section id="deals" className="py-16 sm:py-20 md:py-28 lg:py-32 relative overflow-hidden">
+      {/* Topo waves background */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15"
+        style={{ backgroundImage: `url(${topoWavesBg})` }}
+      />
       {/* Gold waves background */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"

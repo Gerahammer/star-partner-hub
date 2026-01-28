@@ -11,8 +11,12 @@ export const DecorativeFrame = ({ children, className, variant = "gold" }: Decor
     ? "border-primary/60" 
     : "border-border/60";
 
+  const glowClasses = variant === "gold"
+    ? "shadow-[0_0_25px_hsl(45_90%_55%/0.1)] hover:shadow-[0_0_50px_hsl(45_90%_55%/0.2),0_0_80px_hsl(45_90%_55%/0.1)]"
+    : "";
+
   return (
-    <div className={cn("relative", className)}>
+    <div className={cn("relative transition-shadow duration-500", glowClasses, className)}>
       {/* Top Left Corner */}
       <div className={cn("absolute -top-1 -left-1 w-6 h-6 border-t-2 border-l-2", cornerClasses)} />
       

@@ -152,7 +152,7 @@ export const WhyUsMarquee = () => {
           </DecorativeFrame>
           {/* Star with sparkles - hidden on mobile, visible on tablet+ */}
           <div
-            className="hidden md:block absolute -bottom-16 md:-bottom-24 lg:-bottom-32 -right-4 md:right-0 lg:right-16 z-30"
+            className="hidden md:block absolute -bottom-16 md:-bottom-24 lg:-bottom-32 -right-20 md:-right-16 lg:right-0 z-30"
           >
             <div className="relative">
               <img 

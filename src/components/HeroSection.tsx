@@ -114,7 +114,7 @@ export const HeroSection = () => {
           </motion.p>
           
           <motion.div
-            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4"
+            className="flex justify-center items-center px-4"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -122,9 +122,6 @@ export const HeroSection = () => {
             <Button variant="hero" size="lg" className="group w-full sm:w-auto text-sm sm:text-base">
               Start Earning Now
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1" />
-            </Button>
-            <Button variant="heroOutline" size="lg" className="backdrop-blur-sm w-full sm:w-auto text-sm sm:text-base">
-              Learn More
             </Button>
           </motion.div>
         </div>

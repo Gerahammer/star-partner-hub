@@ -57,7 +57,7 @@ export const DealsSection = () => {
     <section id="deals" className="py-16 sm:py-20 md:py-28 lg:py-32 relative overflow-hidden">
       {/* Topo waves background */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-35"
         style={{ backgroundImage: `url(${topoWavesBg})` }}
       />
       {/* Gold waves background */}

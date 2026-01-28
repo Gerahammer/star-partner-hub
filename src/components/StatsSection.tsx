@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { DollarSign, Users, Globe, Award, Star } from "lucide-react";
+import goldWavesBg from "@/assets/gold-waves-bg.png";
 import { DecorativeFrame } from "./DecorativeFrame";
 import { DecorativeDivider } from "./DecorativeDivider";
 
@@ -49,8 +50,13 @@ export const StatsSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="py-12 md:py-20 lg:py-24 relative overflow-hidden bg-transparent">
-      {/* Removed background for scroll gradient effect */}
+    <section className="py-12 md:py-20 lg:py-24 relative overflow-hidden">
+      {/* Gold waves background */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
+        style={{ backgroundImage: `url(${goldWavesBg})` }}
+      />
+      <div className="absolute inset-0 bg-background/60" />
       
       {/* Decorative corner elements */}
       <div className="absolute top-8 left-8 w-16 h-16 border-t-2 border-l-2 border-primary/30 hidden lg:block" />

@@ -245,7 +245,7 @@ export const TestimonialsSection = () => {
   };
 
   return (
-    <section className="py-16 sm:py-20 md:py-24 px-4 bg-gradient-to-b from-background to-muted/20">
+    <section className="py-16 sm:py-20 md:py-24 px-4 bg-transparent">
       <div className="container mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

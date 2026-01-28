@@ -49,9 +49,8 @@ export const StatsSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="py-12 md:py-20 lg:py-24 relative overflow-hidden">
-      {/* Gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-muted/30 to-transparent" />
+    <section className="py-12 md:py-20 lg:py-24 relative overflow-hidden bg-transparent">
+      {/* Removed background for scroll gradient effect */}
       
       {/* Decorative corner elements */}
       <div className="absolute top-8 left-8 w-16 h-16 border-t-2 border-l-2 border-primary/30 hidden lg:block" />

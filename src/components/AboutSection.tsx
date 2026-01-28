@@ -30,9 +30,9 @@ export const AboutSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="about" className="py-24 md:py-32 section-pattern relative">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-radial-gold opacity-15" />
+    <section id="about" className="py-24 md:py-32 relative bg-transparent">
+      {/* Subtle radial accent */}
+      <div className="absolute inset-0 bg-gradient-radial-gold opacity-10" />
       
       <div className="container mx-auto px-4 md:px-8 relative">
         <motion.div

@@ -12,9 +12,9 @@ export const CTASection = () => {
   const [isContactOpen, setIsContactOpen] = useState(false);
 
   return (
-    <section className="py-24 md:py-32 relative overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-radial-gold opacity-20" />
+    <section className="py-24 md:py-32 relative overflow-hidden bg-transparent">
+      {/* Subtle Background Effects */}
+      <div className="absolute inset-0 bg-gradient-radial-gold opacity-10" />
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" />
       

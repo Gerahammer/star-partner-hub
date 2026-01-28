@@ -52,9 +52,9 @@ export const DealsSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="deals" className="py-16 sm:py-20 md:py-28 lg:py-32 section-pattern relative">
-      {/* Background accent */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[150px]" />
+    <section id="deals" className="py-16 sm:py-20 md:py-28 lg:py-32 relative bg-transparent">
+      {/* Subtle background accent */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/3 rounded-full blur-[150px]" />
       
       <div className="container mx-auto px-4 md:px-8 relative">
         <motion.div

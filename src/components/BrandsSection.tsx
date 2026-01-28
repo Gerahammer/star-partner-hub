@@ -6,6 +6,7 @@ import wintinoCharacter from "@/assets/wintino-character.png";
 import wintinoBrandMobile from "@/assets/wintino-brand-mobile.png";
 import { PremiumBorder } from "./PremiumBorder";
 import { DecorativeDivider } from "./DecorativeDivider";
+import topoWavesBg from "@/assets/topo-waves-bg.png";
 
 const brandFeatures = [
   { icon: Gamepad2, label: "5,000+", desc: "Casino games & sportsbook" },
@@ -19,7 +20,12 @@ export const BrandsSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="brands" className="py-24 md:py-32 relative bg-transparent">
+    <section id="brands" className="py-24 md:py-32 relative bg-transparent overflow-hidden">
+      {/* Topo waves background */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15"
+        style={{ backgroundImage: `url(${topoWavesBg})` }}
+      />
       {/* Decorative side lines */}
       <div className="absolute left-0 top-1/4 w-px h-32 bg-gradient-to-b from-transparent via-primary/40 to-transparent hidden lg:block" />
       <div className="absolute right-0 top-1/4 w-px h-32 bg-gradient-to-b from-transparent via-primary/40 to-transparent hidden lg:block" />

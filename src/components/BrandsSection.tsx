@@ -3,7 +3,7 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Gamepad2, Users, Shield, Headphones, Star } from "lucide-react";
 import wintinoCharacter from "@/assets/wintino-character.png";
-import wintinoCharacterMobile from "@/assets/wintino-character-mobile.png";
+import wintinoBrandMobile from "@/assets/wintino-brand-mobile.png";
 import { PremiumBorder } from "./PremiumBorder";
 import { DecorativeDivider } from "./DecorativeDivider";
 
@@ -97,7 +97,7 @@ export const BrandsSection = () => {
                 <div className="relative h-64 lg:h-auto overflow-visible order-1 lg:order-2 flex items-center justify-center lg:justify-start">
                   {/* Mobile/Tablet image */}
                   <img 
-                    src={wintinoCharacterMobile} 
+                    src={wintinoBrandMobile} 
                     alt="Wintino Casino" 
                     className="w-full h-full object-contain lg:hidden"
                   />

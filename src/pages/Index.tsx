@@ -15,8 +15,7 @@ import { ScrollBackground } from "@/components/ScrollBackground";
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
-      <ScrollBackground />
+    <div className="min-h-screen bg-background">
       <ScrollingStars />
       <Header />
       <main>

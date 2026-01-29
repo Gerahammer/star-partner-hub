@@ -111,7 +111,7 @@ export const BrandsSection = () => {
                   <img 
                     src={wintinoCharacter} 
                     alt="Wintino Casino" 
-                    className="hidden lg:block lg:absolute lg:-left-16 lg:top-1/2 lg:-translate-y-1/2 lg:w-[120%] lg:max-w-none"
+                    className="hidden lg:block lg:absolute lg:-left-16 lg:top-1/2 lg:-translate-y-1/2 lg:w-[138%] lg:max-w-none"
                   />
                   
                   {/* Star decorations on image */}

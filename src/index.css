@@ -29,8 +29,8 @@
 }
 
 @font-face {
-  font-family: 'Joti One';
-  src: url('/fonts/JotiOne-Regular.ttf') format('truetype');
+  font-family: 'Original Surfer';
+  src: url('/fonts/OriginalSurfer-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -117,7 +117,7 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Joti One', sans-serif;
+    font-family: 'Original Surfer', sans-serif;
     overflow-x: hidden;
     width: 100%;
     max-width: 100vw;

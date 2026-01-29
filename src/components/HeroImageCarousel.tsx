@@ -26,7 +26,7 @@ export const HeroImageCarousel = () => {
       <img 
         src={goldPBg} 
         alt="" 
-        className="absolute w-[70%] h-auto object-contain opacity-70 pointer-events-none"
+        className="absolute inset-0 w-full h-full object-contain opacity-70 pointer-events-none"
       />
       
       {/* Glow effect behind the image */}

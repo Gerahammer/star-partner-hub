@@ -19,6 +19,8 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
     name: "",
     email: "",
     company: "",
+    telegram: "",
+    teams: "",
     message: "",
   });
   const { toast } = useToast();
@@ -39,7 +41,7 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
         description: "We'll get back to you as soon as possible.",
       });
 
-      setFormData({ name: "", email: "", company: "", message: "" });
+      setFormData({ name: "", email: "", company: "", telegram: "", teams: "", message: "" });
       onClose();
     } catch (error) {
       console.error("Error sending message:", error);
@@ -179,6 +181,35 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
                     placeholder="Your company or website"
                     className="bg-background/50 border-border/50 focus:border-primary"
                   />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="telegram" className="text-foreground/80">
+                      Telegram Username
+                    </Label>
+                    <Input
+                      id="telegram"
+                      name="telegram"
+                      value={formData.telegram}
+                      onChange={handleChange}
+                      placeholder="@username"
+                      className="bg-background/50 border-border/50 focus:border-primary"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="teams" className="text-foreground/80">
+                      Microsoft Teams
+                    </Label>
+                    <Input
+                      id="teams"
+                      name="teams"
+                      value={formData.teams}
+                      onChange={handleChange}
+                      placeholder="Your Teams email"
+                      className="bg-background/50 border-border/50 focus:border-primary"
+                    />
+                  </div>
                 </div>
 
                 <div className="space-y-2">

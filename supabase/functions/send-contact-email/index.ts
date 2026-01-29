@@ -11,6 +11,8 @@ interface ContactRequest {
   name: string;
   email: string;
   company?: string;
+  telegram?: string;
+  teams?: string;
   message: string;
 }
 
@@ -26,7 +28,7 @@ const handler = async (req: Request): Promise<Response> => {
       throw new Error("Email service is not configured");
     }
 
-    const { name, email, company, message }: ContactRequest = await req.json();
+    const { name, email, company, telegram, teams, message }: ContactRequest = await req.json();
 
     // Validate required fields
     if (!name || !email || !message) {
@@ -60,6 +62,8 @@ const handler = async (req: Request): Promise<Response> => {
           <p><strong>Name:</strong> ${name}</p>
           <p><strong>Email:</strong> ${email}</p>
           ${company ? `<p><strong>Company/Website:</strong> ${company}</p>` : ""}
+          ${telegram ? `<p><strong>Telegram:</strong> ${telegram}</p>` : ""}
+          ${teams ? `<p><strong>Microsoft Teams:</strong> ${teams}</p>` : ""}
           <p><strong>Message:</strong></p>
           <p>${message.replace(/\n/g, "<br>")}</p>
         `,

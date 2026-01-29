@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Rubik Pixels', 'sans-serif'],
+        sans: ['Joti One', 'sans-serif'],
         display: ['Bungee', 'cursive'],
         heading: ['Bungee', 'cursive'],
         nav: ['SN Pro', 'sans-serif'],

@@ -83,7 +83,7 @@ export const HeroSection = () => {
             </motion.span>
             
             <motion.h1
-              className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6"
+              className="text-6xl md:text-7xl lg:text-8xl font-bold leading-tight mb-6 font-heading tracking-wider"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
@@ -92,7 +92,7 @@ export const HeroSection = () => {
               <span className="block text-foreground">LIKE A</span>
               <span className="block text-primary">STAR</span>
             </motion.h1>
-            
+
             <motion.p
               className="text-xl text-primary mb-10"
               initial={{ opacity: 0, y: 20 }}

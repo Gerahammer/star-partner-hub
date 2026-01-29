@@ -70,50 +70,46 @@ export const HeroSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center min-h-[70vh]">
           
           {/* Left Side - Text Content */}
-          <div className="flex flex-col justify-center text-center lg:text-left order-1 py-8 lg:py-0">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
+          <div className="flex flex-col justify-center items-center lg:items-start text-center lg:text-left order-1 py-8 lg:py-0">
+            <motion.span
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 text-sm text-foreground mb-8"
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="mb-6"
+              transition={{ duration: 0.6 }}
             >
-              <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-primary/20 to-primary/10 border border-primary/30 text-sm text-foreground backdrop-blur-sm">
-                <Sparkles className="w-4 h-4 text-primary" />
-                Premium iGaming Affiliate Program
-                <Sparkles className="w-4 h-4 text-primary" />
-              </span>
-            </motion.div>
+              <Sparkles className="w-4 h-4 text-primary" />
+              Premium iGaming Affiliate Program
+              <Sparkles className="w-4 h-4 text-primary" />
+            </motion.span>
             
             <motion.h1
-              className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1] mb-4 tracking-tight"
-              initial={{ opacity: 0, y: 50 }}
+              className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6"
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              style={{ fontStyle: 'italic' }}
             >
-              <span className="text-foreground block">BECOME</span>
-              <span className="text-foreground block">A</span>
-              <span className="text-gradient-gold block">PARTNER</span>
+              <span className="block text-foreground">BECOME</span>
+              <span className="block text-foreground">A</span>
+              <span className="block text-primary">PARTNER</span>
             </motion.h1>
             
             <motion.p
-              className="text-lg sm:text-xl text-primary mb-8"
-              initial={{ opacity: 0, y: 30 }}
+              className="text-xl text-primary mb-10"
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
             >
               Earn like a star
             </motion.p>
             
             <motion.div
-              className="flex justify-center lg:justify-start items-center"
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
             >
-              <Button variant="hero" size="lg" className="group text-base px-10 py-6 uppercase tracking-wider">
+              <Button variant="hero" size="lg" className="group uppercase tracking-wide px-8 py-6">
                 Start Earning Now
-                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
               </Button>
             </motion.div>
           </div>

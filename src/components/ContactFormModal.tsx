@@ -123,7 +123,7 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
               {/* Header */}
               <div className="p-6 pb-0 text-center">
                 <h2 className="font-display text-2xl md:text-3xl text-foreground mb-2">
-                  GET IN <span className="text-gradient-gold">TOUCH</span>
+                  GET IN <span className="text-gradient-purple">TOUCH</span>
                 </h2>
                 <div className="flex items-center justify-center gap-3 mb-4">
                   <div className="h-px w-12 bg-gradient-to-r from-transparent to-primary/60" />

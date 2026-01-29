@@ -38,7 +38,7 @@ export const AboutSection = () => {
         style={{ backgroundImage: `url(${topoWavesBg})` }}
       />
       {/* Subtle radial accent */}
-      <div className="absolute inset-0 bg-gradient-radial-gold opacity-10" />
+      <div className="absolute inset-0 bg-gradient-radial-primary opacity-10" />
       
       <div className="container mx-auto px-4 md:px-8 relative">
         <motion.div
@@ -54,7 +54,7 @@ export const AboutSection = () => {
           <h2 className="font-display text-4xl md:text-6xl lg:text-7xl text-foreground mb-6">
             WE BRING THE REAL
             <br />
-            <span className="text-gradient-gold">AFFILIATE FLOW</span>
+            <span className="text-gradient-purple">AFFILIATE FLOW</span>
           </h2>
         </motion.div>
 
@@ -71,7 +71,7 @@ export const AboutSection = () => {
                   <stat.icon className="w-7 h-7 text-primary" />
                 </div>
                 
-                <h3 className="font-display text-5xl md:text-6xl text-gradient-gold mb-2">
+                <h3 className="font-display text-5xl md:text-6xl text-gradient-purple mb-2">
                   {stat.value}
                 </h3>
                 <p className="text-foreground font-semibold text-lg mb-2">

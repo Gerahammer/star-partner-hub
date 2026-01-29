@@ -33,7 +33,7 @@ export const WhyUsSection = () => {
   return (
     <section id="why-us" className="py-16 sm:py-20 md:py-28 lg:py-32 relative overflow-hidden">
       {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-radial-gold opacity-30" />
+      <div className="absolute inset-0 bg-gradient-radial-primary opacity-30" />
       
       <div className="container mx-auto px-4 md:px-8 relative">
         <motion.div
@@ -49,7 +49,7 @@ export const WhyUsSection = () => {
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-foreground px-2">
             MAXIMIZE YOUR
             <br />
-            <span className="text-gradient-gold">EARNINGS</span>
+            <span className="text-gradient-purple">EARNINGS</span>
           </h2>
         </motion.div>
 

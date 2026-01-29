@@ -57,7 +57,7 @@ export const CTASection = () => {
           <h2 className="font-display text-4xl md:text-6xl lg:text-7xl text-foreground mb-6">
             READY TO BECOME
             <br />
-            <span className="text-gradient-gold">A STAR?</span>
+            <span className="text-gradient-purple">A STAR?</span>
           </h2>
           
           <DecorativeDivider variant="star" className="max-w-xs mx-auto mb-6" />

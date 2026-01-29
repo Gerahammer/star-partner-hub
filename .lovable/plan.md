@@ -1,19 +1,35 @@
 
-## Update Hero Slogan to Option 8
+# שינוי סמן העכבר לכוכב
 
-I'll update the Hero section with the new star-themed slogan:
+## מטרה
+להחליף את סמן העכבר הרגיל לכוכב זהב מותאם אישית בכל האתר.
 
-**New Text:**
-- Main Title: **SHINE LIKE A STAR**
-- Subtitle: **Premium Partners, Premium Rewards**
+## גישה טכנית
+נשתמש ב-CSS עם `cursor: url()` כדי להגדיר תמונה מותאמת אישית כסמן העכבר.
 
-### Changes to `src/components/HeroSection.tsx`:
+## צעדים
 
-1. **Update the main heading (lines 85-94)**:
-   - Change from "BECOME A PARTNER" to "SHINE LIKE A STAR"
-   - Format: "SHINE" / "LIKE A" / "STAR" (with STAR in gold/primary color)
+### 1. יצירת תמונת כוכב לסמן
+- נשתמש בתמונת הכוכב הקיימת (`star-icon.png`) או ניצור אייקון כוכב חדש בגודל מתאים לסמן (24x24 או 32x32 פיקסלים)
+- הסמן צריך להיות בגודל קטן כדי שיהיה נוח לשימוש
 
-2. **Update the subtitle (lines 96-103)**:
-   - Change from "Earn like a star" to "Premium Partners, Premium Rewards"
+### 2. עדכון CSS גלובלי
+עדכון קובץ `src/index.css`:
+```css
+body {
+  cursor: url('/star-cursor.png'), auto;
+}
 
-This is a simple text change that maintains the existing layout, animations, and styling.
+a, button, [role="button"] {
+  cursor: url('/star-cursor-pointer.png'), pointer;
+}
+```
+
+### 3. העתקת קובץ הכוכב לתיקיית public
+- נעתיק או ניצור תמונת כוכב מתאימה לסמן בגודל קטן
+- נוסיף גרסה נוספת עבור מצב hover (אופציונלי)
+
+## הערות
+- הסמן צריך להיות בגודל סביר (מומלץ 24-32 פיקסלים)
+- יש להגדיר fallback (`auto` או `pointer`) למקרה שהתמונה לא נטענת
+- נוודא שהסמן עובד בכל הדפדפנים

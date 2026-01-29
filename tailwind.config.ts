@@ -64,6 +64,11 @@ export default {
           light: "hsl(var(--cyan-light))",
           glow: "hsl(var(--cyan-glow))",
         },
+        purple: {
+          DEFAULT: "hsl(var(--purple))",
+          light: "hsl(var(--purple-light))",
+          dark: "hsl(var(--purple-dark))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

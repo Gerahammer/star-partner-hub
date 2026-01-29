@@ -83,18 +83,18 @@ export const HeroSection = () => {
             </motion.span>
             
             <motion.h1
-              className="text-6xl md:text-7xl lg:text-8xl font-bold leading-tight mb-6 font-heading tracking-wider"
+              className="text-7xl md:text-8xl lg:text-9xl font-bold leading-tight mb-6 font-heading tracking-wider drop-shadow-[0_0_30px_hsl(var(--primary)/0.5)]"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <span className="block text-foreground">SHINE</span>
               <span className="block text-foreground">LIKE A</span>
-              <span className="block text-primary">STAR</span>
+              <span className="block text-primary drop-shadow-[0_0_40px_hsl(var(--primary)/0.8)]">STAR</span>
             </motion.h1>
 
             <motion.p
-              className="text-xl text-primary mb-10"
+              className="text-2xl md:text-3xl text-primary font-semibold mb-10 tracking-wide"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}

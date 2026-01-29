@@ -50,8 +50,12 @@
     --primary: 45 90% 55%;
     --primary-foreground: 220 15% 8%;
 
-    --secondary: 45 90% 55%;
-    --secondary-foreground: 220 15% 8%;
+    --secondary: 270 60% 70%;
+    --secondary-foreground: 270 80% 15%;
+    
+    --purple: 270 60% 70%;
+    --purple-light: 270 70% 80%;
+    --purple-dark: 270 50% 55%;
 
     --muted: 220 12% 22%;
     --muted-foreground: 220 8% 60%;
@@ -85,6 +89,7 @@
     /* Shadows - reduced intensity */
     --shadow-gold: 0 0 30px hsl(45 90% 55% / 0.2);
     --shadow-cyan: 0 0 30px hsl(168 100% 45% / 0.25);
+    --shadow-purple: 0 0 30px hsl(270 60% 70% / 0.3);
     --shadow-card: 0 20px 60px hsl(0 0% 0% / 0.4);
 
     --sidebar-background: 220 15% 16%;
@@ -139,6 +144,11 @@
   .text-gradient-gold {
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(135deg, hsl(45 90% 60%), hsl(45 80% 50%));
+  }
+
+  .text-gradient-purple {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(270 70% 75%), hsl(270 60% 60%));
   }
 
   .text-gradient-cyan {

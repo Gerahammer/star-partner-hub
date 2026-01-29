@@ -16,6 +16,18 @@ interface ContactRequest {
   message: string;
 }
 
+// Escape HTML to prevent XSS attacks
+function escapeHtml(text: string): string {
+  const map: { [key: string]: string } = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+  return text.replace(/[&<>"']/g, (m) => map[m]);
+}
+
 const handler = async (req: Request): Promise<Response> => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -47,6 +59,14 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
+    // Sanitize all user inputs to prevent XSS
+    const safeName = escapeHtml(name);
+    const safeEmail = escapeHtml(email);
+    const safeCompany = company ? escapeHtml(company) : "";
+    const safeTelegram = telegram ? escapeHtml(telegram) : "";
+    const safeTeams = teams ? escapeHtml(teams) : "";
+    const safeMessage = escapeHtml(message);
+
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -56,16 +76,16 @@ const handler = async (req: Request): Promise<Response> => {
       body: JSON.stringify({
         from: "Partnerstar Contact <onboarding@resend.dev>",
         to: ["partners@partnerstar.com"],
-        subject: `New Partnership Inquiry from ${name}`,
+        subject: `New Partnership Inquiry from ${safeName}`,
         html: `
           <h2>New Partnership Inquiry</h2>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          ${company ? `<p><strong>Company/Website:</strong> ${company}</p>` : ""}
-          ${telegram ? `<p><strong>Telegram:</strong> ${telegram}</p>` : ""}
-          ${teams ? `<p><strong>Microsoft Teams:</strong> ${teams}</p>` : ""}
+          <p><strong>Name:</strong> ${safeName}</p>
+          <p><strong>Email:</strong> ${safeEmail}</p>
+          ${safeCompany ? `<p><strong>Company/Website:</strong> ${safeCompany}</p>` : ""}
+          ${safeTelegram ? `<p><strong>Telegram:</strong> ${safeTelegram}</p>` : ""}
+          ${safeTeams ? `<p><strong>Microsoft Teams:</strong> ${safeTeams}</p>` : ""}
           <p><strong>Message:</strong></p>
-          <p>${message.replace(/\n/g, "<br>")}</p>
+          <p>${safeMessage.replace(/\n/g, "<br>")}</p>
         `,
         reply_to: email,
       }),

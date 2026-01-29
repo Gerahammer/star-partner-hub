@@ -88,9 +88,9 @@ export const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <span className="block text-foreground">BECOME</span>
-              <span className="block text-foreground">A</span>
-              <span className="block text-primary">PARTNER</span>
+              <span className="block text-foreground">SHINE</span>
+              <span className="block text-foreground">LIKE A</span>
+              <span className="block text-primary">STAR</span>
             </motion.h1>
             
             <motion.p
@@ -99,7 +99,7 @@ export const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              Earn like a star
+              Premium Partners, Premium Rewards
             </motion.p>
             
             <motion.div

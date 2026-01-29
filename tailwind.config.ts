@@ -18,6 +18,7 @@ export default {
         display: ['Bungee', 'cursive'],
         heading: ['Bungee', 'cursive'],
         nav: ['SN Pro', 'sans-serif'],
+        script: ['Dancing Script', 'cursive'],
       },
       colors: {
         border: "hsl(var(--border))",

@@ -92,7 +92,7 @@ const MarqueeRow = ({
       >
         {items.map((item, index) => (
           <div key={index} className="flex items-center gap-4 md:gap-8">
-            <span className="text-xs sm:text-sm md:text-base lg:text-lg font-bold uppercase tracking-wide text-background">
+            <span className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold tracking-wide text-background font-script">
               {item}
             </span>
             <span className="text-background text-base md:text-lg">★</span>

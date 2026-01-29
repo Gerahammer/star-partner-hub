@@ -14,7 +14,7 @@ export const HeroImageCarousel = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 4000);
+    }, 6000);
 
     return () => clearInterval(interval);
   }, []);
@@ -35,25 +35,9 @@ export const HeroImageCarousel = () => {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 1.1 }}
-          transition={{ duration: 1, ease: "easeInOut" }}
+          transition={{ duration: 1.5, ease: "easeInOut" }}
         />
       </AnimatePresence>
-
-      {/* Carousel indicators */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-        {images.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentIndex(index)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              index === currentIndex 
-                ? "bg-primary w-6" 
-                : "bg-primary/30 hover:bg-primary/50"
-            }`}
-            aria-label={`Go to image ${index + 1}`}
-          />
-        ))}
-      </div>
     </div>
   );
 };

@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Space Grotesk', 'sans-serif'],
+        sans: ['Rubik Glitch', 'sans-serif'],
         display: ['Bungee', 'cursive'],
         heading: ['Bungee', 'cursive'],
         nav: ['SN Pro', 'sans-serif'],

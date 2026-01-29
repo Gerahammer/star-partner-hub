@@ -67,7 +67,7 @@ export const HeroSection = () => {
       
       {/* Content - Split Layout */}
       <div className="relative container mx-auto px-4 md:px-8 pt-24 pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[70vh]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-4 items-center min-h-[70vh]">
           
           {/* Left Side - Image Carousel */}
           <motion.div
@@ -80,12 +80,12 @@ export const HeroSection = () => {
           </motion.div>
           
           {/* Right Side - Text Content */}
-          <div className="flex flex-col justify-center text-center lg:text-right order-1 lg:order-2 py-8 lg:py-0">
+          <div className="flex flex-col justify-center text-center lg:text-right order-1 lg:order-2 py-8 lg:py-0 lg:pl-4">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="mb-6"
+              className="mb-6 flex justify-center lg:justify-end"
             >
               <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-primary/20 to-primary/10 border border-primary/30 text-sm text-foreground backdrop-blur-sm">
                 <Sparkles className="w-4 h-4 text-primary" />
@@ -95,15 +95,15 @@ export const HeroSection = () => {
             </motion.div>
             
             <motion.h1
-              className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl leading-[0.9] mb-6"
+              className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-[0.9] mb-6"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <span className="text-foreground">BECOME A</span>
+              <span className="text-foreground">BECOME</span>
               <br />
+              <span className="text-foreground">A </span>
               <span className="text-gradient-gold">PARTNER</span>
-              <span className="text-foreground">STAR</span>
             </motion.h1>
             
             {/* Decorative divider under title */}
@@ -119,7 +119,7 @@ export const HeroSection = () => {
             </motion.div>
             
             <motion.p
-              className="text-lg sm:text-xl md:text-2xl text-muted-foreground mb-10 max-w-lg ml-auto lg:mr-0"
+              className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 max-w-md mx-auto lg:mx-0 lg:ml-auto"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}

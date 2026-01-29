@@ -3,10 +3,11 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Star, Sparkles } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 import { FloatingParticles } from "./FloatingParticles";
+import { HeroImageCarousel } from "./HeroImageCarousel";
 
 export const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -64,68 +65,81 @@ export const HeroSection = () => {
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
       />
       
-      {/* Content */}
+      {/* Content - Split Layout */}
       <div className="relative container mx-auto px-4 md:px-8 pt-24 pb-16">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[70vh]">
+          
+          {/* Left Side - Image Carousel */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            className="relative h-[400px] md:h-[500px] lg:h-[600px] order-2 lg:order-1"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1 }}
           >
-            <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-primary/20 to-primary/10 border border-primary/30 text-sm text-foreground mb-8 backdrop-blur-sm">
-              <Sparkles className="w-4 h-4 text-primary" />
-              Premium iGaming Affiliate Program
-              <Sparkles className="w-4 h-4 text-primary" />
-            </span>
+            <HeroImageCarousel />
           </motion.div>
           
-          <motion.h1
-            className="font-display text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl leading-none mb-4 md:mb-6 px-2"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <span className="text-foreground">BECOME A</span>
-            <br />
-            <span className="text-gradient-gold">PARTNER</span>
-            <span className="text-foreground">STAR</span>
-          </motion.h1>
-          
-          {/* Decorative divider under title */}
-          <motion.div 
-            className="flex items-center justify-center gap-3 mb-6 md:mb-8"
-            initial={{ opacity: 0, scaleX: 0 }}
-            animate={{ opacity: 1, scaleX: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            <div className="h-px w-12 md:w-20 bg-gradient-to-r from-transparent to-primary/60" />
-            <Star className="w-3 h-3 text-primary fill-primary" />
-            <div className="h-px w-12 md:w-20 bg-gradient-to-l from-transparent to-primary/60" />
-          </motion.div>
-          
-          <motion.p
-            className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground mb-8 md:mb-10 max-w-2xl mx-auto px-4"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            Earn like a star with industry-leading commission rates 
-            and premium iGaming brands
-          </motion.p>
-          
-          <motion.div
-            className="flex justify-center items-center px-4"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            <Button variant="hero" size="lg" className="group w-full sm:w-auto text-sm sm:text-base">
-              Start Earning Now
-              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1" />
-            </Button>
-          </motion.div>
+          {/* Right Side - Text Content */}
+          <div className="text-center lg:text-right order-1 lg:order-2">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-primary/20 to-primary/10 border border-primary/30 text-sm text-foreground mb-8 backdrop-blur-sm">
+                <Sparkles className="w-4 h-4 text-primary" />
+                Premium iGaming Affiliate Program
+                <Sparkles className="w-4 h-4 text-primary" />
+              </span>
+            </motion.div>
+            
+            <motion.h1
+              className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-none mb-4 md:mb-6"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <span className="text-foreground">BECOME A</span>
+              <br />
+              <span className="text-gradient-gold">PARTNER</span>
+              <span className="text-foreground">STAR</span>
+            </motion.h1>
+            
+            {/* Decorative divider under title */}
+            <motion.div 
+              className="flex items-center justify-center lg:justify-end gap-3 mb-6 md:mb-8"
+              initial={{ opacity: 0, scaleX: 0 }}
+              animate={{ opacity: 1, scaleX: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              <div className="h-px w-12 md:w-20 bg-gradient-to-r from-transparent to-primary/60" />
+              <Star className="w-3 h-3 text-primary fill-primary" />
+              <div className="h-px w-12 md:w-20 bg-gradient-to-l from-transparent to-primary/60" />
+            </motion.div>
+            
+            <motion.p
+              className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground mb-8 md:mb-10 max-w-xl ml-auto"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              Earn like a star with industry-leading commission rates 
+              and premium iGaming brands
+            </motion.p>
+            
+            <motion.div
+              className="flex justify-center lg:justify-end items-center"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              <Button variant="hero" size="lg" className="group text-sm sm:text-base">
+                Start Earning Now
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1" />
+              </Button>
+            </motion.div>
+          </div>
         </div>
-        
       </div>
     </section>
   );

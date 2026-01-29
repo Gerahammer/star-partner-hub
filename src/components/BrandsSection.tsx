@@ -46,7 +46,7 @@ export const BrandsSection = () => {
           <h2 className="font-display text-4xl md:text-6xl lg:text-7xl text-foreground mb-6">
             PARTNER WITH
             <br />
-            <span className="text-gradient-gold">PREMIUM BRANDS</span>
+            <span className="text-gradient-purple">PREMIUM BRANDS</span>
           </h2>
           <DecorativeDivider variant="star" className="max-w-xs mx-auto" />
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mt-4">
@@ -70,7 +70,7 @@ export const BrandsSection = () => {
                   <div className="absolute top-4 left-4 w-8 h-8 border-t border-l border-primary/30" />
                   <div className="absolute bottom-4 right-4 w-8 h-8 border-b border-r border-primary/30 hidden lg:block" />
                   
-                  <h3 className="font-display text-5xl md:text-6xl text-gradient-gold mb-4">
+                  <h3 className="font-display text-5xl md:text-6xl text-gradient-purple mb-4">
                     WINTINO
                   </h3>
                   <p className="text-xl text-muted-foreground mb-8">

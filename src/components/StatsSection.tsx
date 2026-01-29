@@ -39,7 +39,7 @@ const AnimatedCounter = ({ value, suffix }: { value: number; suffix: string }) =
   }, [isInView, value]);
 
   return (
-    <span ref={ref} className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gradient-gold">
+    <span ref={ref} className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gradient-purple">
       {count.toLocaleString()}{suffix}
     </span>
   );

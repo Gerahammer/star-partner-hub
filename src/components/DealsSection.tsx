@@ -81,7 +81,7 @@ export const DealsSection = () => {
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-foreground mb-4 md:mb-6 px-2">
             DEALS THAT
             <br />
-            <span className="text-gradient-gold">MAKE YOU RICH</span>
+            <span className="text-gradient-purple">MAKE YOU RICH</span>
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
             Choose the commission model that works best for your traffic
@@ -109,7 +109,7 @@ export const DealsSection = () => {
                   </h3>
                 </div>
                 
-                <p className="font-display text-3xl sm:text-4xl md:text-5xl text-gradient-gold mb-3 md:mb-4">
+                <p className="font-display text-3xl sm:text-4xl md:text-5xl text-gradient-purple mb-3 md:mb-4">
                   {plan.highlight}
                 </p>
                 <p className="text-muted-foreground mb-6 md:mb-8 text-sm sm:text-base">

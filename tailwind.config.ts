@@ -16,6 +16,7 @@ export default {
       fontFamily: {
         sans: ['Space Grotesk', 'sans-serif'],
         display: ['Bungee', 'cursive'],
+        heading: ['Bungee', 'cursive'],
       },
       colors: {
         border: "hsl(var(--border))",

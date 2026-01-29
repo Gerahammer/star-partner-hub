@@ -70,7 +70,7 @@ export const HeroSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center min-h-[70vh]">
           
           {/* Left Side - Text Content */}
-          <div className="flex flex-col justify-center items-center text-center order-2 lg:order-2 py-8 lg:py-0">
+          <div className="flex flex-col justify-center items-center text-center order-1 lg:order-2 py-8 lg:py-0">
             <motion.span
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 text-sm text-foreground mb-8"
               initial={{ opacity: 0, y: 20 }}
@@ -116,7 +116,7 @@ export const HeroSection = () => {
           
           {/* Right Side - Image Carousel */}
           <motion.div
-            className="relative h-[400px] md:h-[500px] lg:h-[600px] order-1 lg:order-1"
+            className="relative h-[280px] md:h-[350px] lg:h-[600px] order-2 lg:order-1"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1 }}

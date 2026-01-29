@@ -5,6 +5,7 @@ import heroPlanet1 from "@/assets/hero-planet-1.png";
 import heroPlanet2 from "@/assets/hero-planet-2.png";
 import heroPlanet3 from "@/assets/hero-planet-3.png";
 import heroPlanet4 from "@/assets/hero-planet-4.png";
+import goldPBg from "@/assets/gold-p-bg.png";
 
 const images = [heroPlanet1, heroPlanet2, heroPlanet3, heroPlanet4];
 
@@ -21,6 +22,13 @@ export const HeroImageCarousel = () => {
 
   return (
     <div className="relative w-full h-full flex items-center justify-center">
+      {/* Static P background image */}
+      <img 
+        src={goldPBg} 
+        alt="" 
+        className="absolute w-[70%] h-auto object-contain opacity-70 pointer-events-none"
+      />
+      
       {/* Glow effect behind the image */}
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="w-[80%] h-[80%] bg-primary/20 rounded-full blur-[100px]" />

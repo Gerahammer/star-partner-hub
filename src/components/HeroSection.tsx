@@ -67,25 +67,15 @@ export const HeroSection = () => {
       
       {/* Content - Split Layout */}
       <div className="relative container mx-auto px-4 md:px-8 pt-24 pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-4 items-center min-h-[70vh]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center min-h-[70vh]">
           
-          {/* Left Side - Image Carousel */}
-          <motion.div
-            className="relative h-[400px] md:h-[500px] lg:h-[600px] order-2 lg:order-1"
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1 }}
-          >
-            <HeroImageCarousel />
-          </motion.div>
-          
-          {/* Right Side - Text Content */}
-          <div className="flex flex-col justify-center text-center lg:text-right order-1 lg:order-2 py-8 lg:py-0 lg:pl-4">
+          {/* Left Side - Text Content */}
+          <div className="flex flex-col justify-center text-center lg:text-left order-1 py-8 lg:py-0">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="mb-6 flex justify-center lg:justify-end"
+              className="mb-6"
             >
               <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-primary/20 to-primary/10 border border-primary/30 text-sm text-foreground backdrop-blur-sm">
                 <Sparkles className="w-4 h-4 text-primary" />
@@ -95,51 +85,47 @@ export const HeroSection = () => {
             </motion.div>
             
             <motion.h1
-              className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-[0.9] mb-6"
+              className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.95] mb-6"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <span className="text-foreground">BECOME</span>
-              <br />
-              <span className="text-foreground">A </span>
-              <span className="text-gradient-gold">PARTNER</span>
+              <span className="text-foreground block">BECOME</span>
+              <span className="text-foreground block">A</span>
+              <span className="text-gradient-gold block">PARTNER</span>
             </motion.h1>
             
-            {/* Decorative divider under title */}
-            <motion.div 
-              className="flex items-center justify-center lg:justify-end gap-3 mb-6"
-              initial={{ opacity: 0, scaleX: 0 }}
-              animate={{ opacity: 1, scaleX: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-            >
-              <div className="h-px w-16 md:w-24 bg-gradient-to-r from-transparent to-primary/60" />
-              <Star className="w-4 h-4 text-primary fill-primary" />
-              <div className="h-px w-16 md:w-24 bg-gradient-to-l from-transparent to-primary/60" />
-            </motion.div>
-            
             <motion.p
-              className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 max-w-md mx-auto lg:mx-0 lg:ml-auto"
+              className="text-lg sm:text-xl md:text-2xl text-primary mb-8"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              Earn like a star with industry-leading commission rates 
-              and premium iGaming brands
+              Earn like a star
             </motion.p>
             
             <motion.div
-              className="flex justify-center lg:justify-end items-center"
+              className="flex justify-center lg:justify-start items-center"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              <Button variant="hero" size="lg" className="group text-base px-8 py-6">
+              <Button variant="hero" size="lg" className="group text-base px-10 py-6 uppercase tracking-wider">
                 Start Earning Now
                 <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
               </Button>
             </motion.div>
           </div>
+          
+          {/* Right Side - Image Carousel */}
+          <motion.div
+            className="relative h-[400px] md:h-[500px] lg:h-[600px] order-2"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1 }}
+          >
+            <HeroImageCarousel />
+          </motion.div>
         </div>
       </div>
     </section>

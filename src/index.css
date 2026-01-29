@@ -47,8 +47,8 @@
     --popover: 220 15% 16%;
     --popover-foreground: 0 0% 96%;
 
-    --primary: 45 90% 55%;
-    --primary-foreground: 220 15% 8%;
+    --primary: 270 60% 70%;
+    --primary-foreground: 270 80% 15%;
 
     --secondary: 270 60% 70%;
     --secondary-foreground: 270 80% 15%;
@@ -60,15 +60,15 @@
     --muted: 220 12% 22%;
     --muted-foreground: 220 8% 60%;
 
-    --accent: 45 90% 55%;
-    --accent-foreground: 220 15% 8%;
+    --accent: 270 60% 70%;
+    --accent-foreground: 270 80% 15%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 220 10% 24%;
     --input: 220 10% 24%;
-    --ring: 45 90% 55%;
+    --ring: 270 60% 70%;
 
     --radius: 0.75rem;
 
@@ -76,30 +76,31 @@
     --gold: 45 90% 55%;
     --gold-light: 45 90% 65%;
     --gold-dark: 45 90% 40%;
+    --primary-glow: 270 70% 75%;
     --cyan: 168 100% 45%;
     --cyan-light: 168 85% 55%;
     --cyan-glow: 168 100% 50%;
     
     /* Gradients */
-    --gradient-gold: linear-gradient(135deg, hsl(45 90% 55%), hsl(45 80% 45%));
+    --gradient-primary: linear-gradient(135deg, hsl(270 60% 70%), hsl(270 50% 55%));
     --gradient-cyan: linear-gradient(135deg, hsl(168 100% 50%), hsl(168 80% 40%));
     --gradient-dark: linear-gradient(180deg, hsl(220 15% 14%) 0%, hsl(220 15% 10%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(220 15% 18%) 0%, hsl(220 15% 14%) 100%);
     
     /* Shadows - reduced intensity */
-    --shadow-gold: 0 0 30px hsl(45 90% 55% / 0.2);
+    --shadow-primary: 0 0 30px hsl(270 60% 70% / 0.25);
     --shadow-cyan: 0 0 30px hsl(168 100% 45% / 0.25);
     --shadow-purple: 0 0 30px hsl(270 60% 70% / 0.3);
     --shadow-card: 0 20px 60px hsl(0 0% 0% / 0.4);
 
     --sidebar-background: 220 15% 16%;
     --sidebar-foreground: 0 0% 96%;
-    --sidebar-primary: 45 90% 55%;
-    --sidebar-primary-foreground: 220 15% 8%;
+    --sidebar-primary: 270 60% 70%;
+    --sidebar-primary-foreground: 270 80% 15%;
     --sidebar-accent: 220 12% 22%;
     --sidebar-accent-foreground: 0 0% 96%;
     --sidebar-border: 220 10% 24%;
-    --sidebar-ring: 45 90% 55%;
+    --sidebar-ring: 270 60% 70%;
     
     /* Light section tokens */
     --background-light: 45 20% 96%;
@@ -141,6 +142,11 @@
 }
 
 @layer components {
+  .text-gradient-primary {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(270 70% 75%), hsl(270 60% 60%));
+  }
+
   .text-gradient-gold {
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(135deg, hsl(45 90% 60%), hsl(45 80% 50%));
@@ -156,12 +162,20 @@
     background-image: linear-gradient(135deg, hsl(168 100% 50%), hsl(168 80% 40%));
   }
 
+  .glow-primary {
+    box-shadow: 0 0 30px hsl(270 60% 70% / 0.25);
+  }
+
   .glow-gold {
     box-shadow: 0 0 30px hsl(45 90% 55% / 0.2);
   }
 
   .glow-cyan {
     box-shadow: 0 0 25px hsl(168 100% 45% / 0.2);
+  }
+
+  .bg-gradient-radial-primary {
+    background: radial-gradient(ellipse at center, hsl(270 60% 70% / 0.08) 0%, transparent 70%);
   }
 
   .bg-gradient-radial-gold {
@@ -181,7 +195,7 @@
   .card-premium::before {
     content: '';
     @apply absolute inset-0 opacity-0 transition-opacity duration-500;
-    background: linear-gradient(145deg, hsl(45 90% 55% / 0.03) 0%, transparent 50%);
+    background: linear-gradient(145deg, hsl(270 60% 70% / 0.03) 0%, transparent 50%);
   }
 
   .card-premium:hover::before {
@@ -190,8 +204,8 @@
 
   .section-pattern {
     background-image: 
-      radial-gradient(circle at 20% 50%, hsl(45 90% 55% / 0.02) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, hsl(45 90% 55% / 0.015) 0%, transparent 40%);
+      radial-gradient(circle at 20% 50%, hsl(270 60% 70% / 0.02) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, hsl(270 60% 70% / 0.015) 0%, transparent 40%);
   }
 }
 
@@ -219,7 +233,7 @@
   }
 
   @keyframes glow {
-    from { filter: drop-shadow(0 0 15px hsl(45 90% 55% / 0.3)); }
-    to { filter: drop-shadow(0 0 25px hsl(45 90% 55% / 0.4)); }
+    from { filter: drop-shadow(0 0 15px hsl(270 60% 70% / 0.3)); }
+    to { filter: drop-shadow(0 0 25px hsl(270 60% 70% / 0.4)); }
   }
 }

@@ -46,13 +46,12 @@ export const Header = () => {
             />
           </a>
 
-          {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="text-foreground/80 hover:text-primary transition-colors duration-300 font-medium uppercase tracking-wide text-sm"
+                className="text-foreground/80 hover:text-primary transition-colors duration-300 font-medium uppercase tracking-wide text-sm font-nav"
               >
                 {link.name}
               </a>
@@ -92,7 +91,7 @@ export const Header = () => {
                   <a
                     key={link.name}
                     href={link.href}
-                    className="text-foreground/80 hover:text-primary transition-colors duration-300 font-medium uppercase tracking-wide text-lg py-2"
+                    className="text-foreground/80 hover:text-primary transition-colors duration-300 font-medium uppercase tracking-wide text-lg py-2 font-nav"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {link.name}

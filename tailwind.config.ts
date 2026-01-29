@@ -17,6 +17,7 @@ export default {
         sans: ['Space Grotesk', 'sans-serif'],
         display: ['Bungee', 'cursive'],
         heading: ['Bungee', 'cursive'],
+        nav: ['SN Pro', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

@@ -8,6 +8,7 @@ import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
+import StarCursorTrail from "./components/StarCursorTrail";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <StarCursorTrail />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />

@@ -31,11 +31,11 @@ export const HeroImageCarousel = () => {
           key={currentIndex}
           src={images[currentIndex]}
           alt="Celestial body"
-          className="relative z-10 w-[85%] max-w-[600px] h-auto object-contain drop-shadow-[0_0_80px_hsl(45_90%_55%/0.5)]"
-          initial={{ opacity: 0, scale: 0.9 }}
+          className="relative z-10 w-[95%] max-w-[700px] h-auto object-contain drop-shadow-[0_0_100px_hsl(45_90%_55%/0.6)]"
+          initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 1.1 }}
-          transition={{ duration: 1.5, ease: "easeInOut" }}
+          exit={{ opacity: 0, scale: 1.3 }}
+          transition={{ duration: 1.8, ease: "easeInOut" }}
         />
       </AnimatePresence>
     </div>

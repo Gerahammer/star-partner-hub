@@ -1,103 +1,19 @@
 
-# תוכנית: מעבר הדרגתי של רקע האתר משחור לשמנת
+## Update Hero Slogan to Option 8
 
-## סקירה
-במקום לחלק את האתר לסקציות בהירות וכהות נפרדות (שהרגיש לא טבעי), ניצור אפקט הדרגתי וחלק שבו הרקע משתנה בצורה רציפה מצבע כהה למעלה לצבע שמנת/קרם בתחתית הדף, בהתאם למיקום הגלילה.
+I'll update the Hero section with the new star-themed slogan:
 
-## איך זה יעבוד
+**New Text:**
+- Main Title: **SHINE LIKE A STAR**
+- Subtitle: **Premium Partners, Premium Rewards**
 
-```text
-┌─────────────────────────────────────┐
-│  Hero Section     ████ שחור מלא    │
-├─────────────────────────────────────┤
-│  Marquee          ████ שחור        │
-├─────────────────────────────────────┤
-│  Stats            ▓▓▓▓ אפור כהה    │
-├─────────────────────────────────────┤
-│  About            ▓▓░░ אפור בינוני │
-├─────────────────────────────────────┤
-│  Trust Badges     ░░░░ אפור בהיר   │
-├─────────────────────────────────────┤
-│  Brands           ░░░░ קרם עדין    │
-├─────────────────────────────────────┤
-│  Why Us           ░░░░ קרם         │
-├─────────────────────────────────────┤
-│  Deals            ░░░░ שמנת        │
-├─────────────────────────────────────┤
-│  Testimonials     ░░░░ שמנת בהיר   │
-├─────────────────────────────────────┤
-│  CTA              ░░░░ שמנת        │
-├─────────────────────────────────────┤
-│  Footer           ████ חזרה לכהה   │
-└─────────────────────────────────────┘
-```
+### Changes to `src/components/HeroSection.tsx`:
 
-## גישה טכנית
+1. **Update the main heading (lines 85-94)**:
+   - Change from "BECOME A PARTNER" to "SHINE LIKE A STAR"
+   - Format: "SHINE" / "LIKE A" / "STAR" (with STAR in gold/primary color)
 
-### יצירת קומפוננטה חדשה: `ScrollBackground.tsx`
-קומפוננטה שמאזינה לאירוע גלילה ומחשבת את צבע הרקע בהתאם למיקום:
+2. **Update the subtitle (lines 96-103)**:
+   - Change from "Earn like a star" to "Premium Partners, Premium Rewards"
 
-- שימוש ב-`useScroll` מ-Framer Motion לקבלת מיקום הגלילה
-- שימוש ב-`useTransform` להמרת מיקום הגלילה לערכי צבע
-- אינטרפולציה בין שחור (`hsl(220 15% 12%)`) לשמנת (`hsl(45 20% 92%)`)
-- הצבע משתנה בצורה חלקה ורציפה
-
-### שילוב ב-`Index.tsx`
-הוספת הקומפוננטה כרקע קבוע (fixed) מאחורי כל התוכן
-
-### התאמות לקומפוננטות קיימות
-כל הסקציות יצטרכו רקע שקוף (`bg-transparent`) במקום הרקעים הכהים הנוכחיים, כך שהרקע ההדרגתי יהיה גלוי דרכן
-
-### טיפול מיוחד בטקסט ובאלמנטים
-- בחלק העליון (שחור): טקסט לבן/בהיר ישאר כמו שהוא
-- בחלק התחתון (שמנת): הטקסט יצטרך להפוך לכהה לקריאות טובה
-- נשתמש בחישוב scroll-based כדי להחליף classes של צבעי טקסט
-
-## פרטים טכניים
-
-### קובץ חדש: `src/components/ScrollBackground.tsx`
-```tsx
-// שימוש ב-framer-motion hooks
-const { scrollYProgress } = useScroll();
-
-// אינטרפולציה מ-0 ל-1 לצבעים
-const backgroundColor = useTransform(
-  scrollYProgress,
-  [0, 0.7, 1],
-  [
-    "hsl(220, 15%, 12%)",   // שחור בהתחלה
-    "hsl(45, 20%, 88%)",    // שמנת באמצע-סוף
-    "hsl(220, 15%, 12%)"    // חזרה לשחור בפוטר
-  ]
-);
-```
-
-### עדכון `src/pages/Index.tsx`
-- הוספת `<ScrollBackground />` כאלמנט ראשון
-- עטיפת התוכן ב-container עם z-index גבוה יותר
-
-### עדכון סקציות
-כל סקציה תקבל `bg-transparent` או רקע חלקי שקוף
-
-## קבצים לעדכון
-
-| קובץ | שינוי |
-|------|-------|
-| `src/components/ScrollBackground.tsx` | יצירת קומפוננטה חדשה |
-| `src/pages/Index.tsx` | שילוב הרקע ההדרגתי |
-| `src/components/StatsSection.tsx` | רקע שקוף |
-| `src/components/AboutSection.tsx` | רקע שקוף |
-| `src/components/TrustBadges.tsx` | רקע שקוף |
-| `src/components/BrandsSection.tsx` | רקע שקוף |
-| `src/components/WhyUsMarquee.tsx` | רקע שקוף |
-| `src/components/DealsSection.tsx` | רקע שקוף |
-| `src/components/TestimonialsSection.tsx` | רקע שקוף |
-| `src/components/CTASection.tsx` | רקע שקוף |
-| `src/components/Footer.tsx` | רקע כהה (לשמור על הזהות) |
-
-## יתרונות הגישה הזו
-
-- **טבעי**: המעבר חלק ורציף, לא קופץ בין צבעים
-- **אלגנטי**: יוצר תחושה של מסע ויזואלי בדף
-- **ביצועים**: שימוש ב-CSS transforms שלא גורם ל-repaints יקרים
-- **שמירה על האסתטיקה**: הזהב והאלמנטים הדקורטיביים נשארים
+This is a simple text change that maintains the existing layout, animations, and styling.

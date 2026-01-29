@@ -15,7 +15,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Space Grotesk', 'sans-serif'],
-        display: ['Rubik Storm', 'cursive'],
+        display: ['Bungee', 'cursive'],
       },
       colors: {
         border: "hsl(var(--border))",

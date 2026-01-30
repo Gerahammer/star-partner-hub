@@ -21,7 +21,7 @@ export const HeroImageCarousel = () => {
   }, []);
 
   return (
-    <div className="relative w-full h-full flex items-end justify-center pl-8 md:pl-16">
+    <div className="relative w-full h-full flex items-end justify-center">
       {/* Static P background image */}
       <img 
         src={goldPBg} 
@@ -29,20 +29,22 @@ export const HeroImageCarousel = () => {
         className="absolute inset-0 w-full h-full object-contain opacity-40 pointer-events-none"
       />
       
-      
-      <AnimatePresence mode="wait">
-        <motion.img
-          key={currentIndex}
-          src={images[currentIndex]}
-          alt="Celestial body"
-          className="relative z-10 w-[95%] max-w-[700px] h-auto object-contain"
-          style={{ marginLeft: '2rem' }}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 1.3 }}
-          transition={{ duration: 1.8, ease: "easeInOut" }}
-        />
-      </AnimatePresence>
+
+      {/* Shift coins as a whole so it won't fight Framer Motion transforms */}
+      <div className="relative z-10 translate-x-[3cm]">
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={currentIndex}
+            src={images[currentIndex]}
+            alt="Celestial body"
+            className="w-[95%] max-w-[700px] h-auto object-contain"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.3 }}
+            transition={{ duration: 1.8, ease: "easeInOut" }}
+          />
+        </AnimatePresence>
+      </div>
     </div>
   );
 };

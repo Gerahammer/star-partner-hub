@@ -31,17 +31,21 @@ export const HeroImageCarousel = () => {
       
 
       {/* Position coins to the right edge (between P and text) */}
-      <div className="absolute -right-8 md:-right-12 lg:-right-16 bottom-0 z-10">
+      <div 
+        className="absolute -right-8 md:-right-12 lg:-right-16 bottom-0 z-10"
+        style={{ perspective: "1000px" }}
+      >
         <AnimatePresence mode="wait">
           <motion.img
             key={currentIndex}
             src={images[currentIndex]}
             alt="Celestial body"
             className="w-[220px] md:w-[280px] lg:w-[350px] h-auto object-contain"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
+            initial={{ rotateY: 90, opacity: 0 }}
+            animate={{ rotateY: 0, opacity: 1 }}
+            exit={{ rotateY: -90, opacity: 0 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            style={{ transformStyle: "preserve-3d" }}
           />
         </AnimatePresence>
       </div>

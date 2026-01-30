@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useRef } from "react";
 import { useInView } from "framer-motion";
-import goldStar3d from "@/assets/gold-star-3d.webp";
+import whyusCoin from "@/assets/whyus-coin.webp";
 import { DecorativeFrame } from "./DecorativeFrame";
 
 const marqueeRows = [
@@ -160,8 +160,8 @@ export const WhyUsMarquee = () => {
           >
             <div className="relative">
               <img 
-                src={goldStar3d} 
-                alt="Gold star"
+                src={whyusCoin} 
+                alt="Why Us coin"
                 className="w-96 h-96 md:w-[480px] md:h-[480px] lg:w-[580px] lg:h-[580px] object-contain"
               />
               {/* Sparkles */}

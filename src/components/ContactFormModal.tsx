@@ -121,11 +121,11 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
               </button>
 
               {/* Header */}
-              <div className="p-4 md:p-6 pb-0 text-center">
+              <div className="pt-8 px-4 md:px-6 pb-2 text-center">
                 <h2 className="font-display text-xl md:text-3xl text-foreground mb-2">
                   GET IN <span className="text-gradient-purple">TOUCH</span>
                 </h2>
-                <div className="flex items-center justify-center gap-3 mb-4">
+                <div className="flex items-center justify-center gap-3 mb-2">
                   <div className="h-px w-12 bg-gradient-to-r from-transparent to-primary/60" />
                   <Star className="w-3 h-3 text-primary fill-primary" />
                   <div className="h-px w-12 bg-gradient-to-l from-transparent to-primary/60" />

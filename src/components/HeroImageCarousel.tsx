@@ -40,7 +40,7 @@ export const HeroImageCarousel = () => {
             key={currentIndex}
             src={images[currentIndex]}
             alt="Celestial body"
-            className="w-[280px] md:w-[350px] lg:w-[450px] h-auto object-contain"
+            className="w-[220px] md:w-[280px] lg:w-[350px] h-auto object-contain"
             initial={{ rotateY: 90, opacity: 0 }}
             animate={{ rotateY: 0, opacity: 1 }}
             exit={{ rotateY: -90, opacity: 0 }}

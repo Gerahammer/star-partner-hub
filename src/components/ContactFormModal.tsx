@@ -137,7 +137,8 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
 
               {/* Form */}
               <form onSubmit={handleSubmit} className="p-4 md:p-6 space-y-3 md:space-y-4">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4">
+                {/* Row 1: Name, Email */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4">
                   <div className="space-y-1 md:space-y-2">
                     <Label htmlFor="name" className="text-foreground/80 text-sm">
                       Name *
@@ -167,6 +168,10 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
                       className="bg-background/50 border-border/50 focus:border-primary"
                     />
                   </div>
+                </div>
+
+                {/* Row 2: Company, Telegram, Teams */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4">
                   <div className="space-y-1 md:space-y-2">
                     <Label htmlFor="company" className="text-foreground/80 text-sm">
                       Company / Website
@@ -180,9 +185,6 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
                       className="bg-background/50 border-border/50 focus:border-primary"
                     />
                   </div>
-                </div>
-
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
                   <div className="space-y-1 md:space-y-2">
                     <Label htmlFor="telegram" className="text-foreground/80 text-sm">
                       Telegram Username
@@ -209,21 +211,23 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
                       className="bg-background/50 border-border/50 focus:border-primary"
                     />
                   </div>
-                  <div className="space-y-1 md:space-y-2 col-span-2">
-                    <Label htmlFor="message" className="text-foreground/80 text-sm">
-                      Message *
-                    </Label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                      placeholder="Tell us about your goals and how we can help..."
-                      rows={2}
-                      className="bg-background/50 border-border/50 focus:border-primary resize-none text-sm"
-                    />
-                  </div>
+                </div>
+
+                {/* Row 3: Message - full width */}
+                <div className="space-y-1 md:space-y-2">
+                  <Label htmlFor="message" className="text-foreground/80 text-sm">
+                    Message *
+                  </Label>
+                  <Textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    placeholder="Tell us about your goals and how we can help..."
+                    rows={3}
+                    className="bg-background/50 border-border/50 focus:border-primary resize-none text-sm"
+                  />
                 </div>
 
                 <Button

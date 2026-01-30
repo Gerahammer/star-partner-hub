@@ -31,7 +31,7 @@ export const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50">
       <div className="absolute inset-0 bg-background/50 backdrop-blur-md border-b border-border/50" />
       
-      <nav className="relative container mx-auto px-4 md:px-8 py-4">
+      <nav className="relative container mx-auto px-4 md:px-8 py-2">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <a 
@@ -42,7 +42,7 @@ export const Header = () => {
             <img 
               src={partnerstarLogo} 
               alt="Partnerstar" 
-              className="h-16 md:h-20 w-auto transition-transform duration-300 group-hover:scale-105" 
+              className="h-12 md:h-16 w-auto transition-transform duration-300 group-hover:scale-105" 
             />
           </a>
 

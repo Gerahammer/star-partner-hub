@@ -53,17 +53,6 @@ export const HeroSection = () => {
       <div className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-32 bg-gradient-to-b from-transparent via-primary/50 to-transparent hidden md:block" />
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-px h-32 bg-gradient-to-b from-transparent via-primary/50 to-transparent hidden md:block" />
       
-      {/* Subtle Glow Orbs */}
-      <motion.div
-        className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[150px]"
-        animate={{ scale: [1, 1.1, 1], opacity: [0.15, 0.25, 0.15] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/5 rounded-full blur-[150px]"
-        animate={{ scale: [1.1, 1, 1.1], opacity: [0.1, 0.2, 0.1] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-      />
       
       {/* Content - Split Layout */}
       <div className="relative container mx-auto px-4 md:px-8 pt-24 pb-16">
@@ -83,14 +72,14 @@ export const HeroSection = () => {
             </motion.span>
             
             <motion.h1
-              className="text-7xl md:text-8xl lg:text-9xl font-bold leading-tight mb-6 font-heading tracking-wider drop-shadow-[0_0_30px_hsl(var(--primary)/0.5)]"
+              className="text-7xl md:text-8xl lg:text-9xl font-bold leading-tight mb-6 font-heading tracking-wider"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <span className="block text-foreground">SHINE</span>
               <span className="block text-foreground">LIKE A</span>
-              <span className="block text-primary drop-shadow-[0_0_40px_hsl(var(--primary)/0.8)]">STAR</span>
+              <span className="block text-primary">STAR</span>
             </motion.h1>
 
             <motion.p

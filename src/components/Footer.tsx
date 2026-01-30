@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ContactFormModal } from "./ContactFormModal";
-import partnerstarLogo from "@/assets/partnerstar-logo.png";
+import partnerstarLogo from "@/assets/partnerstar-logo-v2.png";
 
 const footerLinks = [
   {

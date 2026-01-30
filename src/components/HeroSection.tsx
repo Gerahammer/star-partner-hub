@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Star, Sparkles } from "lucide-react";
-import heroBg from "@/assets/hero-bg.jpg";
+import heroBg from "@/assets/hero-bg-v2.jpg";
 import { FloatingParticles } from "./FloatingParticles";
 import { HeroImageCarousel } from "./HeroImageCarousel";
 

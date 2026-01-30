@@ -4,7 +4,7 @@ import coin1 from "@/assets/coin-1.webp";
 import coin2 from "@/assets/coin-2.webp";
 import coin3 from "@/assets/coin-3.webp";
 import coin4 from "@/assets/coin-4.webp";
-import goldPBg from "@/assets/gold-p-bg-v4.png";
+import goldPBg from "@/assets/gold-p-bg-v5.png";
 
 const images = [coin1, coin2, coin3, coin4];
 

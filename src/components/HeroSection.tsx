@@ -69,7 +69,17 @@ export const HeroSection = () => {
             <h1 className="text-7xl md:text-8xl lg:text-9xl font-bold leading-tight mb-6 font-heading tracking-wider">
               <span className="block text-foreground">SHINE</span>
               <span className="block text-foreground">LIKE A</span>
-              <span className="block text-primary">STAR</span>
+              <motion.span 
+                className="block text-primary"
+                animate={{ 
+                  textShadow: [
+                    "0 0 20px hsl(38 65% 50% / 0.3)",
+                    "0 0 40px hsl(38 65% 50% / 0.6)",
+                    "0 0 20px hsl(38 65% 50% / 0.3)"
+                  ]
+                }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              >STAR</motion.span>
             </h1>
 
             <p className="text-2xl md:text-3xl text-primary font-semibold mb-10 tracking-wide">

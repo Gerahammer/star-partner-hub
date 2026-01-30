@@ -87,7 +87,7 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
             onClick={onClose}
           >
             <div 
-              className="relative w-full max-w-lg lg:max-w-4xl bg-card border border-border rounded-lg shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto"
+              className="relative w-full max-w-lg lg:max-w-3xl bg-card border border-border rounded-lg shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Decorative corner frames */}

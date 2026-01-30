@@ -60,58 +60,34 @@ export const HeroSection = () => {
           
           {/* Left Side - Text Content */}
           <div className="flex flex-col justify-center items-center text-center order-1 lg:order-2 py-8 lg:py-0">
-            <motion.span
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 text-sm text-foreground mb-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 text-sm text-foreground mb-8">
               <Sparkles className="w-4 h-4 text-primary" />
               Premium iGaming Affiliate Program
               <Sparkles className="w-4 h-4 text-primary" />
-            </motion.span>
+            </span>
             
-            <motion.h1
-              className="text-7xl md:text-8xl lg:text-9xl font-bold leading-tight mb-6 font-heading tracking-wider"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
+            <h1 className="text-7xl md:text-8xl lg:text-9xl font-bold leading-tight mb-6 font-heading tracking-wider">
               <span className="block text-foreground">SHINE</span>
               <span className="block text-foreground">LIKE A</span>
               <span className="block text-primary">STAR</span>
-            </motion.h1>
+            </h1>
 
-            <motion.p
-              className="text-2xl md:text-3xl text-primary font-semibold mb-10 tracking-wide"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
+            <p className="text-2xl md:text-3xl text-primary font-semibold mb-10 tracking-wide">
               Premium Partners, Premium Rewards
-            </motion.p>
+            </p>
             
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-            >
+            <div>
               <Button variant="hero" size="lg" className="group uppercase tracking-wide px-8 py-6">
                 Start Earning Now
                 <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
               </Button>
-            </motion.div>
+            </div>
           </div>
           
           {/* Right Side - Image Carousel */}
-          <motion.div
-            className="relative h-[280px] md:h-[350px] lg:h-[600px] order-2 lg:order-1"
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1 }}
-          >
+          <div className="relative h-[280px] md:h-[350px] lg:h-[600px] order-2 lg:order-1">
             <HeroImageCarousel />
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

@@ -64,10 +64,10 @@ export default {
           light: "hsl(var(--cyan-light))",
           glow: "hsl(var(--cyan-glow))",
         },
-        purple: {
-          DEFAULT: "hsl(var(--purple))",
-          light: "hsl(var(--purple-light))",
-          dark: "hsl(var(--purple-dark))",
+        sand: {
+          DEFAULT: "hsl(var(--sand))",
+          light: "hsl(var(--sand-light))",
+          dark: "hsl(var(--sand-dark))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",

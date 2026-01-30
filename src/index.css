@@ -47,60 +47,60 @@
     --popover: 220 15% 16%;
     --popover-foreground: 0 0% 96%;
 
-    --primary: 270 60% 70%;
-    --primary-foreground: 270 80% 15%;
+    --primary: 38 65% 50%;
+    --primary-foreground: 38 80% 10%;
 
-    --secondary: 270 60% 70%;
-    --secondary-foreground: 270 80% 15%;
+    --secondary: 32 55% 45%;
+    --secondary-foreground: 32 80% 10%;
     
-    --purple: 270 60% 70%;
-    --purple-light: 270 70% 80%;
-    --purple-dark: 270 50% 55%;
+    --sand: 38 65% 50%;
+    --sand-light: 42 70% 60%;
+    --sand-dark: 34 60% 38%;
 
     --muted: 220 12% 22%;
     --muted-foreground: 220 8% 60%;
 
-    --accent: 270 60% 70%;
-    --accent-foreground: 270 80% 15%;
+    --accent: 38 65% 50%;
+    --accent-foreground: 38 80% 10%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 220 10% 24%;
     --input: 220 10% 24%;
-    --ring: 270 60% 70%;
+    --ring: 38 65% 50%;
 
     --radius: 0.75rem;
 
     /* Custom tokens */
-    --gold: 45 90% 55%;
-    --gold-light: 45 90% 65%;
-    --gold-dark: 45 90% 40%;
-    --primary-glow: 270 70% 75%;
+    --gold: 38 65% 50%;
+    --gold-light: 42 70% 60%;
+    --gold-dark: 34 60% 38%;
+    --primary-glow: 42 70% 55%;
     --cyan: 168 100% 45%;
     --cyan-light: 168 85% 55%;
     --cyan-glow: 168 100% 50%;
     
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(270 60% 70%), hsl(270 50% 55%));
+    --gradient-primary: linear-gradient(135deg, hsl(42 70% 55%), hsl(34 60% 42%));
     --gradient-cyan: linear-gradient(135deg, hsl(168 100% 50%), hsl(168 80% 40%));
     --gradient-dark: linear-gradient(180deg, hsl(220 15% 14%) 0%, hsl(220 15% 10%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(220 15% 18%) 0%, hsl(220 15% 14%) 100%);
     
     /* Shadows - reduced intensity */
-    --shadow-primary: 0 0 30px hsl(270 60% 70% / 0.25);
+    --shadow-primary: 0 0 30px hsl(38 65% 50% / 0.25);
     --shadow-cyan: 0 0 30px hsl(168 100% 45% / 0.25);
-    --shadow-purple: 0 0 30px hsl(270 60% 70% / 0.3);
+    --shadow-gold: 0 0 30px hsl(38 65% 50% / 0.3);
     --shadow-card: 0 20px 60px hsl(0 0% 0% / 0.4);
 
     --sidebar-background: 220 15% 16%;
     --sidebar-foreground: 0 0% 96%;
-    --sidebar-primary: 270 60% 70%;
-    --sidebar-primary-foreground: 270 80% 15%;
+    --sidebar-primary: 38 65% 50%;
+    --sidebar-primary-foreground: 38 80% 10%;
     --sidebar-accent: 220 12% 22%;
     --sidebar-accent-foreground: 0 0% 96%;
     --sidebar-border: 220 10% 24%;
-    --sidebar-ring: 270 60% 70%;
+    --sidebar-ring: 38 65% 50%;
     
     /* Light section tokens */
     --background-light: 45 20% 96%;
@@ -144,17 +144,17 @@
 @layer components {
   .text-gradient-primary {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(270 70% 75%), hsl(270 60% 60%));
+    background-image: linear-gradient(135deg, hsl(42 70% 60%), hsl(34 60% 45%));
   }
 
   .text-gradient-gold {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(45 90% 60%), hsl(45 80% 50%));
+    background-image: linear-gradient(135deg, hsl(42 70% 60%), hsl(34 60% 45%));
   }
 
-  .text-gradient-purple {
+  .text-gradient-sand {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(270 70% 75%), hsl(270 60% 60%));
+    background-image: linear-gradient(135deg, hsl(42 70% 60%), hsl(34 60% 45%));
   }
 
   .text-gradient-cyan {
@@ -163,11 +163,11 @@
   }
 
   .glow-primary {
-    box-shadow: 0 0 30px hsl(270 60% 70% / 0.25);
+    box-shadow: 0 0 30px hsl(38 65% 50% / 0.25);
   }
 
   .glow-gold {
-    box-shadow: 0 0 30px hsl(45 90% 55% / 0.2);
+    box-shadow: 0 0 30px hsl(38 65% 50% / 0.25);
   }
 
   .glow-cyan {
@@ -175,11 +175,11 @@
   }
 
   .bg-gradient-radial-primary {
-    background: radial-gradient(ellipse at center, hsl(270 60% 70% / 0.08) 0%, transparent 70%);
+    background: radial-gradient(ellipse at center, hsl(38 65% 50% / 0.08) 0%, transparent 70%);
   }
 
   .bg-gradient-radial-gold {
-    background: radial-gradient(ellipse at center, hsl(45 90% 55% / 0.08) 0%, transparent 70%);
+    background: radial-gradient(ellipse at center, hsl(38 65% 50% / 0.08) 0%, transparent 70%);
   }
 
   .bg-gradient-radial-cyan {
@@ -195,7 +195,7 @@
   .card-premium::before {
     content: '';
     @apply absolute inset-0 opacity-0 transition-opacity duration-500;
-    background: linear-gradient(145deg, hsl(270 60% 70% / 0.03) 0%, transparent 50%);
+    background: linear-gradient(145deg, hsl(38 65% 50% / 0.03) 0%, transparent 50%);
   }
 
   .card-premium:hover::before {
@@ -204,8 +204,8 @@
 
   .section-pattern {
     background-image: 
-      radial-gradient(circle at 20% 50%, hsl(270 60% 70% / 0.02) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, hsl(270 60% 70% / 0.015) 0%, transparent 40%);
+      radial-gradient(circle at 20% 50%, hsl(38 65% 50% / 0.02) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, hsl(38 65% 50% / 0.015) 0%, transparent 40%);
   }
 }
 
@@ -233,7 +233,7 @@
   }
 
   @keyframes glow {
-    from { filter: drop-shadow(0 0 15px hsl(270 60% 70% / 0.3)); }
-    to { filter: drop-shadow(0 0 25px hsl(270 60% 70% / 0.4)); }
+    from { filter: drop-shadow(0 0 15px hsl(38 65% 50% / 0.3)); }
+    to { filter: drop-shadow(0 0 25px hsl(38 65% 50% / 0.4)); }
   }
 }

@@ -14,8 +14,8 @@ export const HeroSection = () => {
         style={{ backgroundImage: `url(${heroBg})` }}
       />
       
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background" />
+      {/* Overlay - stronger to dim geometric shapes */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/70 to-background" />
       
       {/* Floating Particles */}
       <FloatingParticles />

@@ -31,7 +31,7 @@ export const HeroImageCarousel = () => {
       
 
       {/* Position coins to the right edge (between P and text) */}
-      <div className="absolute right-0 bottom-0 z-10">
+      <div className="absolute -right-8 md:-right-12 lg:-right-16 bottom-0 z-10">
         <AnimatePresence mode="wait">
           <motion.img
             key={currentIndex}

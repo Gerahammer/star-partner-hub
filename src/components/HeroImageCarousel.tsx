@@ -29,17 +29,13 @@ export const HeroImageCarousel = () => {
         className="absolute inset-0 w-full h-full object-contain opacity-40 pointer-events-none"
       />
       
-      {/* Glow effect behind the image */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-[80%] h-[80%] bg-primary/20 rounded-full blur-[100px]" />
-      </div>
       
       <AnimatePresence mode="wait">
         <motion.img
           key={currentIndex}
           src={images[currentIndex]}
           alt="Celestial body"
-          className="relative z-10 w-[95%] max-w-[700px] h-auto object-contain drop-shadow-[0_0_100px_hsl(45_90%_55%/0.6)]"
+          className="relative z-10 w-[95%] max-w-[700px] h-auto object-contain"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 1.3 }}

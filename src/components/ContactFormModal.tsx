@@ -183,7 +183,7 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                <div className="grid grid-cols-2 gap-3 md:gap-4">
                   <div className="space-y-1 md:space-y-2">
                     <Label htmlFor="telegram" className="text-foreground/80 text-sm">
                       Telegram Username

@@ -33,16 +33,16 @@ export const Header = () => {
       
       <nav className="relative container mx-auto px-4 md:px-8 py-2">
         <div className="flex items-center justify-between">
-          {/* Logo */}
+          {/* Logo - overflows below header */}
           <a 
             href="/" 
             onClick={handleLogoClick}
-            className="flex items-center gap-2 group cursor-pointer"
+            className="flex items-center gap-2 group cursor-pointer relative z-10"
           >
             <img 
               src={partnerstarLogo} 
               alt="Partnerstar" 
-              className="h-12 md:h-16 w-auto transition-transform duration-300 group-hover:scale-105" 
+              className="h-16 md:h-24 w-auto transition-transform duration-300 group-hover:scale-105 -mb-4 md:-mb-8" 
             />
           </a>
 

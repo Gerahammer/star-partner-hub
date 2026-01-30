@@ -137,12 +137,10 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
 
               {/* Form */}
               <form onSubmit={handleSubmit} className="p-4 md:p-6 space-y-3 md:space-y-4">
-                {/* Row 1: Name, Email */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4">
-                  <div className="space-y-1 md:space-y-2">
-                    <Label htmlFor="name" className="text-foreground/80 text-sm">
-                      Name *
-                    </Label>
+                {/* Row 1: Name, Email - equal width */}
+                <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-3 md:gap-4">
+                  <div className="space-y-1">
+                    <Label htmlFor="name" className="text-foreground/80 text-sm">Name *</Label>
                     <Input
                       id="name"
                       name="name"
@@ -153,10 +151,8 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
                       className="bg-background/50 border-border/50 focus:border-primary"
                     />
                   </div>
-                  <div className="space-y-1 md:space-y-2">
-                    <Label htmlFor="email" className="text-foreground/80 text-sm">
-                      Email *
-                    </Label>
+                  <div className="space-y-1">
+                    <Label htmlFor="email" className="text-foreground/80 text-sm">Email *</Label>
                     <Input
                       id="email"
                       name="email"

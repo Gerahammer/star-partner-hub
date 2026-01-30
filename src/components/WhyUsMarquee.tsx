@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useRef } from "react";
 import { useInView } from "framer-motion";
-import goldStar3d from "@/assets/gold-star-3d.png";
+import goldStar3d from "@/assets/gold-star-3d.webp";
 import { DecorativeFrame } from "./DecorativeFrame";
 
 const marqueeRows = [

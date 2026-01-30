@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-import heroPlanet1 from "@/assets/hero-planet-1.png";
-import heroPlanet2 from "@/assets/hero-planet-2.png";
-import heroPlanet3 from "@/assets/hero-planet-3.png";
-import heroPlanet4 from "@/assets/hero-planet-4.png";
+import coin1 from "@/assets/coin-1.webp";
+import coin2 from "@/assets/coin-2.webp";
+import coin3 from "@/assets/coin-3.webp";
+import coin4 from "@/assets/coin-4.webp";
 import goldPBg from "@/assets/gold-p-bg.png";
 
-const images = [heroPlanet1, heroPlanet2, heroPlanet3, heroPlanet4];
+const images = [coin1, coin2, coin3, coin4];
 
 export const HeroImageCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);

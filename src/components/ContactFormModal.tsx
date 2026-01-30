@@ -83,11 +83,11 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", duration: 0.5 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center p-2 md:p-4"
             onClick={onClose}
           >
             <div 
-              className="relative w-full max-w-lg bg-card border border-border rounded-lg shadow-2xl overflow-hidden"
+              className="relative w-full max-w-lg bg-card border border-border rounded-lg shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Decorative corner frames */}
@@ -121,8 +121,8 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
               </button>
 
               {/* Header */}
-              <div className="p-6 pb-0 text-center">
-                <h2 className="font-display text-2xl md:text-3xl text-foreground mb-2">
+              <div className="p-4 md:p-6 pb-0 text-center">
+                <h2 className="font-display text-xl md:text-3xl text-foreground mb-2">
                   GET IN <span className="text-gradient-purple">TOUCH</span>
                 </h2>
                 <div className="flex items-center justify-center gap-3 mb-4">
@@ -136,10 +136,10 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
               </div>
 
               {/* Form */}
-              <form onSubmit={handleSubmit} className="p-6 space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="name" className="text-foreground/80">
+              <form onSubmit={handleSubmit} className="p-4 md:p-6 space-y-3 md:space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                  <div className="space-y-1 md:space-y-2">
+                    <Label htmlFor="name" className="text-foreground/80 text-sm">
                       Name *
                     </Label>
                     <Input
@@ -152,8 +152,8 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
                       className="bg-background/50 border-border/50 focus:border-primary"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email" className="text-foreground/80">
+                  <div className="space-y-1 md:space-y-2">
+                    <Label htmlFor="email" className="text-foreground/80 text-sm">
                       Email *
                     </Label>
                     <Input
@@ -169,8 +169,8 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="company" className="text-foreground/80">
+                <div className="space-y-1 md:space-y-2">
+                  <Label htmlFor="company" className="text-foreground/80 text-sm">
                     Company / Website
                   </Label>
                   <Input
@@ -183,9 +183,9 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="telegram" className="text-foreground/80">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                  <div className="space-y-1 md:space-y-2">
+                    <Label htmlFor="telegram" className="text-foreground/80 text-sm">
                       Telegram Username
                     </Label>
                     <Input
@@ -197,8 +197,8 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
                       className="bg-background/50 border-border/50 focus:border-primary"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="teams" className="text-foreground/80">
+                  <div className="space-y-1 md:space-y-2">
+                    <Label htmlFor="teams" className="text-foreground/80 text-sm">
                       Microsoft Teams
                     </Label>
                     <Input
@@ -212,8 +212,8 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="message" className="text-foreground/80">
+                <div className="space-y-1 md:space-y-2">
+                  <Label htmlFor="message" className="text-foreground/80 text-sm">
                     Message *
                   </Label>
                   <Textarea
@@ -223,8 +223,8 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
                     onChange={handleChange}
                     required
                     placeholder="Tell us about your goals and how we can help..."
-                    rows={4}
-                    className="bg-background/50 border-border/50 focus:border-primary resize-none"
+                    rows={3}
+                    className="bg-background/50 border-border/50 focus:border-primary resize-none text-sm"
                   />
                 </div>
 

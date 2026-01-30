@@ -30,8 +30,8 @@ export const HeroImageCarousel = () => {
       />
       
 
-      {/* Shift coins as a whole so it won't fight Framer Motion transforms */}
-      <div className="relative z-10 translate-x-[3cm]">
+      {/* Shift coins without transforms (Framer Motion updates transforms frequently) */}
+      <div className="relative z-10 w-full flex justify-end pr-[3cm]">
         <AnimatePresence mode="wait">
           <motion.img
             key={currentIndex}

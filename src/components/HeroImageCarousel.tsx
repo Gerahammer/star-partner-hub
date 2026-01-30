@@ -30,14 +30,14 @@ export const HeroImageCarousel = () => {
       />
       
 
-      {/* Shift coins without transforms (Framer Motion updates transforms frequently) */}
-      <div className="relative z-10 w-full flex justify-end pr-[3cm]">
+      {/* Position coins to the right edge (between P and text) */}
+      <div className="absolute right-0 bottom-0 z-10">
         <AnimatePresence mode="wait">
           <motion.img
             key={currentIndex}
             src={images[currentIndex]}
             alt="Celestial body"
-            className="w-[95%] max-w-[700px] h-auto object-contain"
+            className="w-[280px] md:w-[350px] lg:w-[450px] h-auto object-contain"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.3 }}

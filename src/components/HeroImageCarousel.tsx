@@ -21,7 +21,7 @@ export const HeroImageCarousel = () => {
   }, []);
 
   return (
-    <div className="relative w-full h-full flex items-center justify-center">
+    <div className="relative w-full h-full flex items-end justify-center">
       {/* Static P background image */}
       <img 
         src={goldPBg} 

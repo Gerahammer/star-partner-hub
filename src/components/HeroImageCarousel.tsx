@@ -26,7 +26,7 @@ export const HeroImageCarousel = () => {
       <img 
         src={goldPBg} 
         alt="" 
-        className="absolute -top-16 -bottom-16 -right-8 left-8 w-[calc(100%+8rem)] h-[calc(100%+8rem)] object-contain opacity-40 pointer-events-none"
+        className="absolute -top-16 -bottom-16 -right-8 left-8 w-[calc(100%+8rem)] h-[calc(100%+8rem)] object-contain opacity-50 pointer-events-none"
       />
       
 

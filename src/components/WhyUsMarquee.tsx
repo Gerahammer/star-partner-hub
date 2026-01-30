@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useRef } from "react";
 import { useInView } from "framer-motion";
-import whyusCoin from "@/assets/whyus-coin.webp";
+import whyusCoin from "@/assets/whyus-coin-new.webp";
 import { DecorativeFrame } from "./DecorativeFrame";
 
 const marqueeRows = [

@@ -33,7 +33,7 @@ export const Footer = () => {
           {/* Logo & Description */}
           <div className="col-span-2 md:col-span-1">
             <Link to="/" className="mb-3 md:mb-4 block">
-              <img src={partnerstarLogo} alt="Partnerstar" className="h-8 md:h-10 w-auto" />
+              <img src={partnerstarLogo} alt="Partnerstar" className="h-12 md:h-16 w-auto" />
             </Link>
             <p className="text-muted-foreground text-xs sm:text-sm">
               Premium iGaming affiliate program with industry-leading commission rates and dedicated support.

@@ -342,6 +342,39 @@
   }
 }
 
+/* Light mode button overrides - Purple instead of gold */
+@layer components {
+  :is(.light) .btn-themed {
+    background-color: hsl(270 50% 45%) !important;
+    color: white !important;
+    box-shadow: 0 4px 20px hsl(270 50% 45% / 0.25) !important;
+  }
+  
+  :is(.light) .btn-themed:hover {
+    background-color: hsl(270 50% 50%) !important;
+    box-shadow: 0 4px 25px hsl(270 50% 45% / 0.35) !important;
+  }
+  
+  :is(.light) .btn-themed-outline {
+    border-color: hsl(270 50% 45%) !important;
+  }
+  
+  :is(.light) .btn-themed-outline:hover {
+    background-color: hsl(270 50% 45% / 0.15) !important;
+    color: hsl(270 50% 45%) !important;
+    border-color: hsl(270 50% 45%) !important;
+  }
+  
+  :is(.light) .btn-themed-ghost:hover {
+    background-color: hsl(270 50% 45% / 0.15) !important;
+    color: hsl(270 50% 45%) !important;
+  }
+  
+  :is(.light) .btn-themed-link {
+    color: hsl(270 50% 45%) !important;
+  }
+}
+
 @layer utilities {
   .animate-float {
     animation: float 6s ease-in-out infinite;

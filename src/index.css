@@ -111,67 +111,72 @@
   }
 
   .light {
-    --background: 40 30% 95%;
-    --foreground: 220 20% 18%;
+    --background: 270 15% 96%;
+    --foreground: 260 20% 18%;
 
-    --card: 40 25% 98%;
-    --card-foreground: 220 20% 18%;
+    --card: 270 20% 99%;
+    --card-foreground: 260 20% 18%;
 
-    --popover: 40 25% 98%;
-    --popover-foreground: 220 20% 18%;
+    --popover: 270 20% 99%;
+    --popover-foreground: 260 20% 18%;
 
-    --primary: 32 75% 40%;
-    --primary-foreground: 40 30% 98%;
+    --primary: 270 50% 45%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 28 65% 35%;
-    --secondary-foreground: 40 30% 98%;
+    --secondary: 32 70% 42%;
+    --secondary-foreground: 0 0% 100%;
     
-    --sand: 32 75% 40%;
-    --sand-light: 38 70% 50%;
-    --sand-dark: 28 70% 32%;
+    --sand: 32 70% 42%;
+    --sand-light: 38 65% 52%;
+    --sand-dark: 28 65% 35%;
 
-    --muted: 40 20% 88%;
-    --muted-foreground: 220 15% 45%;
+    --muted: 270 12% 90%;
+    --muted-foreground: 260 15% 40%;
 
-    --accent: 32 75% 40%;
-    --accent-foreground: 40 30% 98%;
+    --accent: 270 50% 45%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 75% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 40 25% 82%;
-    --input: 40 25% 85%;
-    --ring: 32 75% 40%;
+    --border: 270 15% 85%;
+    --input: 270 15% 88%;
+    --ring: 270 50% 45%;
 
     /* Custom tokens */
-    --gold: 32 75% 40%;
-    --gold-light: 38 70% 50%;
-    --gold-dark: 28 70% 32%;
-    --primary-glow: 38 75% 45%;
+    --gold: 32 70% 42%;
+    --gold-light: 38 65% 52%;
+    --gold-dark: 28 65% 35%;
+    --primary-glow: 270 55% 50%;
     --cyan: 168 80% 30%;
     --cyan-light: 168 70% 40%;
     --cyan-glow: 168 80% 35%;
     
+    /* Purple tokens for light mode */
+    --purple: 270 50% 45%;
+    --purple-light: 270 55% 55%;
+    --purple-dark: 270 45% 35%;
+    
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(38 70% 45%), hsl(28 70% 35%));
+    --gradient-primary: linear-gradient(135deg, hsl(270 55% 50%), hsl(270 45% 38%));
     --gradient-cyan: linear-gradient(135deg, hsl(168 80% 35%), hsl(168 65% 28%));
-    --gradient-dark: linear-gradient(180deg, hsl(40 30% 93%) 0%, hsl(40 25% 88%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(40 25% 98%) 0%, hsl(40 25% 94%) 100%);
+    --gradient-dark: linear-gradient(180deg, hsl(270 15% 94%) 0%, hsl(270 12% 90%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(270 20% 99%) 0%, hsl(270 15% 96%) 100%);
     
     /* Shadows */
-    --shadow-primary: 0 4px 20px hsl(32 75% 40% / 0.15);
+    --shadow-primary: 0 4px 20px hsl(270 50% 45% / 0.15);
     --shadow-cyan: 0 4px 20px hsl(168 80% 30% / 0.15);
-    --shadow-gold: 0 4px 20px hsl(32 75% 40% / 0.18);
-    --shadow-card: 0 8px 30px hsl(220 20% 10% / 0.08);
+    --shadow-gold: 0 4px 20px hsl(32 70% 42% / 0.18);
+    --shadow-card: 0 8px 30px hsl(260 20% 10% / 0.08);
 
-    --sidebar-background: 40 25% 98%;
-    --sidebar-foreground: 220 20% 18%;
-    --sidebar-primary: 32 75% 40%;
-    --sidebar-primary-foreground: 40 30% 98%;
-    --sidebar-accent: 40 20% 88%;
-    --sidebar-accent-foreground: 220 20% 18%;
-    --sidebar-border: 40 25% 82%;
-    --sidebar-ring: 32 75% 40%;
+    --sidebar-background: 270 20% 99%;
+    --sidebar-foreground: 260 20% 18%;
+    --sidebar-primary: 270 50% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 270 12% 90%;
+    --sidebar-accent-foreground: 260 20% 18%;
+    --sidebar-border: 270 15% 85%;
+    --sidebar-ring: 270 50% 45%;
   }
 }
 
@@ -212,7 +217,7 @@
   }
 
   :is(.light) .text-gradient-primary {
-    background-image: linear-gradient(135deg, hsl(32 75% 38%), hsl(28 70% 30%));
+    background-image: linear-gradient(135deg, hsl(270 55% 42%), hsl(270 45% 32%));
   }
 
   .text-gradient-gold {
@@ -221,7 +226,7 @@
   }
 
   :is(.light) .text-gradient-gold {
-    background-image: linear-gradient(135deg, hsl(32 75% 38%), hsl(28 70% 30%));
+    background-image: linear-gradient(135deg, hsl(270 55% 42%), hsl(270 45% 32%));
   }
 
   .text-gradient-sand {
@@ -230,7 +235,7 @@
   }
 
   :is(.light) .text-gradient-sand {
-    background-image: linear-gradient(135deg, hsl(32 75% 38%), hsl(28 70% 30%));
+    background-image: linear-gradient(135deg, hsl(270 55% 42%), hsl(270 45% 32%));
   }
 
   .text-gradient-purple {
@@ -239,7 +244,7 @@
   }
 
   :is(.light) .text-gradient-purple {
-    background-image: linear-gradient(135deg, hsl(32 75% 38%), hsl(28 70% 30%));
+    background-image: linear-gradient(135deg, hsl(270 55% 42%), hsl(270 45% 32%));
   }
 
   .text-gradient-cyan {
@@ -256,7 +261,7 @@
   }
 
   :is(.light) .glow-primary {
-    box-shadow: 0 4px 20px hsl(32 75% 40% / 0.15);
+    box-shadow: 0 4px 20px hsl(270 50% 45% / 0.18);
   }
 
   .glow-gold {
@@ -264,7 +269,7 @@
   }
 
   :is(.light) .glow-gold {
-    box-shadow: 0 4px 20px hsl(32 75% 40% / 0.15);
+    box-shadow: 0 4px 20px hsl(270 50% 45% / 0.15);
   }
 
   .glow-cyan {
@@ -280,7 +285,7 @@
   }
 
   :is(.light) .bg-gradient-radial-primary {
-    background: radial-gradient(ellipse at center, hsl(32 75% 40% / 0.06) 0%, transparent 70%);
+    background: radial-gradient(ellipse at center, hsl(270 50% 45% / 0.08) 0%, transparent 70%);
   }
 
   .bg-gradient-radial-gold {
@@ -288,7 +293,7 @@
   }
 
   :is(.light) .bg-gradient-radial-gold {
-    background: radial-gradient(ellipse at center, hsl(32 75% 40% / 0.06) 0%, transparent 70%);
+    background: radial-gradient(ellipse at center, hsl(270 50% 45% / 0.06) 0%, transparent 70%);
   }
 
   .bg-gradient-radial-cyan {
@@ -306,14 +311,18 @@
   }
 
   :is(.light) .card-premium {
-    background: linear-gradient(145deg, hsl(40 25% 98%) 0%, hsl(40 25% 94%) 100%);
-    border: 1px solid hsl(40 25% 82%);
+    background: linear-gradient(145deg, hsl(270 20% 99%) 0%, hsl(270 15% 96%) 100%);
+    border: 1px solid hsl(270 15% 85%);
   }
 
   .card-premium::before {
     content: '';
     @apply absolute inset-0 opacity-0 transition-opacity duration-500;
     background: linear-gradient(145deg, hsl(38 65% 50% / 0.03) 0%, transparent 50%);
+  }
+
+  :is(.light) .card-premium::before {
+    background: linear-gradient(145deg, hsl(270 50% 45% / 0.05) 0%, transparent 50%);
   }
 
   .card-premium:hover::before {
@@ -328,8 +337,8 @@
 
   :is(.light) .section-pattern {
     background-image: 
-      radial-gradient(circle at 20% 50%, hsl(32 75% 40% / 0.04) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, hsl(32 75% 40% / 0.03) 0%, transparent 40%);
+      radial-gradient(circle at 20% 50%, hsl(270 50% 45% / 0.06) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, hsl(270 50% 45% / 0.04) 0%, transparent 40%);
   }
 }
 

@@ -249,7 +249,7 @@ export const TestimonialsSection = () => {
     <section className="py-16 sm:py-20 md:py-24 px-4 bg-transparent relative overflow-hidden">
       {/* Topo waves background */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-35"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-35 dark:opacity-35"
         style={{ backgroundImage: `url(${topoWavesBg})` }}
       />
       <div className="container mx-auto max-w-7xl relative">

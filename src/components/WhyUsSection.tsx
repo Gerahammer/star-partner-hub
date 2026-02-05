@@ -33,7 +33,7 @@ export const WhyUsSection = () => {
   return (
     <section id="why-us" className="py-16 sm:py-20 md:py-28 lg:py-32 relative overflow-hidden">
       {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-radial-primary opacity-30" />
+      <div className="absolute inset-0 bg-gradient-radial-primary opacity-30 dark:opacity-30" />
       
       <div className="container mx-auto px-4 md:px-8 relative">
         <motion.div
@@ -60,7 +60,7 @@ export const WhyUsSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="flex gap-3 sm:gap-4 md:gap-5 p-4 sm:p-5 md:p-6 rounded-xl md:rounded-2xl bg-card/50 border border-border/50 hover:border-primary/30 transition-colors group"
+              className="flex gap-3 sm:gap-4 md:gap-5 p-4 sm:p-5 md:p-6 rounded-xl md:rounded-2xl bg-card/50 dark:bg-card/50 border border-border/50 hover:border-primary/30 transition-colors group"
             >
               <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 shrink-0 rounded-lg md:rounded-xl bg-secondary/20 flex items-center justify-center group-hover:bg-secondary transition-colors">
                 <feature.icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-secondary group-hover:text-primary-foreground transition-colors" />

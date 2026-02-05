@@ -3,6 +3,7 @@ import { useLocation, useNavigate, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import partnerstarLogo from "@/assets/partnerstar-logo-final.png";
 
 const navLinks = [
@@ -58,8 +59,9 @@ export const Header = () => {
             ))}
           </div>
 
-          {/* Auth Buttons */}
+          {/* Auth Buttons & Theme Toggle */}
           <div className="hidden lg:flex items-center gap-3">
+            <ThemeToggle />
             <Button variant="heroOutline" size="sm" asChild>
               <Link to="/auth">Log In</Link>
             </Button>
@@ -97,7 +99,8 @@ export const Header = () => {
                     {link.name}
                   </a>
                 ))}
-                <div className="flex gap-3 mt-4">
+                <div className="flex items-center gap-3 mt-4">
+                  <ThemeToggle />
                   <Button variant="heroOutline" size="lg" className="flex-1" asChild>
                     <Link to="/auth" onClick={() => setIsMenuOpen(false)}>Log In</Link>
                   </Button>

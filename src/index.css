@@ -109,6 +109,70 @@
     --card-light: 0 0% 100%;
     --border-light: 45 20% 88%;
   }
+
+  .light {
+    --background: 45 20% 96%;
+    --foreground: 220 15% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 15%;
+
+    --primary: 38 65% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 32 55% 40%;
+    --secondary-foreground: 0 0% 100%;
+    
+    --sand: 38 65% 45%;
+    --sand-light: 42 70% 55%;
+    --sand-dark: 34 60% 35%;
+
+    --muted: 45 15% 90%;
+    --muted-foreground: 220 12% 40%;
+
+    --accent: 38 65% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 45 20% 85%;
+    --input: 45 20% 85%;
+    --ring: 38 65% 45%;
+
+    /* Custom tokens */
+    --gold: 38 65% 45%;
+    --gold-light: 42 70% 55%;
+    --gold-dark: 34 60% 35%;
+    --primary-glow: 42 70% 50%;
+    --cyan: 168 100% 35%;
+    --cyan-light: 168 85% 45%;
+    --cyan-glow: 168 100% 40%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(42 70% 50%), hsl(34 60% 38%));
+    --gradient-cyan: linear-gradient(135deg, hsl(168 100% 40%), hsl(168 80% 30%));
+    --gradient-dark: linear-gradient(180deg, hsl(45 20% 94%) 0%, hsl(45 20% 90%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(45 20% 96%) 100%);
+    
+    /* Shadows */
+    --shadow-primary: 0 0 30px hsl(38 65% 45% / 0.2);
+    --shadow-cyan: 0 0 30px hsl(168 100% 35% / 0.2);
+    --shadow-gold: 0 0 30px hsl(38 65% 45% / 0.25);
+    --shadow-card: 0 20px 60px hsl(0 0% 0% / 0.1);
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 220 15% 15%;
+    --sidebar-primary: 38 65% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 45 15% 90%;
+    --sidebar-accent-foreground: 220 15% 15%;
+    --sidebar-border: 45 20% 85%;
+    --sidebar-ring: 38 65% 45%;
+  }
 }
 
 @layer base {

@@ -39,7 +39,7 @@ export const TestimonialsSection = () => {
   });
   const { toast } = useToast();
 
-  // On mobile show 1 item, on desktop show 3
+  // Show 1 item on mobile, all in one row on tablet/desktop (but still use carousel if many)
   const itemsToShow = isMobile ? 1 : 3;
   const showCarousel = testimonials.length > itemsToShow;
 
@@ -389,9 +389,9 @@ export const TestimonialsSection = () => {
             )}
 
             <div 
-              className={`grid gap-4 sm:gap-6 md:gap-8 px-8 sm:px-12 md:px-0 ${
-              isMobile ? 'grid-cols-1' : 'sm:grid-cols-2 lg:grid-cols-3'
-            }`}
+              className={`flex gap-4 md:gap-6 px-8 sm:px-12 md:px-0 justify-center ${
+                isMobile ? 'flex-col' : 'flex-row'
+              }`}
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
@@ -404,6 +404,7 @@ export const TestimonialsSection = () => {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -slideDirection * 50 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className={isMobile ? 'w-full' : 'flex-1 max-w-[340px]'}
                 >
                   <GlowCard className="p-4 sm:p-5 md:p-6 h-full flex flex-col min-h-[220px] sm:min-h-[260px] md:min-h-[280px] bg-card border-border/50" glowColor="gold">
                     {/* Admin actions */}

@@ -88,7 +88,7 @@ export const DealsSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 max-w-5xl mx-auto">
           {plans.map((plan, index) => (
             <motion.div
               key={plan.name}
@@ -97,30 +97,30 @@ export const DealsSection = () => {
               transition={{ duration: 0.8, delay: index * 0.15 }}
             >
               <GlowCard 
-                className="p-5 sm:p-6 md:p-8 h-full"
+                className="p-4 sm:p-5 lg:p-6 h-full"
                 glowColor="gold"
               >
-                <div className="flex items-center gap-3 mb-3 md:mb-4">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                    <plan.icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                    <plan.icon className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-primary" />
                   </div>
-                  <h3 className="font-display text-2xl sm:text-3xl text-foreground">
+                  <h3 className="font-display text-xl sm:text-2xl lg:text-3xl text-foreground">
                     {plan.name}
                   </h3>
                 </div>
                 
-                <p className="font-display text-3xl sm:text-4xl md:text-5xl text-gradient-purple mb-3 md:mb-4">
+                <p className="font-display text-2xl sm:text-3xl lg:text-4xl text-gradient-purple mb-2 sm:mb-3">
                   {plan.highlight}
                 </p>
-                <p className="text-muted-foreground mb-6 md:mb-8 text-sm sm:text-base">
+                <p className="text-muted-foreground mb-4 sm:mb-5 lg:mb-6 text-xs sm:text-sm lg:text-base">
                   {plan.description}
                 </p>
                 
-                <ul className="space-y-4">
+                <ul className="space-y-2 sm:space-y-3">
                   {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-3 text-foreground/90">
-                      <div className="w-5 h-5 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center shrink-0">
-                        <Check className="w-3 h-3 text-primary" />
+                    <li key={feature} className="flex items-center gap-2 text-foreground/90 text-xs sm:text-sm lg:text-base">
+                      <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center shrink-0">
+                        <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-primary" />
                       </div>
                       {feature}
                     </li>

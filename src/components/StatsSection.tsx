@@ -53,10 +53,10 @@ export const StatsSection = () => {
     <section className="py-12 md:py-20 lg:py-24 relative overflow-hidden">
       {/* Gold waves background */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40 dark:opacity-40"
         style={{ backgroundImage: `url(${goldWavesBg})` }}
       />
-      <div className="absolute inset-0 bg-background/60" />
+      <div className="absolute inset-0 bg-background/60 dark:bg-background/60" />
       
       {/* Decorative corner elements */}
       <div className="absolute top-8 left-8 w-16 h-16 border-t-2 border-l-2 border-primary/30 hidden lg:block" />

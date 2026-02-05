@@ -16,10 +16,10 @@ export const CTASection = () => {
     <section className="py-24 md:py-32 relative overflow-hidden">
       {/* Gold waves background */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-35"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-35 dark:opacity-35"
         style={{ backgroundImage: `url(${goldWavesBg})` }}
       />
-      <div className="absolute inset-0 bg-background/60" />
+      <div className="absolute inset-0 bg-background/60 dark:bg-background/60" />
       {/* Subtle glow accents */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" />

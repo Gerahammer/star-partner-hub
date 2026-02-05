@@ -15,7 +15,7 @@ export const HeroSection = () => {
       />
       
       {/* Overlay - stronger to dim geometric shapes */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/70 to-background" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/70 to-background dark:from-background/80 dark:via-background/70 dark:to-background" />
       
       {/* Floating Particles */}
       <FloatingParticles />

@@ -27,7 +27,7 @@ export const Footer = () => {
   const [isContactOpen, setIsContactOpen] = useState(false);
 
   return (
-    <footer className="bg-[hsl(220,15%,12%)] border-t border-border relative z-10">
+    <footer className="bg-card border-t border-border relative z-10">
       <div className="container mx-auto px-4 md:px-8 py-10 md:py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
           {/* Logo & Description */}

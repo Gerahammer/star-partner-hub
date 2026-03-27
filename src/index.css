@@ -7,13 +7,13 @@
 @layer base {
   :root {
     /* Dark Navy base */
-    --background: 220 30% 8%;
+    --background: 220 28% 12%;
     --foreground: 210 20% 90%;
 
-    --card: 220 28% 12%;
+    --card: 220 26% 16%;
     --card-foreground: 210 20% 90%;
 
-    --popover: 220 28% 12%;
+    --popover: 220 26% 16%;
     --popover-foreground: 210 20% 90%;
 
     /* Brushed Gold */
@@ -23,7 +23,7 @@
     --secondary: 43 50% 40%;
     --secondary-foreground: 0 0% 5%;
 
-    --muted: 220 25% 15%;
+    --muted: 220 23% 19%;
     --muted-foreground: 215 15% 55%;
 
     --accent: 43 72% 52%;
@@ -32,8 +32,8 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 220 25% 18%;
-    --input: 220 25% 18%;
+    --border: 220 22% 22%;
+    --input: 220 22% 22%;
     --ring: 43 72% 52%;
 
     --radius: 0.5rem;

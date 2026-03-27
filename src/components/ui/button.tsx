@@ -5,19 +5,19 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-nav font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        default: "btn-themed bg-[hsl(42_70%_58%)] text-[hsl(34_80%_10%)] hover:bg-[hsl(42_70%_62%)] shadow-[0_0_20px_hsl(38_65%_50%/0.3)] hover:shadow-[0_0_25px_hsl(38_65%_50%/0.4)]",
+        default: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline: "btn-themed-outline border border-[hsl(42_70%_58%)] bg-background hover:bg-[hsl(42_70%_58%/0.2)] hover:text-[hsl(42_70%_58%)]",
-        secondary: "btn-themed bg-[hsl(42_70%_58%)] text-[hsl(34_80%_10%)] hover:bg-[hsl(42_70%_62%)]",
-        ghost: "btn-themed-ghost hover:bg-[hsl(42_70%_58%/0.2)] hover:text-[hsl(42_70%_58%)]",
-        link: "btn-themed-link text-[hsl(42_70%_58%)] underline-offset-4 hover:underline",
-        hero: "btn-themed bg-[hsl(42_70%_58%)] text-[hsl(34_80%_10%)] font-bold uppercase tracking-wider shadow-[0_0_20px_hsl(38_65%_50%/0.3)] hover:shadow-[0_0_25px_hsl(38_65%_50%/0.4)] hover:bg-[hsl(42_70%_62%)] hover:scale-[1.02] border-0 transition-all",
-        heroOutline: "btn-themed-outline border-2 border-[hsl(42_70%_58%/0.5)] bg-transparent text-foreground hover:border-[hsl(42_70%_58%)] hover:text-[hsl(42_70%_58%)] font-semibold uppercase tracking-wider transition-all",
-        gold: "btn-themed bg-[hsl(42_70%_58%)] text-[hsl(34_80%_10%)] font-bold uppercase tracking-wider shadow-[0_0_20px_hsl(38_65%_50%/0.2)] hover:shadow-[0_0_25px_hsl(38_65%_50%/0.3)] hover:bg-[hsl(42_70%_62%)] hover:scale-[1.02] transition-all",
+        outline: "border border-border bg-transparent hover:bg-muted/50 hover:text-foreground",
+        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        ghost: "hover:bg-muted/50 hover:text-foreground",
+        link: "text-primary underline-offset-4 hover:underline",
+        gold: "btn-gold-gradient font-bold uppercase tracking-wider",
+        hero: "btn-gold-gradient font-bold uppercase tracking-wider",
+        heroOutline: "border border-border/50 bg-transparent text-muted-foreground hover:text-foreground hover:border-primary/30 font-medium uppercase tracking-wider",
       },
       size: {
         default: "h-10 px-4 py-2 text-sm",

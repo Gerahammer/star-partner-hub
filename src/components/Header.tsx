@@ -3,6 +3,7 @@ import { useLocation, useNavigate, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import partnerstarLogo from "@/assets/partnerstar-full-logo.png";
 
 const navLinks = [
   { name: "Brands", href: "#brands" },

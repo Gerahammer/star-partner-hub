@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ContactFormModal } from "./ContactFormModal";
 import { Send } from "lucide-react";
+import partnerstarLogo from "@/assets/partnerstar-full-logo.png";
 
 const footerLinks = [
   {

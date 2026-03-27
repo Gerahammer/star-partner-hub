@@ -16,16 +16,6 @@ export const HeroSection = () => {
           backgroundSize: '60px 60px'
         }}
       />
-
-      {/* Star image - floating behind text */}
-      <motion.img
-        src={partnerstarStar}
-        alt=""
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 0.12, scale: 1 }}
-        transition={{ duration: 1.2, ease: "easeOut" }}
-        className="absolute top-1/2 left-1/2 z-0 -translate-x-1/2 -translate-y-1/2 w-[900px] md:w-[1100px] lg:w-[1350px] pointer-events-none select-none"
-      />
       
       {/* Content */}
       <div className="relative container mx-auto px-4 md:px-8 pt-24 pb-16 text-center">
@@ -33,11 +23,20 @@ export const HeroSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="max-w-5xl mx-auto"
+          className="max-w-5xl mx-auto relative"
         >
-          
+          {/* Star centered behind the headline */}
+          <motion.img
+            src={partnerstarStar}
+            alt=""
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 0.15, scale: 1 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+            className="absolute inset-0 m-auto w-[500px] h-[500px] md:w-[650px] md:h-[650px] lg:w-[800px] lg:h-[800px] object-contain pointer-events-none select-none z-0"
+          />
+
           {/* Headline */}
-          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl leading-[0.9] mb-8 tracking-tight">
+          <h1 className="relative z-10 font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl leading-[0.9] mb-8 tracking-tight">
             <span className="text-liquid-silver block">ELEVATE YOUR</span>
             <span className="text-liquid-silver block">AFFILIATE REVENUE</span>
             <span className="block mt-2">
@@ -51,7 +50,7 @@ export const HeroSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12"
+            className="relative z-10 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12"
           >
             Access the world's premier casino brands. Join the network trusted by elite affiliates worldwide.
           </motion.p>
@@ -61,6 +60,7 @@ export const HeroSection = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.6 }}
+            className="relative z-10"
           >
             <Button 
               className="btn-gold-gradient rounded-full px-10 py-6 text-base md:text-lg font-bold uppercase tracking-wider group"

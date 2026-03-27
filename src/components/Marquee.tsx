@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 const items = [
   "Up to 50% RevShare",
-  "Instant Payouts",
+  "Weekly Payouts",
   "24/7 Support",
   "Premium Brands",
   "Real-time Tracking",
@@ -13,7 +13,7 @@ const items = [
 
 export const Marquee = () => {
   return (
-    <div className="relative overflow-hidden py-4 bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 border-y border-primary/20">
+    <div className="relative overflow-hidden py-4 border-y border-border/20 bg-muted/20">
       <motion.div
         className="flex gap-8 whitespace-nowrap"
         animate={{ x: ["0%", "-50%"] }}
@@ -25,10 +25,10 @@ export const Marquee = () => {
       >
         {[...items, ...items].map((item, index) => (
           <div key={index} className="flex items-center gap-8">
-            <span className="text-sm md:text-base font-semibold text-foreground/90 uppercase tracking-wider">
+            <span className="text-sm md:text-base font-medium text-muted-foreground uppercase tracking-wider">
               {item}
             </span>
-            <span className="text-primary">★</span>
+            <span className="text-primary text-xs">◆</span>
           </div>
         ))}
       </motion.div>

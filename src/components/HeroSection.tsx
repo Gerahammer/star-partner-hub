@@ -36,7 +36,7 @@ export const HeroSection = () => {
           />
 
           {/* Headline */}
-          <h1 className="relative z-10 font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-[0.9] mb-8 tracking-tight">
+          <h1 className="relative z-10 font-display text-5xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-[0.9] mb-8 tracking-tight">
             <span className="text-liquid-silver block">ELEVATE YOUR</span>
             <span className="text-liquid-silver block">AFFILIATE REVENUE</span>
             <span className="block mt-2">

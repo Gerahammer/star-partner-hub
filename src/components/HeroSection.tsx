@@ -24,7 +24,7 @@ export const HeroSection = () => {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 0.15, scale: 1 }}
         transition={{ duration: 1.2, ease: "easeOut" }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[550px] lg:w-[700px] pointer-events-none select-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[800px] lg:w-[1000px] pointer-events-none select-none"
       />
       
       {/* Content */}

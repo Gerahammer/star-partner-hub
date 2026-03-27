@@ -2,15 +2,13 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Clock, Wrench, Headphones } from "lucide-react";
-import { GlowCard } from "./GlowCard";
-import topoWavesBg from "@/assets/topo-waves-bg.png";
 
 const stats = [
   {
     icon: Clock,
     value: "10+",
     label: "Years of Experience",
-    description: "Founded and operated by iGaming gurus",
+    description: "Founded and operated by iGaming industry veterans",
   },
   {
     icon: Wrench,
@@ -31,16 +29,8 @@ export const AboutSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="about" className="py-24 md:py-32 relative bg-transparent overflow-hidden">
-      {/* Topo waves background */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40 dark:opacity-40"
-        style={{ backgroundImage: `url(${topoWavesBg})` }}
-      />
-      {/* Subtle radial accent */}
-      <div className="absolute inset-0 bg-gradient-radial-primary opacity-10 dark:opacity-10" />
-      
-      <div className="container mx-auto px-4 md:px-8 relative">
+    <section id="about" className="py-20 md:py-28 relative">
+      <div className="container mx-auto px-4 md:px-8">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
@@ -48,39 +38,38 @@ export const AboutSection = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="text-primary font-semibold uppercase tracking-wider text-sm mb-4 block">
+          <span className="text-primary text-sm font-medium uppercase tracking-widest mb-4 block">
             About Us
           </span>
-          <h2 className="font-display text-4xl md:text-6xl lg:text-7xl text-foreground mb-6">
-            WE BRING THE REAL
+          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl mb-6">
+            <span className="text-liquid-silver">WE BRING THE REAL</span>
             <br />
-            <span className="text-gradient-purple">AFFILIATE FLOW</span>
+            <span className="text-gradient-gold">AFFILIATE FLOW</span>
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {stats.map((stat, index) => (
             <motion.div
               key={stat.label}
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
+              transition={{ duration: 0.6, delay: index * 0.15 }}
+              whileHover={{ y: -5, transition: { duration: 0.3 } }}
+              className="glass-card rounded-2xl p-8"
             >
-              <GlowCard className="p-8 h-full">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center mb-6 border border-primary/20">
-                  <stat.icon className="w-7 h-7 text-primary" />
-                </div>
-                
-                <h3 className="font-display text-5xl md:text-6xl text-gradient-purple mb-2">
-                  {stat.value}
-                </h3>
-                <p className="text-foreground font-semibold text-lg mb-2">
-                  {stat.label}
-                </p>
-                <p className="text-muted-foreground">
-                  {stat.description}
-                </p>
-              </GlowCard>
+              <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-6">
+                <stat.icon className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="font-display text-4xl md:text-5xl text-gradient-gold mb-2">
+                {stat.value}
+              </h3>
+              <p className="text-foreground font-semibold text-base mb-2">
+                {stat.label}
+              </p>
+              <p className="text-muted-foreground text-sm">
+                {stat.description}
+              </p>
             </motion.div>
           ))}
         </div>

@@ -1,105 +1,78 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Star, Sparkles } from "lucide-react";
-import heroBg from "@/assets/hero-bg-v2.jpg";
-import { FloatingParticles } from "./FloatingParticles";
-import { HeroImageCarousel } from "./HeroImageCarousel";
+import { ArrowRight } from "lucide-react";
 
 export const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroBg})` }}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden noise-bg">
+      {/* Subtle radial glow */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-primary/5 rounded-full blur-[120px]" />
+      
+      {/* Grid pattern overlay */}
+      <div className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `linear-gradient(hsl(0 0% 50% / 0.3) 1px, transparent 1px), linear-gradient(90deg, hsl(0 0% 50% / 0.3) 1px, transparent 1px)`,
+          backgroundSize: '60px 60px'
+        }}
       />
       
-      {/* Overlay - stronger to dim geometric shapes */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/70 to-background dark:from-background/80 dark:via-background/70 dark:to-background" />
-      
-      {/* Floating Particles */}
-      <FloatingParticles />
-      
-      {/* Decorative Corner Frames */}
-      <div className="absolute top-24 left-4 md:left-8 w-16 md:w-24 h-16 md:h-24 border-t-2 border-l-2 border-primary/40" />
-      <div className="absolute top-24 right-4 md:right-8 w-16 md:w-24 h-16 md:h-24 border-t-2 border-r-2 border-primary/40" />
-      <div className="absolute bottom-24 left-4 md:left-8 w-16 md:w-24 h-16 md:h-24 border-b-2 border-l-2 border-primary/40" />
-      <div className="absolute bottom-24 right-4 md:right-8 w-16 md:w-24 h-16 md:h-24 border-b-2 border-r-2 border-primary/40" />
-      
-      {/* Decorative Stars */}
-      <motion.div 
-        className="absolute top-32 left-12 md:left-20"
-        animate={{ rotate: 360, opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-      >
-        <Star className="w-3 h-3 md:w-4 md:h-4 text-primary fill-primary" />
-      </motion.div>
-      <motion.div 
-        className="absolute top-40 right-16 md:right-28"
-        animate={{ rotate: -360, opacity: [0.4, 0.7, 0.4] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-      >
-        <Star className="w-2 h-2 md:w-3 md:h-3 text-primary fill-primary" />
-      </motion.div>
-      <motion.div 
-        className="absolute bottom-40 left-20 md:left-32"
-        animate={{ rotate: 360, opacity: [0.2, 0.5, 0.2] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-      >
-        <Star className="w-2 h-2 md:w-3 md:h-3 text-primary fill-primary" />
-      </motion.div>
-      
-      {/* Side Decorative Lines */}
-      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-32 bg-gradient-to-b from-transparent via-primary/50 to-transparent hidden md:block" />
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-px h-32 bg-gradient-to-b from-transparent via-primary/50 to-transparent hidden md:block" />
-      
-      
-      {/* Content - Split Layout */}
-      <div className="relative container mx-auto px-4 md:px-8 pt-24 pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center min-h-[70vh]">
+      {/* Content */}
+      <div className="relative container mx-auto px-4 md:px-8 pt-24 pb-16 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="max-w-5xl mx-auto"
+        >
+          {/* Badge */}
+          <motion.span 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="inline-block px-4 py-1.5 rounded-full text-xs font-medium uppercase tracking-widest text-primary border border-primary/30 bg-primary/5 mb-10"
+          >
+            Premium Affiliate Network
+          </motion.span>
           
-          {/* Left Side - Text Content */}
-          <div className="flex flex-col justify-center items-center text-center order-1 lg:order-2 py-8 lg:py-0">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 text-sm text-foreground mb-8">
-              <Sparkles className="w-4 h-4 text-primary" />
-              Premium iGaming Affiliate Program
-              <Sparkles className="w-4 h-4 text-primary" />
+          {/* Headline */}
+          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl leading-[0.9] mb-8 tracking-tight">
+            <span className="text-liquid-silver block">ELEVATE YOUR</span>
+            <span className="text-liquid-silver block">AFFILIATE REVENUE</span>
+            <span className="block mt-2">
+              <span className="text-liquid-silver">TO </span>
+              <span className="text-gradient-gold">STAR STATUS</span>
             </span>
-            
-            <h1 className="text-7xl md:text-8xl lg:text-9xl font-bold leading-tight mb-6 font-heading tracking-wider">
-              <span className="block text-foreground">SHINE</span>
-              <span className="block text-foreground">LIKE A</span>
-              <motion.span 
-                className="block text-primary"
-                animate={{ 
-                  textShadow: [
-                    "0 0 20px hsl(38 65% 50% / 0.3)",
-                    "0 0 40px hsl(38 65% 50% / 0.6)",
-                    "0 0 20px hsl(38 65% 50% / 0.3)"
-                  ]
-                }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              >STAR</motion.span>
-            </h1>
+          </h1>
 
-            <p className="text-2xl md:text-3xl text-primary font-semibold mb-10 tracking-wide">
-              Premium Partners, Premium Rewards
-            </p>
-            
-            <div>
-              <Button variant="hero" size="lg" className="group uppercase tracking-wide px-8 py-6">
-                Start Earning Now
-                <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
-              </Button>
-            </div>
-          </div>
+          {/* Subtext */}
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12"
+          >
+            Access the world's premier casino brands. Join the network trusted by elite affiliates worldwide.
+          </motion.p>
           
-          {/* Right Side - Image Carousel */}
-          <div className="relative h-[280px] md:h-[350px] lg:h-[600px] order-2 lg:order-1">
-            <HeroImageCarousel />
-          </div>
-        </div>
+          {/* CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+          >
+            <Button 
+              className="btn-gold-gradient rounded-full px-10 py-6 text-base md:text-lg font-bold uppercase tracking-wider group"
+              size="lg"
+            >
+              Get Started Now
+              <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+            </Button>
+          </motion.div>
+        </motion.div>
       </div>
+      
+      {/* Bottom fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
     </section>
   );
 };

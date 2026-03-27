@@ -1,19 +1,14 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-import { DollarSign, Users, Globe, Award, Star } from "lucide-react";
-import goldWavesBg from "@/assets/gold-waves-bg.png";
-import { DecorativeFrame } from "./DecorativeFrame";
-import { DecorativeDivider } from "./DecorativeDivider";
 
 const stats = [
-  { icon: DollarSign, value: 15, suffix: "M+", label: "Paid to Partners" },
-  { icon: Users, value: 1000, suffix: "+", label: "Active Affiliates" },
-  { icon: Globe, value: 150, suffix: "+", label: "Countries" },
-  { icon: Award, value: 10, suffix: "+", label: "Years Experience" },
+  { value: 25.4, suffix: "M+", label: "Total Paid", prefix: "$" },
+  { value: 50, suffix: "+", label: "Active Brands", prefix: "" },
+  { value: 15, suffix: "%+", label: "Avg. Conversion", prefix: "" },
 ];
 
-const AnimatedCounter = ({ value, suffix }: { value: number; suffix: string }) => {
+const AnimatedCounter = ({ value, suffix, prefix }: { value: number; suffix: string; prefix: string }) => {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
@@ -23,6 +18,7 @@ const AnimatedCounter = ({ value, suffix }: { value: number; suffix: string }) =
       let start = 0;
       const duration = 2000;
       const increment = value / (duration / 16);
+      const isDecimal = value % 1 !== 0;
       
       const timer = setInterval(() => {
         start += increment;
@@ -30,7 +26,7 @@ const AnimatedCounter = ({ value, suffix }: { value: number; suffix: string }) =
           setCount(value);
           clearInterval(timer);
         } else {
-          setCount(Math.floor(start));
+          setCount(isDecimal ? Math.round(start * 10) / 10 : Math.floor(start));
         }
       }, 16);
 
@@ -39,8 +35,8 @@ const AnimatedCounter = ({ value, suffix }: { value: number; suffix: string }) =
   }, [isInView, value]);
 
   return (
-    <span ref={ref} className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gradient-purple">
-      {count.toLocaleString()}{suffix}
+    <span ref={ref} className="font-display text-4xl sm:text-5xl md:text-6xl text-gradient-gold">
+      {prefix}{count % 1 !== 0 ? count.toFixed(1) : count}{suffix}
     </span>
   );
 };
@@ -50,49 +46,27 @@ export const StatsSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="py-12 md:py-20 lg:py-24 relative overflow-hidden">
-      {/* Gold waves background */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40 dark:opacity-40"
-        style={{ backgroundImage: `url(${goldWavesBg})` }}
-      />
-      <div className="absolute inset-0 bg-background/60 dark:bg-background/60" />
-      
-      {/* Decorative corner elements */}
-      <div className="absolute top-8 left-8 w-16 h-16 border-t-2 border-l-2 border-primary/30 hidden lg:block" />
-      <div className="absolute top-8 right-8 w-16 h-16 border-t-2 border-r-2 border-primary/30 hidden lg:block" />
-      <div className="absolute bottom-8 left-8 w-16 h-16 border-b-2 border-l-2 border-primary/30 hidden lg:block" />
-      <div className="absolute bottom-8 right-8 w-16 h-16 border-b-2 border-r-2 border-primary/30 hidden lg:block" />
-      
-      <div className="container mx-auto px-4 md:px-8 relative">
-        <DecorativeDivider variant="star" className="mb-8 md:mb-12" />
-        
+    <section className="py-16 md:py-20 relative">
+      <div className="container mx-auto px-4 md:px-8">
         <div 
           ref={ref}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-4"
+          className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto"
         >
           {stats.map((stat, index) => (
             <motion.div
               key={stat.label}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="text-center group"
+              transition={{ duration: 0.6, delay: index * 0.15 }}
+              className="text-center p-6 md:p-8 rounded-xl border border-primary/20 bg-card/50 hover:border-primary/40 transition-colors duration-300"
             >
-              <DecorativeFrame variant="subtle" className="p-4 md:p-6">
-                <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <stat.icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-primary" />
-                </div>
-                <div className="mb-2">
-                  <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-                </div>
-                <p className="text-muted-foreground font-medium text-xs sm:text-sm md:text-base">{stat.label}</p>
-              </DecorativeFrame>
+              <div className="mb-3">
+                <AnimatedCounter value={stat.value} suffix={stat.suffix} prefix={stat.prefix} />
+              </div>
+              <p className="text-muted-foreground font-medium text-sm uppercase tracking-wider">{stat.label}</p>
             </motion.div>
           ))}
         </div>
-        
-        <DecorativeDivider variant="diamond" className="mt-8 md:mt-12" />
       </div>
     </section>
   );

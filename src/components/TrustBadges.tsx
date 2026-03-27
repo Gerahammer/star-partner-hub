@@ -17,7 +17,7 @@ export const TrustBadges = () => {
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
   return (
-    <section className="py-12 border-y border-border/30 bg-transparent">
+    <section className="py-10 border-y border-border/20">
       <div className="container mx-auto px-4 md:px-8">
         <motion.div
           ref={ref}
@@ -29,13 +29,13 @@ export const TrustBadges = () => {
           {badges.map((badge, index) => (
             <motion.div
               key={badge.label}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.4, delay: index * 0.08 }}
               className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
             >
-              <badge.icon className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
-              <span className="text-sm font-medium whitespace-nowrap">{badge.label}</span>
+              <badge.icon className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" />
+              <span className="text-xs font-medium uppercase tracking-wider whitespace-nowrap">{badge.label}</span>
             </motion.div>
           ))}
         </motion.div>

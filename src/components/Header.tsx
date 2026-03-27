@@ -29,7 +29,7 @@ export const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
-      <div className="absolute inset-0 bg-background/80 backdrop-blur-md border-b border-border/30" />
+      <div className="absolute inset-0 bg-background/95 border-b border-border/30" />
       
       <nav className="relative container mx-auto px-4 md:px-8 py-4">
         <div className="flex items-center justify-between">

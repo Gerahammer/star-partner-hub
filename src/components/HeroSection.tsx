@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import partnerstarStar from "@/assets/partnerstar-star.png";
 
 export const HeroSection = () => {
   return (
@@ -14,6 +15,16 @@ export const HeroSection = () => {
           backgroundImage: `linear-gradient(hsl(0 0% 50% / 0.3) 1px, transparent 1px), linear-gradient(90deg, hsl(0 0% 50% / 0.3) 1px, transparent 1px)`,
           backgroundSize: '60px 60px'
         }}
+      />
+
+      {/* Star image - floating behind text */}
+      <motion.img
+        src={partnerstarStar}
+        alt=""
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 0.15, scale: 1 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[550px] lg:w-[700px] pointer-events-none select-none"
       />
       
       {/* Content */}

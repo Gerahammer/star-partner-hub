@@ -14,11 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Original Surfer', 'sans-serif'],
-        display: ['Bungee', 'cursive'],
-        heading: ['Bungee', 'cursive'],
-        nav: ['SN Pro', 'sans-serif'],
-        script: ['Dancing Script', 'cursive'],
+        sans: ['Inter', 'sans-serif'],
+        display: ['Montserrat', 'sans-serif'],
+        heading: ['Montserrat', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -58,16 +56,6 @@ export default {
           DEFAULT: "hsl(var(--gold))",
           light: "hsl(var(--gold-light))",
           dark: "hsl(var(--gold-dark))",
-        },
-        cyan: {
-          DEFAULT: "hsl(var(--cyan))",
-          light: "hsl(var(--cyan-light))",
-          glow: "hsl(var(--cyan-glow))",
-        },
-        sand: {
-          DEFAULT: "hsl(var(--sand))",
-          light: "hsl(var(--sand-light))",
-          dark: "hsl(var(--sand-dark))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",

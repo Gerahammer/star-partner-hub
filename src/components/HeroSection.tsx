@@ -30,7 +30,7 @@ export const HeroSection = () => {
             src={partnerstarStar}
             alt=""
             initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 0.15, scale: 1 }}
+            animate={{ opacity: 0.3, scale: 1 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
             className="absolute inset-0 m-auto w-[1500px] h-[1500px] md:w-[1950px] md:h-[1950px] lg:w-[2400px] lg:h-[2400px] object-contain pointer-events-none select-none z-0"
           />

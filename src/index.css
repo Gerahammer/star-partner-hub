@@ -6,15 +6,15 @@
 
 @layer base {
   :root {
-    /* Matte Black base */
-    --background: 0 0% 7%;
-    --foreground: 0 0% 88%;
+    /* Dark Navy base */
+    --background: 220 30% 8%;
+    --foreground: 210 20% 90%;
 
-    --card: 0 0% 10%;
-    --card-foreground: 0 0% 88%;
+    --card: 220 28% 12%;
+    --card-foreground: 210 20% 90%;
 
-    --popover: 0 0% 10%;
-    --popover-foreground: 0 0% 88%;
+    --popover: 220 28% 12%;
+    --popover-foreground: 210 20% 90%;
 
     /* Brushed Gold */
     --primary: 43 72% 52%;

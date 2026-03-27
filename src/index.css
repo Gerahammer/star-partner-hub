@@ -7,7 +7,7 @@
 @layer base {
   :root {
     /* Dark Navy base */
-    --background: 220 30% 8%;
+    --background: 220 28% 12%;
     --foreground: 210 20% 90%;
 
     --card: 220 28% 12%;

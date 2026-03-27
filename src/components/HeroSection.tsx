@@ -22,9 +22,9 @@ export const HeroSection = () => {
         src={partnerstarStar}
         alt=""
         initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 0.15, scale: 1 }}
+        animate={{ opacity: 0.12, scale: 1 }}
         transition={{ duration: 1.2, ease: "easeOut" }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[800px] lg:w-[1000px] pointer-events-none select-none"
+        className="absolute top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] md:w-[900px] lg:w-[1200px] pointer-events-none select-none"
       />
       
       {/* Content */}

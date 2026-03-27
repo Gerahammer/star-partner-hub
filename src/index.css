@@ -6,15 +6,15 @@
 
 @layer base {
   :root {
-    /* Matte Black base */
-    --background: 0 0% 7%;
-    --foreground: 0 0% 88%;
+    /* Dark Navy base */
+    --background: 220 30% 8%;
+    --foreground: 210 20% 90%;
 
-    --card: 0 0% 10%;
-    --card-foreground: 0 0% 88%;
+    --card: 220 28% 12%;
+    --card-foreground: 210 20% 90%;
 
-    --popover: 0 0% 10%;
-    --popover-foreground: 0 0% 88%;
+    --popover: 220 28% 12%;
+    --popover-foreground: 210 20% 90%;
 
     /* Brushed Gold */
     --primary: 43 72% 52%;
@@ -23,8 +23,8 @@
     --secondary: 43 50% 40%;
     --secondary-foreground: 0 0% 5%;
 
-    --muted: 0 0% 14%;
-    --muted-foreground: 0 0% 55%;
+    --muted: 220 25% 15%;
+    --muted-foreground: 215 15% 55%;
 
     --accent: 43 72% 52%;
     --accent-foreground: 0 0% 5%;
@@ -32,8 +32,8 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 18%;
-    --input: 0 0% 18%;
+    --border: 220 25% 18%;
+    --input: 220 25% 18%;
     --ring: 43 72% 52%;
 
     --radius: 0.5rem;
@@ -46,17 +46,17 @@
     --silver-muted: 0 0% 55%;
     
     /* Glassmorphism */
-    --glass-bg: 0 0% 12%;
-    --glass-border: 0 0% 20%;
+    --glass-bg: 220 28% 12%;
+    --glass-border: 220 25% 20%;
     --glass-glow: 43 72% 52%;
 
-    --sidebar-background: 0 0% 10%;
-    --sidebar-foreground: 0 0% 88%;
+    --sidebar-background: 220 28% 12%;
+    --sidebar-foreground: 210 20% 90%;
     --sidebar-primary: 43 72% 52%;
     --sidebar-primary-foreground: 0 0% 5%;
-    --sidebar-accent: 0 0% 14%;
-    --sidebar-accent-foreground: 0 0% 88%;
-    --sidebar-border: 0 0% 18%;
+    --sidebar-accent: 220 25% 15%;
+    --sidebar-accent-foreground: 210 20% 90%;
+    --sidebar-border: 220 25% 18%;
     --sidebar-ring: 43 72% 52%;
   }
 }
@@ -111,9 +111,9 @@
 
   /* Glassmorphism card */
   .glass-card {
-    background: hsl(0 0% 10% / 0.6);
+    background: hsl(220 28% 12% / 0.6);
     backdrop-filter: blur(20px);
-    border: 1px solid hsl(0 0% 20% / 0.5);
+    border: 1px solid hsl(220 25% 20% / 0.5);
     box-shadow: inset 0 1px 0 0 hsl(0 0% 100% / 0.05);
   }
 

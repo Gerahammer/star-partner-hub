@@ -77,7 +77,7 @@ export const DashboardMockup = () => {
                     <span className="text-xs text-muted-foreground">{kpi.label}</span>
                   </div>
                   <p className="text-foreground font-bold text-lg md:text-xl">{kpi.value}</p>
-                  <span className="text-xs text-emerald-400 font-medium">{kpi.change}</span>
+                  <span className="text-xs font-medium" style={{ color: 'hsl(152 69% 53%)' }}>{kpi.change}</span>
                 </div>
               ))}
             </div>

@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { DollarSign, MousePointerClick, UserPlus, CreditCard, ArrowUpRight } from "lucide-react";
+import { DollarSign, MousePointerClick, UserPlus, CreditCard, ArrowUpRight, ExternalLink } from "lucide-react";
 
 const chartData = [25, 38, 32, 52, 45, 60, 55, 72, 65, 80, 75, 92];
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -47,9 +47,21 @@ export const DashboardMockup = () => {
             <span className="text-foreground">Track Your </span>
             <span className="text-gradient-gold">Earnings</span>
           </h2>
-          <p className="text-muted-foreground text-sm max-w-md mx-auto">
+          <p className="text-muted-foreground text-sm max-w-md mx-auto mb-3">
             Every click, conversion, and commission — all in real-time
           </p>
+          <div className="flex items-center justify-center gap-2 text-muted-foreground/50 text-xs">
+            <span>Powered by</span>
+            <a 
+              href="https://www.referon.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-primary/70 hover:text-primary transition-colors font-medium"
+            >
+              ReferOn
+              <ExternalLink className="w-2.5 h-2.5" strokeWidth={1.5} />
+            </a>
+          </div>
         </motion.div>
 
         <motion.div

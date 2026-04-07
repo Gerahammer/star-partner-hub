@@ -44,10 +44,9 @@ export const HeroSection = () => {
           />
 
           <h1 className="relative z-10 font-display text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] xl:text-[6.5rem] leading-[0.9] mb-7 tracking-tight">
-            <span className="text-foreground block">MAXIMIZE YOUR</span>
-            <span className="text-foreground block">CASINO</span>
+            <span className="text-foreground block">WHERE AFFILIATES</span>
             <span className="block mt-3">
-              <span className="text-gradient-gold">REVENUE</span>
+              <span className="text-gradient-gold">BECOME STARS</span>
             </span>
           </h1>
 

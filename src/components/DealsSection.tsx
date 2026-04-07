@@ -1,13 +1,12 @@
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useRef, useState, TouchEvent } from "react";
-import { Check, Crown, Zap, TrendingUp, ChevronLeft, ChevronRight } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const plans = [
   {
     name: "RevShare",
-    icon: TrendingUp,
     highlight: "25–50%",
     description: "Lifetime revenue share on all player activity",
     features: [
@@ -19,7 +18,6 @@ const plans = [
   },
   {
     name: "CPA",
-    icon: Zap,
     highlight: "Custom",
     description: "Fixed commission per qualified player",
     features: [
@@ -32,7 +30,6 @@ const plans = [
   },
   {
     name: "Hybrid",
-    icon: Crown,
     highlight: "Best Deal",
     description: "Combine RevShare with CPA benefits",
     features: [
@@ -65,31 +62,27 @@ export const DealsSection = () => {
   };
 
   const renderCard = (plan: typeof plans[0]) => (
-    <div className={`glass-card rounded-2xl p-6 lg:p-8 h-full flex flex-col ${plan.featured ? 'border-primary/25' : ''}`}
-      style={plan.featured ? { boxShadow: '0 0 40px hsl(42 65% 52% / 0.06), 0 8px 40px hsl(0 0% 0% / 0.4)' } : {}}
+    <div className={`rounded-2xl p-6 lg:p-8 h-full flex flex-col border ${plan.featured ? 'border-primary/20' : 'border-border/15'}`}
+      style={{ 
+        background: plan.featured 
+          ? 'linear-gradient(165deg, hsl(224 28% 13%) 0%, hsl(224 26% 9%) 100%)' 
+          : 'hsl(224 28% 10%)',
+        boxShadow: plan.featured ? '0 0 30px hsl(42 65% 52% / 0.04)' : 'none'
+      }}
     >
-      <div className="flex items-center gap-3 mb-5">
-        <div className="w-10 h-10 rounded-xl flex items-center justify-center border border-primary/15"
-          style={{ background: 'linear-gradient(135deg, hsl(42 65% 52% / 0.1), hsl(42 65% 52% / 0.04))' }}
-        >
-          <plan.icon className="w-5 h-5 text-primary" />
-        </div>
-        <h3 className="font-display text-lg text-foreground">{plan.name}</h3>
-      </div>
-      
-      <p className="font-mono text-3xl lg:text-4xl text-gradient-gold mb-3 font-bold tracking-tight">
+      {plan.featured && (
+        <span className="text-[10px] uppercase tracking-[0.2em] text-primary/70 font-medium mb-4">Most Popular</span>
+      )}
+      <h3 className="font-display text-lg text-foreground mb-2">{plan.name}</h3>
+      <p className="font-mono text-3xl lg:text-4xl text-foreground mb-2 font-bold tracking-tight">
         {plan.highlight}
       </p>
-      <p className="text-muted-foreground mb-6 text-sm">{plan.description}</p>
+      <p className="text-muted-foreground/60 mb-6 text-sm">{plan.description}</p>
       
       <ul className="space-y-3 mt-auto">
         {plan.features.map((feature) => (
-          <li key={feature} className="flex items-center gap-2.5 text-foreground/75 text-sm">
-            <div className="w-4.5 h-4.5 rounded-full flex items-center justify-center shrink-0"
-              style={{ background: 'hsl(42 65% 52% / 0.12)' }}
-            >
-              <Check className="w-3 h-3 text-primary" />
-            </div>
+          <li key={feature} className="flex items-center gap-2.5 text-muted-foreground text-sm">
+            <Check className="w-3.5 h-3.5 text-muted-foreground/50 shrink-0" strokeWidth={1.5} />
             {feature}
           </li>
         ))}
@@ -114,15 +107,15 @@ export const DealsSection = () => {
             <span className="text-foreground">Choose Your </span>
             <span className="text-gradient-gold">Deal</span>
           </h2>
-          <p className="text-muted-foreground text-base max-w-lg mx-auto">
+          <p className="text-muted-foreground text-sm max-w-md mx-auto">
             Pick the model that works best for your traffic
           </p>
         </motion.div>
 
         {isMobile ? (
           <div className="relative">
-            <Button variant="outline" size="icon" className="absolute left-0 top-1/2 -translate-y-1/2 z-10 rounded-full h-8 w-8 bg-card/80 border-border/50" onClick={prevSlide}>
-              <ChevronLeft className="h-4 w-4" />
+            <Button variant="outline" size="icon" className="absolute left-0 top-1/2 -translate-y-1/2 z-10 rounded-full h-8 w-8 bg-card/80 border-border/30" onClick={prevSlide}>
+              <ChevronLeft className="h-4 w-4" strokeWidth={1.5} />
             </Button>
             <div className="px-10 overflow-hidden" onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
               <AnimatePresence mode="wait" initial={false}>
@@ -131,19 +124,19 @@ export const DealsSection = () => {
                 </motion.div>
               </AnimatePresence>
             </div>
-            <Button variant="outline" size="icon" className="absolute right-0 top-1/2 -translate-y-1/2 z-10 rounded-full h-8 w-8 bg-card/80 border-border/50" onClick={nextSlide}>
-              <ChevronRight className="h-4 w-4" />
+            <Button variant="outline" size="icon" className="absolute right-0 top-1/2 -translate-y-1/2 z-10 rounded-full h-8 w-8 bg-card/80 border-border/30" onClick={nextSlide}>
+              <ChevronRight className="h-4 w-4" strokeWidth={1.5} />
             </Button>
             <div className="flex justify-center gap-2 mt-6">
               {plans.map((_, index) => (
                 <button key={index} onClick={() => { setSlideDirection(index > currentSlide ? 1 : -1); setCurrentSlide(index); }}
-                  className={`w-2 h-2 rounded-full transition-colors ${index === currentSlide ? "bg-primary" : "bg-muted-foreground/20"}`}
+                  className={`w-1.5 h-1.5 rounded-full transition-colors ${index === currentSlide ? "bg-primary/70" : "bg-muted-foreground/15"}`}
                 />
               ))}
             </div>
           </div>
         ) : (
-          <div className="flex gap-5 max-w-5xl mx-auto justify-center">
+          <div className="flex gap-4 max-w-5xl mx-auto justify-center">
             {plans.map((plan, index) => (
               <motion.div
                 key={plan.name}

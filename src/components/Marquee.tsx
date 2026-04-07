@@ -13,24 +13,20 @@ const items = [
 
 export const Marquee = () => {
   return (
-    <div className="relative overflow-hidden py-5 border-y border-border/15"
-      style={{ background: 'linear-gradient(90deg, hsl(224 30% 8%) 0%, hsl(224 28% 10%) 50%, hsl(224 30% 8%) 100%)' }}
+    <div className="relative overflow-hidden py-4 border-y border-border/10"
+      style={{ background: 'hsl(224 30% 7%)' }}
     >
       <motion.div
-        className="flex gap-10 whitespace-nowrap"
+        className="flex gap-12 whitespace-nowrap"
         animate={{ x: ["0%", "-50%"] }}
-        transition={{
-          duration: 35,
-          repeat: Infinity,
-          ease: "linear",
-        }}
+        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
       >
         {[...items, ...items].map((item, index) => (
-          <div key={index} className="flex items-center gap-10">
-            <span className="text-[13px] md:text-sm font-medium text-muted-foreground/70 uppercase tracking-[0.12em]">
+          <div key={index} className="flex items-center gap-12">
+            <span className="text-[11px] font-medium text-muted-foreground/40 uppercase tracking-[0.15em]">
               {item}
             </span>
-            <span className="text-primary/40 text-[8px]">◆</span>
+            <span className="text-muted-foreground/15 text-[6px]">●</span>
           </div>
         ))}
       </motion.div>

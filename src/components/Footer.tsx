@@ -5,13 +5,15 @@ import { ContactFormModal } from "./ContactFormModal";
 import { Send } from "lucide-react";
 import partnerstarLogo from "@/assets/partnerstar-full-logo.png";
 
+const paymentLabels = ["Wire", "BTC", "USDT", "Skrill", "Neteller"];
+
 const footerLinks = [
   {
     title: "Company",
     links: [
-      { name: "About", href: "#about", isRoute: false },
       { name: "Our Brands", href: "#brands", isRoute: false },
       { name: "Commissions", href: "#deals", isRoute: false },
+      { name: "Why Us", href: "#why-us", isRoute: false },
     ],
   },
   {
@@ -27,29 +29,28 @@ export const Footer = () => {
   const [isContactOpen, setIsContactOpen] = useState(false);
 
   return (
-    <footer className="border-t border-border/30 relative z-10 bg-background">
+    <footer className="border-t border-border/20 relative z-10" style={{ background: 'hsl(225 35% 5%)' }}>
       <div className="container mx-auto px-4 md:px-8 py-12 md:py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-10">
-          {/* Logo */}
           <div className="col-span-2 md:col-span-1">
             <Link to="/" className="mb-4 block">
               <img src={partnerstarLogo} alt="Partnerstar" className="h-10 w-auto" />
             </Link>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-muted-foreground/60 text-xs leading-relaxed">
               Premium iGaming affiliate program with industry-leading commission rates.
             </p>
           </div>
           
           {footerLinks.map((section) => (
             <div key={section.title}>
-              <h4 className="font-semibold text-foreground text-sm uppercase tracking-wider mb-4">{section.title}</h4>
-              <ul className="space-y-3">
+              <h4 className="font-medium text-foreground/80 text-xs uppercase tracking-[0.15em] mb-4">{section.title}</h4>
+              <ul className="space-y-2.5">
                 {section.links.map((link) => (
                   <li key={link.name}>
                     {link.isRoute ? (
-                      <Link to={link.href} className="text-muted-foreground hover:text-foreground transition-colors text-sm">{link.name}</Link>
+                      <Link to={link.href} className="text-muted-foreground/50 hover:text-muted-foreground transition-colors text-sm">{link.name}</Link>
                     ) : (
-                      <a href={link.href} className="text-muted-foreground hover:text-foreground transition-colors text-sm">{link.name}</a>
+                      <a href={link.href} className="text-muted-foreground/50 hover:text-muted-foreground transition-colors text-sm">{link.name}</a>
                     )}
                   </li>
                 ))}
@@ -57,17 +58,16 @@ export const Footer = () => {
             </div>
           ))}
           
-          {/* Support */}
           <div className="col-span-2 md:col-span-1">
-            <h4 className="font-semibold text-foreground text-sm uppercase tracking-wider mb-4">Support</h4>
+            <h4 className="font-medium text-foreground/80 text-xs uppercase tracking-[0.15em] mb-4">Support</h4>
             <a 
               href="https://t.me/partnerstar" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm mb-4"
+              className="inline-flex items-center gap-2 text-muted-foreground/50 hover:text-muted-foreground transition-colors text-sm mb-4"
             >
-              <Send className="w-4 h-4" />
-              Telegram Support
+              <Send className="w-3.5 h-3.5" strokeWidth={1.5} />
+              Telegram
             </a>
             <div className="mt-3">
               <Button 
@@ -80,13 +80,19 @@ export const Footer = () => {
             </div>
           </div>
         </div>
+
+        {/* Payment methods */}
+        <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
+          {paymentLabels.map((p) => (
+            <span key={p} className="text-[10px] text-muted-foreground/30 font-mono tracking-wider uppercase">{p}</span>
+          ))}
+        </div>
         
-        {/* Bottom */}
-        <div className="pt-8 border-t border-border/20 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-muted-foreground text-xs">
+        <div className="pt-6 border-t border-border/10 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-muted-foreground/40 text-xs">
             © {new Date().getFullYear()} Partnerstar. All rights reserved.
           </p>
-          <p className="text-muted-foreground text-xs">
+          <p className="text-muted-foreground/40 text-xs">
             18+ | Gamble Responsibly
           </p>
         </div>

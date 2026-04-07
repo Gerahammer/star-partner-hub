@@ -1,28 +1,27 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { TrendingUp, Wallet, BarChart3, Shield } from "lucide-react";
+import { TrendingUp, Wallet, BarChart3, UserCheck } from "lucide-react";
 
 const features = [
   {
     icon: TrendingUp,
-    title: "Up to 50% RevShare",
-    description: "Industry-leading commission rates with custom CPA & Hybrid plans available",
-  },
-  {
-    icon: Wallet,
-    title: "Fast Payouts",
-    description: "Monthly on-time payouts via wire, crypto, and e-wallets",
+    title: "High Conversion Rates",
+    description: "Optimized funnels and premium brands that convert your traffic into revenue",
   },
   {
     icon: BarChart3,
-    title: "Real-Time Reporting",
-    description: "Detailed API & post-back reporting with ZERO data lag",
+    title: "Real-Time Tracking",
+    description: "Detailed analytics, API integrations, and post-back tracking with zero lag",
   },
   {
-    icon: Shield,
-    title: "Trusted Partner",
-    description: "Transparent operations with verified tracking and fair terms",
+    icon: Wallet,
+    title: "Fast Payments",
+    description: "Weekly payouts via wire, crypto, and e-wallets — no delays",
+  },
+  {
+    icon: UserCheck,
+    title: "Dedicated Manager",
+    description: "Personal account manager to optimize your campaigns and maximize ROI",
   },
 ];
 
@@ -31,9 +30,8 @@ export const WhyUsSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="why-us" className="py-16 sm:py-20 md:py-28 lg:py-32 relative overflow-hidden">
-      {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-radial-primary opacity-30 dark:opacity-30" />
+    <section id="why-us" className="py-24 md:py-32 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent" />
       
       <div className="container mx-auto px-4 md:px-8 relative">
         <motion.div
@@ -43,33 +41,32 @@ export const WhyUsSection = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="text-primary font-semibold uppercase tracking-wider text-xs sm:text-sm mb-3 md:mb-4 block">
+          <span className="text-primary font-semibold uppercase tracking-wider text-xs sm:text-sm mb-4 block">
             Why Choose Us
           </span>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-foreground px-2">
-            MAXIMIZE YOUR
-            <br />
-            <span className="text-gradient-purple">EARNINGS</span>
+          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl">
+            <span className="text-liquid-silver">BUILT FOR </span>
+            <span className="text-gradient-gold">PERFORMANCE</span>
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-6 max-w-5xl mx-auto">
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="flex gap-3 sm:gap-4 md:gap-5 p-4 sm:p-5 md:p-6 rounded-xl md:rounded-2xl bg-card/50 dark:bg-card/50 border border-border/50 hover:border-primary/30 transition-colors group"
+              className="flex gap-4 p-5 md:p-6 rounded-2xl bg-card/50 border border-border/50 hover:border-primary/30 transition-all duration-300 group hover:-translate-y-1"
             >
-              <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 shrink-0 rounded-lg md:rounded-xl bg-secondary/20 flex items-center justify-center group-hover:bg-secondary transition-colors">
-                <feature.icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-secondary group-hover:text-primary-foreground transition-colors" />
+              <div className="w-12 h-12 shrink-0 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors border border-primary/20">
+                <feature.icon className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <h3 className="font-display text-lg sm:text-xl md:text-2xl text-foreground mb-1 md:mb-2">
+                <h3 className="font-display text-lg md:text-xl text-foreground mb-1">
                   {feature.title}
                 </h3>
-                <p className="text-muted-foreground text-sm sm:text-base">
+                <p className="text-muted-foreground text-sm">
                   {feature.description}
                 </p>
               </div>

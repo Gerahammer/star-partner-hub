@@ -1,5 +1,4 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Shield, Lock, CreditCard, Award, Zap, Clock } from "lucide-react";
 
@@ -17,8 +16,11 @@ export const TrustBadges = () => {
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
   return (
-    <section className="py-10 border-y border-border/20">
+    <section className="py-12 border-y border-border/20">
       <div className="container mx-auto px-4 md:px-8">
+        <p className="text-center text-muted-foreground text-sm uppercase tracking-widest mb-8 font-medium">
+          Trusted by affiliates worldwide
+        </p>
         <motion.div
           ref={ref}
           initial={{ opacity: 0 }}
@@ -32,7 +34,7 @@ export const TrustBadges = () => {
               initial={{ opacity: 0, y: 15 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.4, delay: index * 0.08 }}
-              className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
+              className="flex items-center gap-2.5 text-muted-foreground hover:text-foreground transition-colors group"
             >
               <badge.icon className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" />
               <span className="text-xs font-medium uppercase tracking-wider whitespace-nowrap">{badge.label}</span>

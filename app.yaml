@@ -1,0 +1,28 @@
+name: seashell-app
+services:
+- name: api
+  github:
+    repo: Gerahammer/star-partner-hub
+    branch: main
+    deploy_on_push: true
+  source_dir: /
+  build_command: npm install && npm run build
+  run_command: npm start
+  envs:
+  - key: NODE_ENV
+    value: production
+  - key: PORT
+    value: "8080"
+  - key: RESEND_API_KEY
+    scope: RUN_TIME
+  - key: TELEGRAM_BOT_TOKEN
+    scope: RUN_TIME
+  - key: TELEGRAM_CHAT_ID
+    scope: RUN_TIME
+  http_port: 8080
+  health_check:
+    http_path: /health
+    initial_delay_seconds: 30
+    timeout_seconds: 5
+regions:
+- name: fra

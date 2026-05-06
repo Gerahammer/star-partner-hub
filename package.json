@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "vite",
     "dev:server": "tsx watch server.ts",
-    "build": "vite build && tsc server.ts --outDir dist --module esnext --target es2020 --skipLibCheck",
+    "build": "vite build",
     "build:dev": "vite build --mode development",
-    "start": "node dist/server.js",
+    "start": "tsx server.ts",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",

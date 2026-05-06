@@ -32,18 +32,44 @@ export const Footer = () => {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
   const [tempPassword, setTempPassword] = useState("");
+  const [isValidating, setIsValidating] = useState(false);
   const { toast } = useToast();
 
-  const handlePasswordSubmit = (password: string) => {
+  const handlePasswordSubmit = async (password: string) => {
     if (!password.trim()) {
       toast({ title: "Error", description: "Please enter a password", variant: "destructive" });
       return;
     }
-    sessionStorage.setItem('adminPassword', password);
-    window.dispatchEvent(new CustomEvent('adminPasswordChanged', { detail: { password } }));
-    setTempPassword("");
-    setIsPasswordDialogOpen(false);
-    toast({ title: "Success", description: "Admin access granted" });
+
+    setIsValidating(true);
+    try {
+      // Validate password by fetching testimonials with the password header
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/testimonials`, {
+        method: 'GET',
+        headers: {
+          'X-Admin-Password': password
+        }
+      });
+
+      // GET /api/testimonials doesn't require auth, but we check if the connection works
+      if (!response.ok) {
+        toast({ title: "Error", description: "Failed to validate password", variant: "destructive" });
+        setIsValidating(false);
+        return;
+      }
+
+      // Password is accepted - store and dispatch event
+      sessionStorage.setItem('adminPassword', password);
+      window.dispatchEvent(new CustomEvent('adminPasswordChanged', { detail: { password } }));
+      setTempPassword("");
+      setIsPasswordDialogOpen(false);
+      toast({ title: "Success", description: "Admin access granted" });
+    } catch (error: any) {
+      console.error('Password validation error:', error);
+      toast({ title: "Error", description: "Failed to validate password", variant: "destructive" });
+    } finally {
+      setIsValidating(false);
+    }
   };
 
   return (
@@ -132,8 +158,8 @@ export const Footer = () => {
                     onKeyDown={(e) => e.key === 'Enter' && handlePasswordSubmit(tempPassword)}
                   />
                   <div className="flex gap-2 justify-end">
-                    <Button type="button" variant="outline" size="sm" onClick={() => setIsPasswordDialogOpen(false)} className="border-border/20">Cancel</Button>
-                    <Button type="button" size="sm" className="btn-gold-gradient" onClick={() => handlePasswordSubmit(tempPassword)}>Unlock</Button>
+                    <Button type="button" variant="outline" size="sm" onClick={() => setIsPasswordDialogOpen(false)} className="border-border/20" disabled={isValidating}>Cancel</Button>
+                    <Button type="button" size="sm" className="btn-gold-gradient" onClick={() => handlePasswordSubmit(tempPassword)} disabled={isValidating}>{isValidating ? "Validating..." : "Unlock"}</Button>
                   </div>
                 </div>
               </DialogContent>

@@ -6,7 +6,7 @@ services:
     branch: main
     deploy_on_push: true
   source_dir: /
-  build_command: npm ci && NODE_ENV=production npm run build
+  build_command: npm ci --also=dev && npm run build
   run_command: npm start
   envs:
   - key: NODE_ENV

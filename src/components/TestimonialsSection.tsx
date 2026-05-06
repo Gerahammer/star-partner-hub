@@ -292,52 +292,59 @@ export const TestimonialsSection = () => {
                       {/* Decorative gradient accent */}
                       <div className="pointer-events-none absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/10 to-transparent blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                      {/* Quote mark decoration */}
-                      <div className="pointer-events-none absolute top-3 right-4 text-primary/15 text-5xl font-serif leading-none select-none">"</div>
+                      {/* Header: logo top-left, admin buttons top-right */}
+                      <div className="relative z-10 flex items-start justify-between p-4 pb-0">
+                        {testimonial.logo_url ? (
+                          <img src={testimonial.logo_url} alt={`${testimonial.site_name} logo`} className="w-12 h-12 object-contain rounded-lg border border-primary/20 p-1.5 flex-shrink-0" style={{ background: 'hsl(224 28% 15%)' }} />
+                        ) : (
+                          <div className="w-12 h-12 rounded-lg border border-primary/20 flex items-center justify-center flex-shrink-0" style={{ background: 'hsl(224 28% 15%)' }}>
+                            <span className="text-primary/60 font-medium text-base">{testimonial.site_name.charAt(0).toUpperCase()}</span>
+                          </div>
+                        )}
 
-                      {adminPassword && (
-                        <div className="relative z-10 flex justify-end gap-1.5 p-4 pb-0">
-                          <motion.button
-                            onClick={() => handleEdit(testimonial)}
-                            className="p-2 rounded-lg hover:bg-primary/10 transition-all focus-visible:ring-2 focus-visible:ring-ring/50"
-                            whileHover={{ scale: 1.1 }}
-                            aria-label={`Edit testimonial from ${testimonial.site_name}`}
-                          >
-                            <Edit2 className="w-4 h-4 text-muted-foreground/60 hover:text-primary" strokeWidth={1.5} />
-                          </motion.button>
-                          <motion.button
-                            onClick={() => handleDelete(testimonial.id)}
-                            className="p-2 rounded-lg hover:bg-destructive/10 transition-all focus-visible:ring-2 focus-visible:ring-ring/50"
-                            whileHover={{ scale: 1.1 }}
-                            aria-label={`Delete testimonial from ${testimonial.site_name}`}
-                          >
-                            <Trash2 className="w-4 h-4 text-muted-foreground/60 hover:text-destructive" strokeWidth={1.5} />
-                          </motion.button>
-                        </div>
-                      )}
+                        {adminPassword && (
+                          <div className="flex gap-1.5">
+                            <motion.button
+                              onClick={() => handleEdit(testimonial)}
+                              className="p-2 rounded-lg hover:bg-primary/10 transition-all focus-visible:ring-2 focus-visible:ring-ring/50"
+                              whileHover={{ scale: 1.1 }}
+                              aria-label={`Edit testimonial from ${testimonial.site_name}`}
+                            >
+                              <Edit2 className="w-4 h-4 text-muted-foreground/60 hover:text-primary" strokeWidth={1.5} />
+                            </motion.button>
+                            <motion.button
+                              onClick={() => handleDelete(testimonial.id)}
+                              className="p-2 rounded-lg hover:bg-destructive/10 transition-all focus-visible:ring-2 focus-visible:ring-ring/50"
+                              whileHover={{ scale: 1.1 }}
+                              aria-label={`Delete testimonial from ${testimonial.site_name}`}
+                            >
+                              <Trash2 className="w-4 h-4 text-muted-foreground/60 hover:text-destructive" strokeWidth={1.5} />
+                            </motion.button>
+                          </div>
+                        )}
+                      </div>
 
                       {/* Content */}
-                      <div className="flex-1 flex flex-col p-6">
+                      <div className="flex-1 flex flex-col px-6 pt-4 pb-6">
                         {/* Quote text */}
                         <p className="text-muted-foreground/70 leading-relaxed text-sm flex-1 italic mb-6">"{testimonial.content}"</p>
 
-                        {/* Author info */}
-                        <div className="flex items-center gap-3 pt-4 border-t border-border/20">
-                          {testimonial.logo_url ? (
-                            <img src={testimonial.logo_url} alt={`${testimonial.site_name} logo`} className="w-11 h-11 object-contain rounded-lg border border-primary/20 p-1.5 flex-shrink-0" style={{ background: 'hsl(224 28% 15%)' }} />
+                        {/* Author info - centered */}
+                        <div className="flex items-center justify-center pt-4 border-t border-border/20">
+                          {testimonial.site_url ? (
+                            <a
+                              href={testimonial.site_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="font-semibold text-foreground text-sm hover:text-primary transition-colors inline-flex items-center gap-1.5"
+                              aria-label={`Visit ${testimonial.site_name}`}
+                            >
+                              {testimonial.site_name}
+                              <ExternalLink className="w-3.5 h-3.5 text-primary/70" strokeWidth={2} />
+                            </a>
                           ) : (
-                            <div className="w-11 h-11 rounded-lg border border-primary/20 flex items-center justify-center flex-shrink-0" style={{ background: 'hsl(224 28% 15%)' }}>
-                              <span className="text-primary/60 font-medium text-sm">{testimonial.site_name.charAt(0).toUpperCase()}</span>
-                            </div>
+                            <p className="font-semibold text-foreground text-sm">{testimonial.site_name}</p>
                           )}
-                          <div className="flex-1 min-w-0">
-                            <p className="font-semibold text-foreground text-sm truncate">{testimonial.site_name}</p>
-                            {testimonial.site_url && (
-                              <a href={testimonial.site_url} target="_blank" rel="noopener noreferrer" className="text-[11px] text-primary/70 hover:text-primary flex items-center gap-1 mt-0.5 transition-colors">
-                                Visit <ExternalLink className="w-3 h-3" strokeWidth={2} />
-                              </a>
-                            )}
-                          </div>
                         </div>
                       </div>
                     </motion.div>

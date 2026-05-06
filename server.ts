@@ -219,6 +219,14 @@ app.get('/health', (req: Request, res: Response) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
+app.post('/api/auth/check-password', (req: Request, res: Response) => {
+  if (checkAdminPassword(req)) {
+    res.json({ valid: true, message: 'Password is correct' });
+  } else {
+    res.status(401).json({ valid: false, error: 'Invalid password' });
+  }
+});
+
 app.post('/api/contact', async (req: Request, res: Response) => {
   try {
     const { name, email, company, telegram, teams, message } = req.body;

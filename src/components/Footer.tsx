@@ -43,22 +43,29 @@ export const Footer = () => {
 
     setIsValidating(true);
     try {
-      // Validate password by fetching testimonials with the password header
-      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/testimonials`, {
-        method: 'GET',
+      // Validate password against the auth endpoint
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/auth/check-password`, {
+        method: 'POST',
         headers: {
+          'Content-Type': 'application/json',
           'X-Admin-Password': password
         }
       });
 
-      // GET /api/testimonials doesn't require auth, but we check if the connection works
       if (!response.ok) {
-        toast({ title: "Error", description: "Failed to validate password", variant: "destructive" });
+        toast({ title: "Error", description: "Invalid password", variant: "destructive" });
         setIsValidating(false);
         return;
       }
 
-      // Password is accepted - store and dispatch event
+      const data = await response.json();
+      if (!data.valid) {
+        toast({ title: "Error", description: "Invalid password", variant: "destructive" });
+        setIsValidating(false);
+        return;
+      }
+
+      // Password is valid - store and dispatch event
       sessionStorage.setItem('adminPassword', password);
       window.dispatchEvent(new CustomEvent('adminPasswordChanged', { detail: { password } }));
       setTempPassword("");

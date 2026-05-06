@@ -226,8 +226,8 @@ export const TestimonialsSection = () => {
                 </form>
               </DialogContent>
             </Dialog>
-          )}
-        </div>
+          </div>
+        )}
 
         {testimonials.length === 0 ? (
           <div className="text-center py-16"><p className="text-muted-foreground/50 text-sm">No testimonials yet.</p></div>

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, TouchEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Trash2, Edit2, ExternalLink, ChevronLeft, ChevronRight, Upload, Lock } from "lucide-react";
+import { Plus, Trash2, Edit2, ExternalLink, ChevronLeft, ChevronRight, Upload } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
@@ -18,9 +18,7 @@ interface Testimonial {
 
 export const TestimonialsSection = () => {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
-  const [adminPassword, setAdminPassword] = useState<string | null>(null);
-  const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
-  const [tempPassword, setTempPassword] = useState("");
+  const [adminPassword, setAdminPassword] = useState<string | null>(() => sessionStorage.getItem('adminPassword'));
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -37,7 +35,15 @@ export const TestimonialsSection = () => {
   const itemsToShow = isMobile ? 1 : 3;
   const showCarousel = testimonials.length > itemsToShow;
 
-  useEffect(() => { fetchTestimonials(); }, []);
+  useEffect(() => {
+    fetchTestimonials();
+    const handleStorageChange = () => {
+      const newPassword = sessionStorage.getItem('adminPassword');
+      setAdminPassword(newPassword);
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
 
   const fetchTestimonials = async () => {
     try {
@@ -51,16 +57,6 @@ export const TestimonialsSection = () => {
     }
   };
 
-  const handlePasswordSubmit = (password: string) => {
-    if (!password.trim()) {
-      toast({ title: "Error", description: "Please enter a password", variant: "destructive" });
-      return;
-    }
-    setAdminPassword(password);
-    setTempPassword("");
-    setIsPasswordDialogOpen(false);
-    toast({ title: "Success", description: "Admin access granted" });
-  };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -199,32 +195,8 @@ export const TestimonialsSection = () => {
           </h2>
         </motion.div>
 
-        <div className="flex justify-end mb-8 gap-2">
-          <Dialog open={isPasswordDialogOpen} onOpenChange={setIsPasswordDialogOpen}>
-            <DialogTrigger asChild>
-              <Button variant="outline" className="rounded-full text-xs border-border/20" onClick={() => setIsPasswordDialogOpen(true)}>
-                <Lock className="w-3.5 h-3.5 mr-1.5" strokeWidth={1.5} /> {adminPassword ? "Change Password" : "Unlock Admin"}
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-md bg-card border-border/30">
-              <DialogHeader><DialogTitle className="text-sm">Admin Password</DialogTitle></DialogHeader>
-              <div className="space-y-4">
-                <Input
-                  type="password"
-                  placeholder="Enter admin password"
-                  value={tempPassword}
-                  onChange={(e) => setTempPassword(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handlePasswordSubmit(tempPassword)}
-                />
-                <div className="flex gap-2 justify-end">
-                  <Button type="button" variant="outline" size="sm" onClick={() => setIsPasswordDialogOpen(false)} className="border-border/20">Cancel</Button>
-                  <Button type="button" size="sm" className="btn-gold-gradient" onClick={() => handlePasswordSubmit(tempPassword)}>Unlock</Button>
-                </div>
-              </div>
-            </DialogContent>
-          </Dialog>
-
-          {adminPassword && (
+        {adminPassword && (
+          <div className="flex justify-end mb-8">
             <Dialog open={isDialogOpen} onOpenChange={(open) => { if (!open) resetForm(); setIsDialogOpen(open); }}>
               <DialogTrigger asChild>
                 <Button className="btn-gold-gradient rounded-full text-xs" onClick={() => resetForm()}>

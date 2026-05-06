@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { ContactFormModal } from "./ContactFormModal";
-import { Send } from "lucide-react";
+import { Send, Lock } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { useToast } from "@/hooks/use-toast";
 import partnerstarLogo from "@/assets/partnerstar-full-logo.png";
 
 const paymentLabels = ["Wire", "BTC", "USDT", "Skrill", "Neteller"];
@@ -27,6 +30,20 @@ const footerLinks = [
 
 export const Footer = () => {
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
+  const [tempPassword, setTempPassword] = useState("");
+  const { toast } = useToast();
+
+  const handlePasswordSubmit = (password: string) => {
+    if (!password.trim()) {
+      toast({ title: "Error", description: "Please enter a password", variant: "destructive" });
+      return;
+    }
+    sessionStorage.setItem('adminPassword', password);
+    setTempPassword("");
+    setIsPasswordDialogOpen(false);
+    toast({ title: "Success", description: "Admin access granted" });
+  };
 
   return (
     <footer className="border-t border-border/20 relative z-10" style={{ background: 'hsl(225 35% 5%)' }}>
@@ -93,13 +110,36 @@ export const Footer = () => {
           <p className="text-muted-foreground/40 text-xs">
             © {new Date().getFullYear()} Partnerstar. All rights reserved.
           </p>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <p className="text-muted-foreground/40 text-xs">
               18+ | Gamble Responsibly
             </p>
             <a href="https://ro-affiliate.partnerstar.com/login" target="_blank" rel="noopener noreferrer" className="text-muted-foreground/60 hover:text-foreground transition-colors text-xs focus-visible:ring-2 focus-visible:ring-ring/50 rounded px-1 py-0.5">
               Log In
             </a>
+            <Dialog open={isPasswordDialogOpen} onOpenChange={setIsPasswordDialogOpen}>
+              <DialogTrigger asChild>
+                <Button variant="ghost" size="sm" className="h-6 px-2 text-xs text-muted-foreground/60 hover:text-foreground">
+                  <Lock className="w-3 h-3 mr-1" strokeWidth={1.5} />
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md bg-card border-border/30">
+                <DialogHeader><DialogTitle className="text-sm">Admin Password</DialogTitle></DialogHeader>
+                <div className="space-y-4">
+                  <Input
+                    type="password"
+                    placeholder="Enter admin password"
+                    value={tempPassword}
+                    onChange={(e) => setTempPassword(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handlePasswordSubmit(tempPassword)}
+                  />
+                  <div className="flex gap-2 justify-end">
+                    <Button type="button" variant="outline" size="sm" onClick={() => setIsPasswordDialogOpen(false)} className="border-border/20">Cancel</Button>
+                    <Button type="button" size="sm" className="btn-gold-gradient" onClick={() => handlePasswordSubmit(tempPassword)}>Unlock</Button>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
       </div>

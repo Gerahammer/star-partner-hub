@@ -1,8 +1,6 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Eye } from "lucide-react";
-import { useState } from "react";
-import { ContactFormModal } from "./ContactFormModal";
 import partnerstarStar from "@/assets/partnerstar-star.png";
 
 const heroStats = [
@@ -12,7 +10,6 @@ const heroStats = [
 ];
 
 export const HeroSection = () => {
-  const [isContactOpen, setIsContactOpen] = useState(false);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -65,13 +62,15 @@ export const HeroSection = () => {
             transition={{ delay: 0.6, duration: 0.6 }}
             className="relative z-10 flex flex-col sm:flex-row gap-4 justify-center items-center mb-20"
           >
-            <Button 
+            <Button
               className="btn-gold-gradient rounded-full px-10 py-6 text-sm md:text-base font-bold uppercase tracking-wider group"
               size="lg"
-              onClick={() => setIsContactOpen(true)}
+              asChild
             >
-              Join Now
-              <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" strokeWidth={1.5} />
+              <a href="https://ro-affiliate.partnerstar.com/registration" target="_blank" rel="noopener noreferrer">
+                Register
+                <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" strokeWidth={1.5} />
+              </a>
             </Button>
             <Button 
               variant="outline" 
@@ -99,9 +98,8 @@ export const HeroSection = () => {
           </motion.div>
         </motion.div>
       </div>
-      
+
       <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent z-10" />
-      <ContactFormModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
     </section>
   );
 };

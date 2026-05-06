@@ -56,10 +56,10 @@ export const Header = () => {
 
           <div className="hidden lg:flex items-center gap-3">
             <Button variant="ghost" size="sm" className="text-muted-foreground/50 hover:text-foreground text-[12px]" asChild>
-              <Link to="/auth">Log In</Link>
+              <a href="https://ro-affiliate.partnerstar.com/login" target="_blank" rel="noopener noreferrer">Log In</a>
             </Button>
             <Button className="btn-gold-gradient rounded-full px-5 text-[11px] font-bold uppercase tracking-wider" size="sm" asChild>
-              <Link to="/auth">Join Now</Link>
+              <a href="https://ro-affiliate.partnerstar.com/registration" target="_blank" rel="noopener noreferrer">Register</a>
             </Button>
           </div>
 
@@ -94,10 +94,10 @@ export const Header = () => {
                 ))}
                 <div className="flex items-center gap-3 mt-4">
                   <Button variant="ghost" size="lg" className="flex-1 text-muted-foreground/50" asChild>
-                    <Link to="/auth" onClick={() => setIsMenuOpen(false)}>Log In</Link>
+                    <a href="https://ro-affiliate.partnerstar.com/login" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)}>Log In</a>
                   </Button>
                   <Button className="flex-1 btn-gold-gradient rounded-full font-bold uppercase tracking-wider" size="lg" asChild>
-                    <Link to="/auth" onClick={() => setIsMenuOpen(false)}>Join Now</Link>
+                    <a href="https://ro-affiliate.partnerstar.com/registration" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)}>Register</a>
                   </Button>
                 </div>
               </div>

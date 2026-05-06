@@ -1,13 +1,11 @@
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { ContactFormModal } from "./ContactFormModal";
 
 export const CTASection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [isContactOpen, setIsContactOpen] = useState(false);
 
   return (
     <section className="py-28 md:py-36 relative overflow-hidden">
@@ -33,18 +31,18 @@ export const CTASection = () => {
             Join thousands of affiliates already earning with premium casino brands.
           </p>
           
-          <Button 
+          <Button
             className="btn-gold-gradient rounded-full px-12 py-7 text-base font-bold uppercase tracking-wider group"
             size="lg"
-            onClick={() => setIsContactOpen(true)}
+            asChild
           >
-            Join Now
-            <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" strokeWidth={1.5} />
+            <a href="https://ro-affiliate.partnerstar.com/registration" target="_blank" rel="noopener noreferrer">
+              Register
+              <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" strokeWidth={1.5} />
+            </a>
           </Button>
         </motion.div>
       </div>
-
-      <ContactFormModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
     </section>
   );
 };

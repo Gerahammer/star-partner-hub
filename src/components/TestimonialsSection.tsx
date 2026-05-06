@@ -25,6 +25,7 @@ export const TestimonialsSection = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [uploadingLogo, setUploadingLogo] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [slideDirection, setSlideDirection] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const touchStartX = useRef<number | null>(null);
@@ -95,19 +96,19 @@ export const TestimonialsSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!adminPassword) {
-      toast({ title: "Error", description: "Admin password required", variant: "destructive" });
+    if (!adminPassword || isSubmitting) {
       return;
     }
 
-    const payload = {
-      site_name: formData.site_name,
-      content: formData.content,
-      site_url: formData.site_url || null,
-      logo_url: formData.logo_url || null
-    };
-
+    setIsSubmitting(true);
     try {
+      const payload = {
+        site_name: formData.site_name,
+        content: formData.content,
+        site_url: formData.site_url || null,
+        logo_url: formData.logo_url || null
+      };
+
       const url = editingId ? `/api/testimonials/${editingId}` : '/api/testimonials';
       const method = editingId ? 'PUT' : 'POST';
 
@@ -130,6 +131,8 @@ export const TestimonialsSection = () => {
       fetchTestimonials();
     } catch (error: any) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -222,9 +225,9 @@ export const TestimonialsSection = () => {
           </Dialog>
 
           {adminPassword && (
-            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <Dialog open={isDialogOpen} onOpenChange={(open) => { if (!open) resetForm(); setIsDialogOpen(open); }}>
               <DialogTrigger asChild>
-                <Button className="btn-gold-gradient rounded-full text-xs" onClick={() => { resetForm(); setIsDialogOpen(true); }}>
+                <Button className="btn-gold-gradient rounded-full text-xs" onClick={() => resetForm()}>
                   <Plus className="w-3.5 h-3.5 mr-1.5" strokeWidth={1.5} /> Add
                 </Button>
               </DialogTrigger>
@@ -245,8 +248,8 @@ export const TestimonialsSection = () => {
                     </div>
                   </div>
                   <div className="flex gap-2 justify-end">
-                    <Button type="button" variant="outline" size="sm" onClick={resetForm} className="border-border/20">Cancel</Button>
-                    <Button type="submit" size="sm" className="btn-gold-gradient">{editingId ? "Update" : "Add"}</Button>
+                    <Button type="button" variant="outline" size="sm" onClick={resetForm} className="border-border/20" disabled={isSubmitting}>Cancel</Button>
+                    <Button type="submit" size="sm" className="btn-gold-gradient" disabled={isSubmitting}>{isSubmitting ? "Saving..." : editingId ? "Update" : "Add"}</Button>
                   </div>
                 </form>
               </DialogContent>

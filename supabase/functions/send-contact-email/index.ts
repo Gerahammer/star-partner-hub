@@ -4,6 +4,8 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+const TELEGRAM_BOT_TOKEN = Deno.env.get("TELEGRAM_BOT_TOKEN");
+const TELEGRAM_CHAT_ID = Deno.env.get("TELEGRAM_CHAT_ID");
 
 // Rate limit settings
 const RATE_LIMIT_MAX_REQUESTS = 5; // Max requests per time window
@@ -86,14 +88,62 @@ async function recordRequest(supabase: any, ipAddress: string): Promise<void> {
   const { error } = await supabase
     .from("contact_rate_limits")
     .insert({ ip_address: ipAddress });
-  
+
   if (error) {
     console.error("Failed to record rate limit:", error);
   }
-  
+
   // Occasionally clean up old entries (1% chance per request)
   if (Math.random() < 0.01) {
     await supabase.rpc("cleanup_old_rate_limits");
+  }
+}
+
+// Send message to Telegram
+async function sendTelegramMessage(name: string, email: string, company: string, telegram: string, teams: string, message: string): Promise<boolean> {
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+    console.warn("Telegram credentials not configured, skipping Telegram notification");
+    return false;
+  }
+
+  try {
+    const telegramMessage = `
+📬 <b>New Partnership Inquiry</b>
+
+👤 <b>Name:</b> ${escapeHtml(name)}
+📧 <b>Email:</b> ${escapeHtml(email)}
+${company ? `🏢 <b>Company:</b> ${escapeHtml(company)}` : ""}
+${telegram ? `📱 <b>Telegram:</b> ${escapeHtml(telegram)}` : ""}
+${teams ? `💼 <b>Teams:</b> ${escapeHtml(teams)}` : ""}
+
+💬 <b>Message:</b>
+${escapeHtml(message)}
+    `.trim();
+
+    const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: telegramMessage,
+        parse_mode: "HTML",
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error("Telegram API error:", errorData);
+      return false;
+    }
+
+    const data = await response.json();
+    console.log("Telegram message sent successfully:", data);
+    return true;
+  } catch (error) {
+    console.error("Error sending Telegram message:", error);
+    return false;
   }
 }
 
@@ -200,15 +250,22 @@ const handler = async (req: Request): Promise<Response> => {
     const data = await res.json();
     console.log("Email sent successfully:", data);
 
+    // Send Telegram notification
+    const telegramSent = await sendTelegramMessage(safeName, safeEmail, safeCompany, safeTelegram, safeTeams, safeMessage);
+
     return new Response(
-      JSON.stringify({ success: true, message: "Email sent successfully" }),
-      { 
-        status: 200, 
-        headers: { 
-          ...corsHeaders, 
+      JSON.stringify({
+        success: true,
+        message: "Email sent successfully",
+        telegramNotified: telegramSent
+      }),
+      {
+        status: 200,
+        headers: {
+          ...corsHeaders,
           "Content-Type": "application/json",
           "X-RateLimit-Remaining": String(remaining - 1)
-        } 
+        }
       }
     );
   } catch (error: any) {

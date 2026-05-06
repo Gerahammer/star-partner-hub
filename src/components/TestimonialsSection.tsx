@@ -295,7 +295,7 @@ export const TestimonialsSection = () => {
                       {/* Header: logo top-left, admin buttons top-right */}
                       <div className="relative z-10 flex items-start justify-between p-4 pb-0">
                         {testimonial.logo_url ? (
-                          <img src={testimonial.logo_url} alt={`${testimonial.site_name} logo`} className="w-12 h-12 object-contain rounded-lg border border-primary/20 p-1.5 flex-shrink-0" style={{ background: 'hsl(224 28% 15%)' }} />
+                          <img src={testimonial.logo_url} alt={`${testimonial.site_name} logo`} loading="lazy" className="w-12 h-12 object-contain rounded-lg border border-primary/20 p-1.5 flex-shrink-0" style={{ background: 'hsl(224 28% 15%)' }} />
                         ) : (
                           <div className="w-12 h-12 rounded-lg border border-primary/20 flex items-center justify-center flex-shrink-0" style={{ background: 'hsl(224 28% 15%)' }}>
                             <span className="text-primary/60 font-medium text-base">{testimonial.site_name.charAt(0).toUpperCase()}</span>

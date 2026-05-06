@@ -21,6 +21,8 @@ services:
     scope: RUN_TIME
   - key: DATABASE_URL
     scope: RUN_TIME
+  - key: ALLOWED_ORIGINS
+    scope: RUN_TIME
   - key: DO_SPACES_KEY
     scope: RUN_TIME
   - key: DO_SPACES_SECRET

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 
 interface ContactFormModalProps {
   isOpen: boolean;
@@ -15,13 +14,24 @@ interface ContactFormModalProps {
 
 export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const submissionInProgressRef = useRef(false);
   const [formData, setFormData] = useState({
     name: "", email: "", company: "", telegram: "", teams: "", message: "",
   });
   const { toast } = useToast();
 
+  // Close on Escape
+  useEffect(() => {
+    if (!isOpen) return;
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [isOpen, onClose]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submissionInProgressRef.current || isSubmitting) return;
+    submissionInProgressRef.current = true;
     setIsSubmitting(true);
     try {
       const apiUrl = import.meta.env.VITE_API_URL || '';
@@ -43,6 +53,7 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
     } catch (error) {
       toast({ title: "Error", description: error instanceof Error ? error.message : "Failed to send message. Please try again.", variant: "destructive" });
     } finally {
+      submissionInProgressRef.current = false;
       setIsSubmitting(false);
     }
   };
@@ -68,7 +79,11 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
               className="relative w-full max-w-lg lg:max-w-3xl glass-card rounded-2xl border border-border/50 shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <button onClick={onClose} className="absolute top-4 right-4 p-2 text-muted-foreground hover:text-foreground transition-colors z-10">
+              <button
+                onClick={onClose}
+                aria-label="Close contact form"
+                className="absolute top-4 right-4 p-2 text-muted-foreground hover:text-foreground transition-colors z-10 rounded-full focus-visible:ring-2 focus-visible:ring-ring/50"
+              >
                 <X className="w-5 h-5" />
               </button>
 

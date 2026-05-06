@@ -51,7 +51,7 @@ export const BrandsSection = () => {
             <div className="grid lg:grid-cols-2 gap-0">
               {/* Content */}
               <div className="p-8 lg:p-12 flex flex-col justify-center order-2 lg:order-1">
-                <img src={wintinoLogo} alt="Wintino" className="h-12 md:h-14 w-auto mb-4 self-center" />
+                <img src={wintinoLogo} alt="Wintino" loading="lazy" className="h-12 md:h-14 w-auto mb-4 self-center" />
 
                 <p className="text-lg text-muted-foreground mb-8">
                   Premium online casino with the best gaming experience. 
@@ -81,14 +81,17 @@ export const BrandsSection = () => {
               
               {/* Image */}
               <div className="relative h-64 lg:h-auto overflow-visible order-1 lg:order-2 flex items-center justify-center lg:justify-start">
-                <img 
-                  src={wintinoBrandMobile} 
-                  alt="Wintino Casino" 
+                <img
+                  src={wintinoBrandMobile}
+                  alt="Wintino Casino"
+                  loading="lazy"
                   className="w-full h-full object-contain lg:hidden"
                 />
-                <img 
-                  src={wintinoCharacter} 
-                  alt="Wintino Casino" 
+                <img
+                  src={wintinoCharacter}
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
                   className="hidden lg:block lg:absolute lg:-left-32 lg:top-1/2 lg:-translate-y-1/2 lg:w-[138%] lg:max-w-none"
                 />
               </div>

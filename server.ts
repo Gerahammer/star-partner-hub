@@ -1,11 +1,15 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { Pool } from 'pg';
-import { randomUUID } from 'crypto';
+import { randomUUID, timingSafeEqual } from 'crypto';
 import multer from 'multer';
 import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
+import { fileTypeFromBuffer } from 'file-type';
+import { z } from 'zod';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,7 +30,7 @@ const DO_SPACES_SECRET = process.env.DO_SPACES_SECRET;
 const DO_SPACES_BUCKET = process.env.DO_SPACES_BUCKET;
 const DO_SPACES_REGION = process.env.DO_SPACES_REGION || 'fra1';
 const DO_SPACES_ENDPOINT = process.env.DO_SPACES_ENDPOINT || `https://${DO_SPACES_REGION}.digitaloceanspaces.com`;
-const DO_SPACES_CDN = process.env.DO_SPACES_CDN; // optional CDN URL like https://my-bucket.fra1.cdn.digitaloceanspaces.com
+const DO_SPACES_CDN = process.env.DO_SPACES_CDN;
 
 // Database setup - PostgreSQL
 if (!DATABASE_URL) {
@@ -34,8 +38,7 @@ if (!DATABASE_URL) {
   process.exit(1);
 }
 
-// Strip sslmode from URL so the pg-connection-string parser doesn't override our ssl config
-// (newer pg versions treat sslmode=require as verify-full, which fails on DO's self-signed CA).
+// Strip sslmode from URL so the pg-connection-string parser doesn't override our ssl config.
 const cleanedDbUrl = (() => {
   try {
     const u = new URL(DATABASE_URL);
@@ -51,7 +54,10 @@ const pool = new Pool({
   ssl: NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined,
 });
 
-// Initialize database schema
+pool.on('error', (err) => {
+  console.error('Unexpected error on idle Postgres client:', err);
+});
+
 async function initDatabase() {
   try {
     await pool.query(`
@@ -100,31 +106,37 @@ function buildPublicLogoUrl(key: string): string {
   return `${DO_SPACES_ENDPOINT}/${DO_SPACES_BUCKET}/${key}`;
 }
 
-function extractKeyFromLogoUrl(url: string): string | null {
+// Only allow deleting objects under our logos/ prefix that match a UUID-named file
+const LOGO_KEY_PATTERN = /^logos\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.[a-z0-9]{1,5}$/i;
+
+function safeKeyFromLogoUrl(url: string): string | null {
   if (!url || !DO_SPACES_BUCKET) return null;
-  // Match patterns like https://endpoint/bucket/key or https://cdn/key
+  let candidate: string | null = null;
   const bucketPattern = new RegExp(`/${DO_SPACES_BUCKET}/(.+)$`);
   const m = url.match(bucketPattern);
-  if (m) return m[1];
-  // CDN style: just take pathname
-  try {
-    const u = new URL(url);
-    return u.pathname.replace(/^\//, '');
-  } catch {
-    return null;
+  if (m) {
+    candidate = m[1];
+  } else {
+    try {
+      const u = new URL(url);
+      candidate = u.pathname.replace(/^\//, '');
+    } catch {
+      return null;
+    }
   }
+  return candidate && LOGO_KEY_PATTERN.test(candidate) ? candidate : null;
 }
 
-// Rate limiting: store IP -> array of timestamps
-const rateLimitStore = new Map<string, number[]>();
-const RATE_LIMIT_MAX_REQUESTS = 5;
-const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour
-
 // Middleware
-app.use(express.json({ limit: '1mb' }));
+app.set('trust proxy', 1);
+app.use(helmet({
+  contentSecurityPolicy: false, // disabled for the SPA; tighten later if needed
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
+}));
+app.use(express.json({ limit: '256kb' }));
 app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000', 'http://localhost:8080'],
-  credentials: true
+  origin: process.env.ALLOWED_ORIGINS?.split(',').map(s => s.trim()) || ['http://localhost:3000', 'http://localhost:8080'],
+  credentials: true,
 }));
 
 // Serve static files from dist (frontend build)
@@ -144,68 +156,61 @@ function escapeHtml(text: string): string {
   return text.replace(/[&<>"']/g, (m) => map[m]);
 }
 
-function getClientIP(req: Request): string {
-  const forwarded = req.headers['x-forwarded-for'];
-  if (forwarded) {
-    const ip = typeof forwarded === 'string' ? forwarded.split(',')[0] : forwarded[0];
-    return ip.trim();
-  }
-
-  const realIP = req.headers['x-real-ip'];
-  if (realIP) {
-    return typeof realIP === 'string' ? realIP : realIP[0];
-  }
-
-  return req.ip || 'unknown';
-}
-
-function checkRateLimit(ipAddress: string): { allowed: boolean; remaining: number } {
-  const now = Date.now();
-  const windowStart = now - RATE_LIMIT_WINDOW_MS;
-
-  if (!rateLimitStore.has(ipAddress)) {
-    rateLimitStore.set(ipAddress, []);
-  }
-
-  let timestamps = rateLimitStore.get(ipAddress)!;
-  timestamps = timestamps.filter(ts => ts > windowStart);
-  rateLimitStore.set(ipAddress, timestamps);
-
-  const requestCount = timestamps.length;
-  const remaining = Math.max(0, RATE_LIMIT_MAX_REQUESTS - requestCount);
-
-  return {
-    allowed: requestCount < RATE_LIMIT_MAX_REQUESTS,
-    remaining
-  };
-}
-
-function recordRateLimit(ipAddress: string): void {
-  if (!rateLimitStore.has(ipAddress)) {
-    rateLimitStore.set(ipAddress, []);
-  }
-  const timestamps = rateLimitStore.get(ipAddress)!;
-  timestamps.push(Date.now());
-  rateLimitStore.set(ipAddress, timestamps);
-}
-
 function checkAdminPassword(req: Request): boolean {
   const password = req.headers['x-admin-password'];
-  return !!ADMIN_PASSWORD && password === ADMIN_PASSWORD;
+  if (!ADMIN_PASSWORD || typeof password !== 'string' || password.length === 0) {
+    return false;
+  }
+  const a = Buffer.from(password);
+  const b = Buffer.from(ADMIN_PASSWORD);
+  if (a.length !== b.length) return false;
+  return timingSafeEqual(a, b);
 }
 
-// Configure multer for in-memory uploads (we then push to Spaces)
+function adminOnly(req: Request, res: Response, next: NextFunction) {
+  if (!checkAdminPassword(req)) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  next();
+}
+
+// Rate limiters
+const contactLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many requests', message: 'Please try again later. Maximum 5 requests per hour.' },
+});
+
+const adminAuthLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many attempts', message: 'Too many failed attempts. Try again in 15 minutes.' },
+});
+
+const adminMutationLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 60,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Multer in-memory uploads (validated via magic-bytes)
 const upload = multer({
   storage: multer.memoryStorage(),
-  fileFilter: (req: any, file: any, cb: any) => {
-    if (!file.mimetype.startsWith('image/')) {
-      cb(new Error('Only image files are allowed'));
-    } else {
-      cb(null, true);
-    }
-  },
-  limits: { fileSize: 5 * 1024 * 1024 }
+  limits: { fileSize: 5 * 1024 * 1024 },
 });
+
+const ALLOWED_IMAGE_MIMES = new Set(['image/jpeg', 'image/png', 'image/gif', 'image/webp']);
+const MIME_TO_EXT: Record<string, string> = {
+  'image/jpeg': '.jpg',
+  'image/png': '.png',
+  'image/gif': '.gif',
+  'image/webp': '.webp',
+};
 
 async function sendTelegramMessage(
   name: string,
@@ -249,7 +254,6 @@ ${escapeHtml(message)}
       console.error('Telegram API error:', errorData);
       return false;
     }
-
     return true;
   } catch (error) {
     console.error('Error sending Telegram message:', error);
@@ -257,12 +261,34 @@ ${escapeHtml(message)}
   }
 }
 
-// Routes
-app.get('/health', (req: Request, res: Response) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+// Validation schemas
+const contactSchema = z.object({
+  name: z.string().trim().min(1).max(120),
+  email: z.string().trim().email().max(254),
+  company: z.string().trim().max(200).optional().or(z.literal('')),
+  telegram: z.string().trim().max(120).optional().or(z.literal('')),
+  teams: z.string().trim().max(200).optional().or(z.literal('')),
+  message: z.string().trim().min(1).max(4000),
 });
 
-app.post('/api/auth/check-password', (req: Request, res: Response) => {
+const testimonialSchema = z.object({
+  site_name: z.string().trim().min(1).max(120),
+  content: z.string().trim().min(1).max(2000),
+  site_url: z.string().trim().url().max(2048).optional().or(z.literal('')).nullable(),
+  logo_url: z.string().trim().url().max(2048).optional().or(z.literal('')).nullable(),
+});
+
+// Routes
+app.get('/health', async (req: Request, res: Response) => {
+  try {
+    await pool.query('SELECT 1');
+    res.json({ status: 'ok', timestamp: new Date().toISOString(), db: 'connected' });
+  } catch {
+    res.status(503).json({ status: 'degraded', timestamp: new Date().toISOString(), db: 'disconnected' });
+  }
+});
+
+app.post('/api/auth/check-password', adminAuthLimiter, (req: Request, res: Response) => {
   if (checkAdminPassword(req)) {
     res.json({ valid: true, message: 'Password is correct' });
   } else {
@@ -270,35 +296,17 @@ app.post('/api/auth/check-password', (req: Request, res: Response) => {
   }
 });
 
-app.post('/api/contact', async (req: Request, res: Response) => {
+app.post('/api/contact', contactLimiter, async (req: Request, res: Response) => {
   try {
-    const { name, email, company, telegram, teams, message } = req.body;
-
-    if (!name || !email || !message) {
+    const parsed = contactSchema.safeParse(req.body);
+    if (!parsed.success) {
       return res.status(400).json({
-        error: 'Name, email, and message are required',
-        message: 'Please fill in all required fields'
+        error: 'Validation failed',
+        message: parsed.error.issues[0]?.message ?? 'Invalid input',
       });
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({
-        error: 'Invalid email address',
-        message: 'Please enter a valid email address'
-      });
-    }
-
-    const clientIP = getClientIP(req);
-    const rateLimit = checkRateLimit(clientIP);
-
-    if (!rateLimit.allowed) {
-      console.log(`Rate limit exceeded for IP: ${clientIP}`);
-      return res.status(429).json({
-        error: 'Too many requests',
-        message: 'Please try again later. Maximum 5 requests per hour.'
-      });
-    }
+    const { name, email, company = '', telegram = '', teams = '', message } = parsed.data;
 
     const safeName = escapeHtml(name);
     const safeEmail = escapeHtml(email);
@@ -307,13 +315,11 @@ app.post('/api/contact', async (req: Request, res: Response) => {
     const safeTeams = teams ? escapeHtml(teams) : '';
     const safeMessage = escapeHtml(message);
 
-    console.log(`Processing contact form from ${clientIP}: ${safeName} <${safeEmail}>`);
+    console.log('Processing contact form');
 
     const telegramSent = await sendTelegramMessage(
       safeName, safeEmail, safeCompany, safeTelegram, safeTeams, safeMessage
     );
-
-    recordRateLimit(clientIP);
 
     if (!telegramSent) {
       console.error('Telegram notification failed');
@@ -323,17 +329,11 @@ app.post('/api/contact', async (req: Request, res: Response) => {
       });
     }
 
-    res.status(200).json({
-      success: true,
-      message: 'Message received successfully',
-      remaining: rateLimit.remaining - 1
-    });
-  } catch (error: any) {
-    console.error('Error processing contact form:', error);
-    res.status(500).json({
-      error: 'Failed to process request',
-      message: error.message || 'An error occurred while processing your request'
-    });
+    res.status(200).json({ success: true, message: 'Message received successfully' });
+  } catch (error: unknown) {
+    const msg = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Error processing contact form:', msg);
+    res.status(500).json({ error: 'Failed to process request' });
   }
 });
 
@@ -344,23 +344,20 @@ app.get('/api/testimonials', async (req: Request, res: Response) => {
       'SELECT id, site_name, content, site_url, logo_url, created_at, updated_at FROM testimonials ORDER BY created_at DESC'
     );
     res.json(result.rows);
-  } catch (error: any) {
-    console.error('Error fetching testimonials:', error);
+  } catch (error: unknown) {
+    const msg = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Error fetching testimonials:', msg);
     res.status(500).json({ error: 'Failed to fetch testimonials' });
   }
 });
 
-app.post('/api/testimonials', async (req: Request, res: Response) => {
+app.post('/api/testimonials', adminMutationLimiter, adminOnly, async (req: Request, res: Response) => {
   try {
-    if (!checkAdminPassword(req)) {
-      return res.status(401).json({ error: 'Unauthorized' });
+    const parsed = testimonialSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({ error: parsed.error.issues[0]?.message ?? 'Invalid input' });
     }
-
-    const { site_name, content, site_url, logo_url } = req.body;
-
-    if (!site_name || !content) {
-      return res.status(400).json({ error: 'site_name and content are required' });
-    }
+    const { site_name, content, site_url, logo_url } = parsed.data;
 
     const id = randomUUID();
     const result = await pool.query<Testimonial>(
@@ -371,24 +368,21 @@ app.post('/api/testimonials', async (req: Request, res: Response) => {
     );
 
     res.status(201).json(result.rows[0]);
-  } catch (error: any) {
-    console.error('Error creating testimonial:', error);
+  } catch (error: unknown) {
+    const msg = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Error creating testimonial:', msg);
     res.status(500).json({ error: 'Failed to create testimonial' });
   }
 });
 
-app.put('/api/testimonials/:id', async (req: Request, res: Response) => {
+app.put('/api/testimonials/:id', adminMutationLimiter, adminOnly, async (req: Request, res: Response) => {
   try {
-    if (!checkAdminPassword(req)) {
-      return res.status(401).json({ error: 'Unauthorized' });
+    const parsed = testimonialSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({ error: parsed.error.issues[0]?.message ?? 'Invalid input' });
     }
-
+    const { site_name, content, site_url, logo_url } = parsed.data;
     const { id } = req.params;
-    const { site_name, content, site_url, logo_url } = req.body;
-
-    if (!site_name || !content) {
-      return res.status(400).json({ error: 'site_name and content are required' });
-    }
 
     const result = await pool.query<Testimonial>(
       `UPDATE testimonials
@@ -403,21 +397,17 @@ app.put('/api/testimonials/:id', async (req: Request, res: Response) => {
     }
 
     res.json(result.rows[0]);
-  } catch (error: any) {
-    console.error('Error updating testimonial:', error);
+  } catch (error: unknown) {
+    const msg = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Error updating testimonial:', msg);
     res.status(500).json({ error: 'Failed to update testimonial' });
   }
 });
 
-app.delete('/api/testimonials/:id', async (req: Request, res: Response) => {
+app.delete('/api/testimonials/:id', adminMutationLimiter, adminOnly, async (req: Request, res: Response) => {
   try {
-    if (!checkAdminPassword(req)) {
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
-
     const { id } = req.params;
 
-    // First, fetch the testimonial to get the logo URL for cleanup
     const fetchResult = await pool.query<{ logo_url: string | null }>(
       'SELECT logo_url FROM testimonials WHERE id = $1',
       [id]
@@ -428,39 +418,34 @@ app.delete('/api/testimonials/:id', async (req: Request, res: Response) => {
     }
 
     const logoUrl = fetchResult.rows[0].logo_url;
-
-    // Delete the row
     await pool.query('DELETE FROM testimonials WHERE id = $1', [id]);
 
-    // Best-effort: delete the logo from Spaces (don't fail if this errors)
     if (logoUrl && s3Client && DO_SPACES_BUCKET) {
-      const key = extractKeyFromLogoUrl(logoUrl);
-      if (key && key.startsWith('logos/')) {
+      const key = safeKeyFromLogoUrl(logoUrl);
+      if (key) {
         try {
           await s3Client.send(new DeleteObjectCommand({
             Bucket: DO_SPACES_BUCKET,
             Key: key,
           }));
-        } catch (err) {
-          console.warn('Failed to delete logo from Spaces:', err);
+        } catch (err: unknown) {
+          const msg = err instanceof Error ? err.message : 'Unknown error';
+          console.warn('Failed to delete logo from Spaces:', msg);
         }
       }
     }
 
     res.json({ success: true });
-  } catch (error: any) {
-    console.error('Error deleting testimonial:', error);
+  } catch (error: unknown) {
+    const msg = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Error deleting testimonial:', msg);
     res.status(500).json({ error: 'Failed to delete testimonial' });
   }
 });
 
-// File upload endpoint - uploads to DigitalOcean Spaces
-app.post('/api/testimonials/upload', upload.single('file'), async (req: Request, res: Response) => {
+// File upload endpoint - validates magic bytes and uploads to DO Spaces
+app.post('/api/testimonials/upload', adminMutationLimiter, adminOnly, upload.single('file'), async (req: Request, res: Response) => {
   try {
-    if (!checkAdminPassword(req)) {
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
-
     if (!req.file) {
       return res.status(400).json({ error: 'No file provided' });
     }
@@ -472,23 +457,32 @@ app.post('/api/testimonials/upload', upload.single('file'), async (req: Request,
       });
     }
 
-    const ext = path.extname(req.file.originalname).toLowerCase() || '.jpg';
+    // Validate by magic bytes (don't trust client-provided MIME)
+    const detected = await fileTypeFromBuffer(req.file.buffer);
+    if (!detected || !ALLOWED_IMAGE_MIMES.has(detected.mime)) {
+      return res.status(400).json({
+        error: 'Invalid file type',
+        message: 'Only JPEG, PNG, GIF, and WebP images are allowed',
+      });
+    }
+
+    const ext = MIME_TO_EXT[detected.mime];
     const key = `logos/${randomUUID()}${ext}`;
 
     await s3Client.send(new PutObjectCommand({
       Bucket: DO_SPACES_BUCKET,
       Key: key,
       Body: req.file.buffer,
-      ContentType: req.file.mimetype,
+      ContentType: detected.mime,
       ACL: 'public-read',
       CacheControl: 'public, max-age=31536000',
     }));
 
-    const url = buildPublicLogoUrl(key);
-    res.json({ url });
-  } catch (error: any) {
-    console.error('Error uploading file:', error);
-    res.status(500).json({ error: error.message || 'Failed to upload file' });
+    res.json({ url: buildPublicLogoUrl(key) });
+  } catch (error: unknown) {
+    const msg = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Error uploading file:', msg);
+    res.status(500).json({ error: 'Failed to upload file' });
   }
 });
 
@@ -500,26 +494,39 @@ if (NODE_ENV === 'production') {
 }
 
 // Error handling middleware
-app.use((err: any, req: Request, res: Response, next: any) => {
-  console.error('Unhandled error:', err);
+app.use((err: unknown, req: Request, res: Response, _next: NextFunction) => {
+  // Multer file-size errors
+  if (err && typeof err === 'object' && 'code' in err && (err as { code: string }).code === 'LIMIT_FILE_SIZE') {
+    return res.status(413).json({ error: 'File too large', message: 'Maximum file size is 5MB' });
+  }
+  const msg = err instanceof Error ? err.message : 'Unknown error';
+  console.error('Unhandled error:', msg);
   res.status(500).json({
     error: 'Internal server error',
-    message: NODE_ENV === 'production' ? 'An error occurred' : err.message
+    message: NODE_ENV === 'production' ? 'An error occurred' : msg,
   });
 });
 
-// Start server after DB init
-initDatabase().then(() => {
-  app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT} (${NODE_ENV} mode)`);
-    if (s3Client && DO_SPACES_BUCKET) {
-      console.log(`✓ DigitalOcean Spaces configured (bucket: ${DO_SPACES_BUCKET})`);
-    } else {
-      console.warn('⚠ DigitalOcean Spaces NOT configured - logo uploads will fail');
-    }
-    if (NODE_ENV === 'development') {
-      console.log(`   API: http://localhost:${PORT}/api/contact`);
-      console.log(`   Health: http://localhost:${PORT}/health`);
-    }
-  });
+// Graceful shutdown
+process.on('SIGTERM', async () => {
+  console.log('SIGTERM received, closing pool…');
+  await pool.end().catch(() => {});
+  process.exit(0);
 });
+
+// Start server after DB init
+initDatabase()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT} (${NODE_ENV} mode)`);
+      if (s3Client && DO_SPACES_BUCKET) {
+        console.log(`✓ DigitalOcean Spaces configured (bucket: ${DO_SPACES_BUCKET})`);
+      } else {
+        console.warn('⚠ DigitalOcean Spaces NOT configured - logo uploads will fail');
+      }
+    });
+  })
+  .catch((err) => {
+    console.error('Fatal startup error:', err);
+    process.exit(1);
+  });

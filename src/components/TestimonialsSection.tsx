@@ -28,6 +28,7 @@ export const TestimonialsSection = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
+  const submissionInProgressRef = useRef(false);
   const isMobile = useIsMobile();
   const [formData, setFormData] = useState({ site_name: "", content: "", site_url: "", logo_url: "" });
   const { toast } = useToast();
@@ -92,10 +93,11 @@ export const TestimonialsSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!adminPassword || isSubmitting) {
+    if (!adminPassword || isSubmitting || submissionInProgressRef.current) {
       return;
     }
 
+    submissionInProgressRef.current = true;
     setIsSubmitting(true);
     try {
       const payload = {
@@ -128,6 +130,7 @@ export const TestimonialsSection = () => {
     } catch (error: any) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
     } finally {
+      submissionInProgressRef.current = false;
       setIsSubmitting(false);
     }
   };

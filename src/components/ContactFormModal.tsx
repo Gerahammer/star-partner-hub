@@ -24,13 +24,24 @@ export const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => 
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const { error } = await supabase.functions.invoke("send-contact-email", { body: formData });
-      if (error) throw error;
+      const apiUrl = import.meta.env.VITE_API_URL || '';
+      const response = await fetch(`${apiUrl}/api/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to send message");
+      }
+
+      const data = await response.json();
       toast({ title: "Message sent!", description: "We'll get back to you as soon as possible." });
       setFormData({ name: "", email: "", company: "", telegram: "", teams: "", message: "" });
       onClose();
     } catch (error) {
-      toast({ title: "Error", description: "Failed to send message. Please try again.", variant: "destructive" });
+      toast({ title: "Error", description: error instanceof Error ? error.message : "Failed to send message. Please try again.", variant: "destructive" });
     } finally {
       setIsSubmitting(false);
     }

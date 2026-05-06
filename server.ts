@@ -11,7 +11,6 @@ const PORT = process.env.PORT || 3001;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 // Environment variables
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
@@ -93,58 +92,6 @@ function recordRateLimit(ipAddress: string): void {
   rateLimitStore.set(ipAddress, timestamps);
 }
 
-async function sendEmail(
-  name: string,
-  email: string,
-  company: string,
-  telegram: string,
-  teams: string,
-  message: string
-): Promise<boolean> {
-  if (!RESEND_API_KEY) {
-    console.error('RESEND_API_KEY not configured');
-    return false;
-  }
-
-  try {
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${RESEND_API_KEY}`,
-      },
-      body: JSON.stringify({
-        from: 'Partnerstar Contact <onboarding@resend.dev>',
-        to: ['partners@partnerstar.com'],
-        subject: `New Partnership Inquiry from ${escapeHtml(name)}`,
-        html: `
-          <h2>New Partnership Inquiry</h2>
-          <p><strong>Name:</strong> ${escapeHtml(name)}</p>
-          <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-          ${company ? `<p><strong>Company/Website:</strong> ${escapeHtml(company)}</p>` : ''}
-          ${telegram ? `<p><strong>Telegram:</strong> ${escapeHtml(telegram)}</p>` : ''}
-          ${teams ? `<p><strong>Microsoft Teams:</strong> ${escapeHtml(teams)}</p>` : ''}
-          <p><strong>Message:</strong></p>
-          <p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>
-        `,
-        reply_to: email,
-      }),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.text();
-      console.error('Resend API error:', errorData);
-      return false;
-    }
-
-    const data = await response.json();
-    console.log('Email sent successfully:', data);
-    return true;
-  } catch (error) {
-    console.error('Error sending email:', error);
-    return false;
-  }
-}
 
 async function sendTelegramMessage(
   name: string,
@@ -248,16 +195,6 @@ app.post('/api/contact', async (req: Request, res: Response) => {
 
     console.log(`Processing contact form from ${clientIP}: ${safeName} <${safeEmail}>`);
 
-    // Send email
-    const emailSent = await sendEmail(
-      safeName,
-      safeEmail,
-      safeCompany,
-      safeTelegram,
-      safeTeams,
-      safeMessage
-    );
-
     // Send Telegram notification
     const telegramSent = await sendTelegramMessage(
       safeName,
@@ -271,20 +208,17 @@ app.post('/api/contact', async (req: Request, res: Response) => {
     // Record rate limit (only after successful processing)
     recordRateLimit(clientIP);
 
-    // Even if email or Telegram fails, we still consider it a successful submission
-    // The user gets the success message, but we log which services failed
-    if (!emailSent) {
-      console.error('Email service failed but form was submitted');
-    }
     if (!telegramSent) {
-      console.warn('Telegram notification failed but form was submitted');
+      console.error('Telegram notification failed');
+      return res.status(500).json({
+        error: 'Failed to send notification',
+        message: 'Unable to process your inquiry at this time'
+      });
     }
 
     res.status(200).json({
       success: true,
-      message: 'Message sent successfully',
-      emailSent,
-      telegramSent,
+      message: 'Message received successfully',
       remaining: rateLimit.remaining - 1
     });
   } catch (error: any) {

@@ -37,12 +37,12 @@ export const TestimonialsSection = () => {
 
   useEffect(() => {
     fetchTestimonials();
-    const handleStorageChange = () => {
-      const newPassword = sessionStorage.getItem('adminPassword');
-      setAdminPassword(newPassword);
+    const handlePasswordChange = (event: Event) => {
+      const customEvent = event as CustomEvent;
+      setAdminPassword(customEvent.detail.password);
     };
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
+    window.addEventListener('adminPasswordChanged', handlePasswordChange);
+    return () => window.removeEventListener('adminPasswordChanged', handlePasswordChange);
   }, []);
 
   const fetchTestimonials = async () => {

@@ -40,6 +40,7 @@ export const Footer = () => {
       return;
     }
     sessionStorage.setItem('adminPassword', password);
+    window.dispatchEvent(new CustomEvent('adminPasswordChanged', { detail: { password } }));
     setTempPassword("");
     setIsPasswordDialogOpen(false);
     toast({ title: "Success", description: "Admin access granted" });
@@ -114,9 +115,6 @@ export const Footer = () => {
             <p className="text-muted-foreground/40 text-xs">
               18+ | Gamble Responsibly
             </p>
-            <a href="https://ro-affiliate.partnerstar.com/login" target="_blank" rel="noopener noreferrer" className="text-muted-foreground/60 hover:text-foreground transition-colors text-xs focus-visible:ring-2 focus-visible:ring-ring/50 rounded px-1 py-0.5">
-              Log In
-            </a>
             <Dialog open={isPasswordDialogOpen} onOpenChange={setIsPasswordDialogOpen}>
               <DialogTrigger asChild>
                 <Button variant="ghost" size="sm" className="h-6 px-2 text-xs text-muted-foreground/60 hover:text-foreground">

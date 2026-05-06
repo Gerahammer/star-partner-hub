@@ -34,8 +34,20 @@ if (!DATABASE_URL) {
   process.exit(1);
 }
 
+// Strip sslmode from URL so the pg-connection-string parser doesn't override our ssl config
+// (newer pg versions treat sslmode=require as verify-full, which fails on DO's self-signed CA).
+const cleanedDbUrl = (() => {
+  try {
+    const u = new URL(DATABASE_URL);
+    u.searchParams.delete('sslmode');
+    return u.toString();
+  } catch {
+    return DATABASE_URL;
+  }
+})();
+
 const pool = new Pool({
-  connectionString: DATABASE_URL,
+  connectionString: cleanedDbUrl,
   ssl: NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined,
 });
 

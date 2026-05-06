@@ -2,6 +2,10 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import Database from 'better-sqlite3';
+import fs from 'fs';
+import { randomUUID } from 'crypto';
+import multer from 'multer';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,6 +17,34 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 // Environment variables
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+
+// Database setup
+const dbPath = path.join(process.cwd(), 'testimonials.db');
+const db = new Database(dbPath);
+
+// Initialize database schema
+db.exec(`
+  CREATE TABLE IF NOT EXISTS testimonials (
+    id TEXT PRIMARY KEY,
+    site_name TEXT NOT NULL,
+    content TEXT NOT NULL,
+    site_url TEXT,
+    logo_url TEXT,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+  );
+`);
+
+interface Testimonial {
+  id: string;
+  site_name: string;
+  content: string;
+  site_url: string | null;
+  logo_url: string | null;
+  created_at: string;
+  updated_at: string;
+}
 
 // Rate limiting: store IP -> array of timestamps
 const rateLimitStore = new Map<string, number[]>();
@@ -91,6 +123,41 @@ function recordRateLimit(ipAddress: string): void {
   timestamps.push(Date.now());
   rateLimitStore.set(ipAddress, timestamps);
 }
+
+function checkAdminPassword(req: Request): boolean {
+  const password = req.headers['x-admin-password'];
+  return password === ADMIN_PASSWORD && ADMIN_PASSWORD;
+}
+
+function ensurePublicLogosDir(): void {
+  const logosDir = path.join(process.cwd(), 'public', 'logos');
+  if (!fs.existsSync(logosDir)) {
+    fs.mkdirSync(logosDir, { recursive: true });
+  }
+}
+
+// Configure multer for logo uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    ensurePublicLogosDir();
+    cb(null, path.join(process.cwd(), 'public', 'logos'));
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    const fileName = `${randomUUID()}${ext}`;
+    cb(null, fileName);
+  }
+});
+
+const uploadFilter = (req: any, file: any, cb: any) => {
+  if (!file.mimetype.startsWith('image/')) {
+    cb(new Error('Only image files are allowed'));
+  } else {
+    cb(null, true);
+  }
+};
+
+const upload = multer({ storage, fileFilter: uploadFilter, limits: { fileSize: 5 * 1024 * 1024 } });
 
 
 async function sendTelegramMessage(
@@ -229,6 +296,124 @@ app.post('/api/contact', async (req: Request, res: Response) => {
     });
   }
 });
+
+// Testimonials routes
+app.get('/api/testimonials', (req: Request, res: Response) => {
+  try {
+    const stmt = db.prepare('SELECT * FROM testimonials ORDER BY created_at DESC');
+    const testimonials = stmt.all() as Testimonial[];
+    res.json(testimonials);
+  } catch (error: any) {
+    console.error('Error fetching testimonials:', error);
+    res.status(500).json({ error: 'Failed to fetch testimonials' });
+  }
+});
+
+app.post('/api/testimonials', (req: Request, res: Response) => {
+  try {
+    if (!checkAdminPassword(req)) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const { site_name, content, site_url, logo_url } = req.body;
+
+    if (!site_name || !content) {
+      return res.status(400).json({ error: 'site_name and content are required' });
+    }
+
+    const id = randomUUID();
+    const now = new Date().toISOString();
+
+    const stmt = db.prepare(`
+      INSERT INTO testimonials (id, site_name, content, site_url, logo_url, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `);
+
+    stmt.run(id, site_name, content, site_url || null, logo_url || null, now, now);
+
+    res.status(201).json({ id, site_name, content, site_url, logo_url, created_at: now, updated_at: now });
+  } catch (error: any) {
+    console.error('Error creating testimonial:', error);
+    res.status(500).json({ error: 'Failed to create testimonial' });
+  }
+});
+
+app.put('/api/testimonials/:id', (req: Request, res: Response) => {
+  try {
+    if (!checkAdminPassword(req)) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const { id } = req.params;
+    const { site_name, content, site_url, logo_url } = req.body;
+
+    if (!site_name || !content) {
+      return res.status(400).json({ error: 'site_name and content are required' });
+    }
+
+    const now = new Date().toISOString();
+
+    const stmt = db.prepare(`
+      UPDATE testimonials SET site_name = ?, content = ?, site_url = ?, logo_url = ?, updated_at = ?
+      WHERE id = ?
+    `);
+
+    const result = stmt.run(site_name, content, site_url || null, logo_url || null, now, id);
+
+    if (result.changes === 0) {
+      return res.status(404).json({ error: 'Testimonial not found' });
+    }
+
+    res.json({ id, site_name, content, site_url, logo_url, updated_at: now });
+  } catch (error: any) {
+    console.error('Error updating testimonial:', error);
+    res.status(500).json({ error: 'Failed to update testimonial' });
+  }
+});
+
+app.delete('/api/testimonials/:id', (req: Request, res: Response) => {
+  try {
+    if (!checkAdminPassword(req)) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const { id } = req.params;
+
+    const stmt = db.prepare('DELETE FROM testimonials WHERE id = ?');
+    const result = stmt.run(id);
+
+    if (result.changes === 0) {
+      return res.status(404).json({ error: 'Testimonial not found' });
+    }
+
+    res.json({ success: true });
+  } catch (error: any) {
+    console.error('Error deleting testimonial:', error);
+    res.status(500).json({ error: 'Failed to delete testimonial' });
+  }
+});
+
+// File upload endpoint
+app.post('/api/testimonials/upload', upload.single('file'), (req: Request, res: Response) => {
+  try {
+    if (!checkAdminPassword(req)) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file provided' });
+    }
+
+    const relativePath = `/logos/${req.file.filename}`;
+    res.json({ url: relativePath });
+  } catch (error: any) {
+    console.error('Error uploading file:', error);
+    res.status(500).json({ error: error.message || 'Failed to upload file' });
+  }
+});
+
+// Serve static logos
+app.use('/logos', express.static(path.join(process.cwd(), 'public', 'logos')));
 
 // Serve index.html for all other routes (SPA fallback)
 if (NODE_ENV === 'production') {

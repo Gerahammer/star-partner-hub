@@ -1,11 +1,10 @@
 import { useState, useEffect, useRef, TouchEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Trash2, Edit2, ExternalLink, ChevronLeft, ChevronRight, Upload } from "lucide-react";
+import { Plus, Trash2, Edit2, ExternalLink, ChevronLeft, ChevronRight, Upload, Lock } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -19,7 +18,9 @@ interface Testimonial {
 
 export const TestimonialsSection = () => {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [adminPassword, setAdminPassword] = useState<string | null>(null);
+  const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
+  const [tempPassword, setTempPassword] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -35,41 +36,101 @@ export const TestimonialsSection = () => {
   const itemsToShow = isMobile ? 1 : 3;
   const showCarousel = testimonials.length > itemsToShow;
 
-  useEffect(() => { fetchTestimonials(); checkAdminStatus(); }, []);
+  useEffect(() => { fetchTestimonials(); }, []);
 
   const fetchTestimonials = async () => {
-    const { data, error } = await supabase.from("testimonials").select("*").order("created_at", { ascending: false });
-    if (!error) setTestimonials(data || []);
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/testimonials`);
+      if (!response.ok) throw new Error('Failed to fetch testimonials');
+      const data = await response.json();
+      setTestimonials(data);
+    } catch (error) {
+      console.error('Error fetching testimonials:', error);
+      toast({ title: "Error", description: "Failed to load testimonials", variant: "destructive" });
+    }
   };
 
-  const checkAdminStatus = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) { setIsAdmin(false); return; }
-    const { data, error } = await supabase.from("user_roles").select("role").eq("user_id", user.id).eq("role", "admin").maybeSingle();
-    setIsAdmin(!!data && !error);
+  const handlePasswordSubmit = (password: string) => {
+    if (!password.trim()) {
+      toast({ title: "Error", description: "Please enter a password", variant: "destructive" });
+      return;
+    }
+    setAdminPassword(password);
+    setTempPassword("");
+    setIsPasswordDialogOpen(false);
+    toast({ title: "Success", description: "Admin access granted" });
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file) return;
+    if (!file || !adminPassword) return;
+
     setUploadingLogo(true);
-    const fileName = `${Date.now()}.${file.name.split('.').pop()}`;
-    const { error: uploadError } = await supabase.storage.from('testimonial-logos').upload(fileName, file);
-    if (uploadError) { toast({ title: "Upload failed", description: uploadError.message, variant: "destructive" }); setUploadingLogo(false); return; }
-    const { data: { publicUrl } } = supabase.storage.from('testimonial-logos').getPublicUrl(fileName);
-    setFormData({ ...formData, logo_url: publicUrl });
-    setUploadingLogo(false);
+    const formDataObj = new FormData();
+    formDataObj.append('file', file);
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/testimonials/upload`, {
+        method: 'POST',
+        headers: {
+          'X-Admin-Password': adminPassword
+        },
+        body: formDataObj
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Upload failed');
+      }
+
+      const data = await response.json();
+      setFormData({ ...formData, logo_url: data.url });
+      toast({ title: "Success", description: "Logo uploaded" });
+    } catch (error: any) {
+      toast({ title: "Upload failed", description: error.message, variant: "destructive" });
+    } finally {
+      setUploadingLogo(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const payload = { site_name: formData.site_name, content: formData.content, site_url: formData.site_url || null, logo_url: formData.logo_url || null };
-    let error;
-    if (editingId) { const { error: e } = await supabase.from("testimonials").update(payload).eq("id", editingId); error = e; }
-    else { const { error: e } = await supabase.from("testimonials").insert(payload); error = e; }
-    if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
-    toast({ title: editingId ? "Updated" : "Added" });
-    resetForm(); fetchTestimonials();
+    if (!adminPassword) {
+      toast({ title: "Error", description: "Admin password required", variant: "destructive" });
+      return;
+    }
+
+    const payload = {
+      site_name: formData.site_name,
+      content: formData.content,
+      site_url: formData.site_url || null,
+      logo_url: formData.logo_url || null
+    };
+
+    try {
+      const url = editingId ? `/api/testimonials/${editingId}` : '/api/testimonials';
+      const method = editingId ? 'PUT' : 'POST';
+
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}${url}`, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Admin-Password': adminPassword
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to save testimonial');
+      }
+
+      toast({ title: editingId ? "Updated" : "Added", description: "Testimonial saved successfully" });
+      resetForm();
+      fetchTestimonials();
+    } catch (error: any) {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    }
   };
 
   const handleEdit = (t: Testimonial) => {
@@ -78,9 +139,29 @@ export const TestimonialsSection = () => {
   };
 
   const handleDelete = async (id: string) => {
-    const { error } = await supabase.from("testimonials").delete().eq("id", id);
-    if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
-    fetchTestimonials();
+    if (!adminPassword) {
+      toast({ title: "Error", description: "Admin password required", variant: "destructive" });
+      return;
+    }
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/testimonials/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'X-Admin-Password': adminPassword
+        }
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to delete testimonial');
+      }
+
+      toast({ title: "Deleted", description: "Testimonial removed" });
+      fetchTestimonials();
+    } catch (error: any) {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    }
   };
 
   const resetForm = () => { setFormData({ site_name: "", content: "", site_url: "", logo_url: "" }); setEditingId(null); setIsDialogOpen(false); };
@@ -115,8 +196,32 @@ export const TestimonialsSection = () => {
           </h2>
         </motion.div>
 
-        {isAdmin && (
-          <div className="flex justify-end mb-8">
+        <div className="flex justify-end mb-8 gap-2">
+          <Dialog open={isPasswordDialogOpen} onOpenChange={setIsPasswordDialogOpen}>
+            <DialogTrigger asChild>
+              <Button variant="outline" className="rounded-full text-xs border-border/20" onClick={() => setIsPasswordDialogOpen(true)}>
+                <Lock className="w-3.5 h-3.5 mr-1.5" strokeWidth={1.5} /> {adminPassword ? "Change Password" : "Unlock Admin"}
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-md bg-card border-border/30">
+              <DialogHeader><DialogTitle className="text-sm">Admin Password</DialogTitle></DialogHeader>
+              <div className="space-y-4">
+                <Input
+                  type="password"
+                  placeholder="Enter admin password"
+                  value={tempPassword}
+                  onChange={(e) => setTempPassword(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handlePasswordSubmit(tempPassword)}
+                />
+                <div className="flex gap-2 justify-end">
+                  <Button type="button" variant="outline" size="sm" onClick={() => setIsPasswordDialogOpen(false)} className="border-border/20">Cancel</Button>
+                  <Button type="button" size="sm" className="btn-gold-gradient" onClick={() => handlePasswordSubmit(tempPassword)}>Unlock</Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+
+          {adminPassword && (
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
                 <Button className="btn-gold-gradient rounded-full text-xs" onClick={() => { resetForm(); setIsDialogOpen(true); }}>
@@ -146,8 +251,8 @@ export const TestimonialsSection = () => {
                 </form>
               </DialogContent>
             </Dialog>
-          </div>
-        )}
+          )}
+        </div>
 
         {testimonials.length === 0 ? (
           <div className="text-center py-16"><p className="text-muted-foreground/50 text-sm">No testimonials yet.</p></div>
@@ -184,7 +289,7 @@ export const TestimonialsSection = () => {
                       className="rounded-2xl p-6 h-full flex flex-col min-h-[200px] border border-border/15"
                       style={{ background: 'hsl(224 28% 10%)' }}
                     >
-                      {isAdmin && (
+                      {adminPassword && (
                         <div className="flex justify-end gap-1.5 mb-3">
                           <motion.button
                             onClick={() => handleEdit(testimonial)}

@@ -154,7 +154,14 @@ export const TestimonialsSection = () => {
         ) : (
           <div className="relative">
             {showCarousel && (
-              <Button variant="outline" size="icon" className="absolute -left-2 md:-left-12 top-1/2 -translate-y-1/2 z-10 rounded-full h-9 w-9 border-border/15" style={{ background: 'hsl(224 28% 10%)' }} onClick={prevSlide}>
+              <Button
+                variant="outline"
+                size="icon"
+                className="absolute -left-2 md:-left-12 top-1/2 -translate-y-1/2 z-10 rounded-full h-9 w-9 border-border/15 hover:border-border/30 transition-colors"
+                style={{ background: 'hsl(224 28% 10%)' }}
+                onClick={prevSlide}
+                aria-label="Previous testimonial"
+              >
                 <ChevronLeft className="h-4 w-4 text-muted-foreground/50" strokeWidth={1.5} />
               </Button>
             )}
@@ -171,17 +178,30 @@ export const TestimonialsSection = () => {
                     transition={{ duration: 0.3 }}
                     className={isMobile ? 'w-full' : 'flex-1 max-w-[320px]'}
                   >
-                    <div className="rounded-2xl p-6 h-full flex flex-col min-h-[200px] border border-border/15"
+                    <motion.div
+                      whileHover={{ y: -4 }}
+                      transition={{ duration: 0.3 }}
+                      className="rounded-2xl p-6 h-full flex flex-col min-h-[200px] border border-border/15"
                       style={{ background: 'hsl(224 28% 10%)' }}
                     >
                       {isAdmin && (
                         <div className="flex justify-end gap-1.5 mb-3">
-                          <button onClick={() => handleEdit(testimonial)} className="p-1 rounded-full hover:bg-muted/30 transition-colors">
+                          <motion.button
+                            onClick={() => handleEdit(testimonial)}
+                            className="p-1 rounded-full hover:bg-muted/30 transition-colors focus-visible:ring-2 focus-visible:ring-ring/50"
+                            whileHover={{ scale: 1.15 }}
+                            aria-label={`Edit testimonial from ${testimonial.site_name}`}
+                          >
                             <Edit2 className="w-3.5 h-3.5 text-muted-foreground/40" strokeWidth={1.5} />
-                          </button>
-                          <button onClick={() => handleDelete(testimonial.id)} className="p-1 rounded-full hover:bg-destructive/10 transition-colors">
+                          </motion.button>
+                          <motion.button
+                            onClick={() => handleDelete(testimonial.id)}
+                            className="p-1 rounded-full hover:bg-destructive/10 transition-colors focus-visible:ring-2 focus-visible:ring-ring/50"
+                            whileHover={{ scale: 1.15 }}
+                            aria-label={`Delete testimonial from ${testimonial.site_name}`}
+                          >
                             <Trash2 className="w-3.5 h-3.5 text-muted-foreground/40" strokeWidth={1.5} />
-                          </button>
+                          </motion.button>
                         </div>
                       )}
                       <div className="flex items-center gap-3 mb-4">
@@ -202,7 +222,7 @@ export const TestimonialsSection = () => {
                         </div>
                       </div>
                       <p className="text-muted-foreground/60 leading-relaxed line-clamp-4 text-sm flex-1">"{testimonial.content}"</p>
-                    </div>
+                    </motion.div>
                   </motion.div>
                 ))}
               </AnimatePresence>
@@ -210,13 +230,24 @@ export const TestimonialsSection = () => {
 
             {showCarousel && (
               <>
-                <Button variant="outline" size="icon" className="absolute -right-2 md:-right-12 top-1/2 -translate-y-1/2 z-10 rounded-full h-9 w-9 border-border/15" style={{ background: 'hsl(224 28% 10%)' }} onClick={nextSlide}>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="absolute -right-2 md:-right-12 top-1/2 -translate-y-1/2 z-10 rounded-full h-9 w-9 border-border/15 hover:border-border/30 transition-colors"
+                  style={{ background: 'hsl(224 28% 10%)' }}
+                  onClick={nextSlide}
+                  aria-label="Next testimonial"
+                >
                   <ChevronRight className="h-4 w-4 text-muted-foreground/50" strokeWidth={1.5} />
                 </Button>
                 <div className="flex justify-center gap-1.5 mt-8">
-                  {testimonials.map((_, index) => (
-                    <button key={index} onClick={() => { setSlideDirection(index > currentSlide ? 1 : -1); setCurrentSlide(index); }}
-                      className={`w-1.5 h-1.5 rounded-full transition-colors ${index === currentSlide ? "bg-primary/60" : "bg-muted-foreground/15"}`}
+                  {testimonials.map((testimonial, index) => (
+                    <button
+                      key={index}
+                      onClick={() => { setSlideDirection(index > currentSlide ? 1 : -1); setCurrentSlide(index); }}
+                      className={`w-1.5 h-1.5 rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-ring/50 ${index === currentSlide ? "bg-primary/60" : "bg-muted-foreground/15"}`}
+                      aria-label={`Go to testimonial from ${testimonial.site_name}`}
+                      aria-current={index === currentSlide ? "true" : "false"}
                     />
                   ))}
                 </div>

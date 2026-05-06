@@ -33,7 +33,7 @@ export const Footer = () => {
       <div className="container mx-auto px-4 md:px-8 py-12 md:py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-10">
           <div className="col-span-2 md:col-span-1">
-            <Link to="/" className="mb-4 block">
+            <Link to="/" className="mb-4 block group transition-transform hover:scale-105" aria-label="Back to Partnerstar home">
               <img src={partnerstarLogo} alt="Partnerstar" className="h-10 w-auto" />
             </Link>
             <p className="text-muted-foreground/60 text-xs leading-relaxed">
@@ -48,9 +48,9 @@ export const Footer = () => {
                 {section.links.map((link) => (
                   <li key={link.name}>
                     {link.isRoute ? (
-                      <Link to={link.href} className="text-muted-foreground/50 hover:text-muted-foreground transition-colors text-sm">{link.name}</Link>
+                      <Link to={link.href} className="text-muted-foreground/60 hover:text-foreground transition-colors text-sm focus-visible:ring-2 focus-visible:ring-ring/50 rounded px-1 py-0.5 inline-block">{link.name}</Link>
                     ) : (
-                      <a href={link.href} className="text-muted-foreground/50 hover:text-muted-foreground transition-colors text-sm">{link.name}</a>
+                      <a href={link.href} className="text-muted-foreground/60 hover:text-foreground transition-colors text-sm focus-visible:ring-2 focus-visible:ring-ring/50 rounded px-1 py-0.5 inline-block">{link.name}</a>
                     )}
                   </li>
                 ))}
@@ -60,13 +60,14 @@ export const Footer = () => {
           
           <div className="col-span-2 md:col-span-1">
             <h4 className="font-medium text-foreground/80 text-xs uppercase tracking-[0.15em] mb-4">Support</h4>
-            <a 
-              href="https://t.me/partnerstar" 
-              target="_blank" 
+            <a
+              href="https://t.me/partnerstar"
+              target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-muted-foreground/50 hover:text-muted-foreground transition-colors text-sm mb-4"
+              className="inline-flex items-center gap-2 text-muted-foreground/60 hover:text-foreground transition-colors text-sm mb-4 focus-visible:ring-2 focus-visible:ring-ring/50 rounded px-1 py-0.5 group"
+              aria-label="Telegram support channel"
             >
-              <Send className="w-3.5 h-3.5" strokeWidth={1.5} />
+              <Send className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" strokeWidth={1.5} />
               Telegram
             </a>
             <div className="mt-3">

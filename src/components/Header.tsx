@@ -38,7 +38,7 @@ export const Header = () => {
       
       <nav className="relative container mx-auto px-4 md:px-8 py-4">
         <div className="flex items-center justify-between">
-          <a href="/" onClick={handleLogoClick} className="flex items-center cursor-pointer">
+          <a href="/" onClick={handleLogoClick} className="flex items-center cursor-pointer group transition-transform hover:scale-105" aria-label="Partnerstar home">
             <img src={partnerstarLogo} alt="Partnerstar" className="h-8 md:h-10 w-auto" />
           </a>
 
@@ -47,7 +47,7 @@ export const Header = () => {
               <a
                 key={link.name}
                 href={link.href}
-                className="text-muted-foreground/50 hover:text-muted-foreground transition-colors duration-300 text-[12px] font-medium tracking-[0.1em] uppercase"
+                className="text-muted-foreground/60 hover:text-foreground transition-colors duration-300 text-[12px] font-medium tracking-[0.1em] uppercase focus-visible:ring-2 focus-visible:ring-ring/50 rounded px-2 py-1"
               >
                 {link.name}
               </a>
@@ -63,7 +63,12 @@ export const Header = () => {
             </Button>
           </div>
 
-          <button className="lg:hidden p-2 text-foreground/70" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <button
+            className="lg:hidden p-2 text-foreground/70 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/50 rounded-md transition-colors"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle navigation menu"
+            aria-expanded={isMenuOpen}
+          >
             {isMenuOpen ? <X size={20} strokeWidth={1.5} /> : <Menu size={20} strokeWidth={1.5} />}
           </button>
         </div>

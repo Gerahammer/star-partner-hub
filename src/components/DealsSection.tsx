@@ -62,10 +62,13 @@ export const DealsSection = () => {
   };
 
   const renderCard = (plan: typeof plans[0]) => (
-    <div className={`rounded-2xl p-6 lg:p-8 h-full flex flex-col border ${plan.featured ? 'border-primary/20' : 'border-border/15'}`}
-      style={{ 
-        background: plan.featured 
-          ? 'linear-gradient(165deg, hsl(224 28% 13%) 0%, hsl(224 26% 9%) 100%)' 
+    <motion.div
+      whileHover={{ y: -8 }}
+      transition={{ duration: 0.3 }}
+      className={`rounded-2xl p-6 lg:p-8 h-full flex flex-col border ${plan.featured ? 'border-primary/20' : 'border-border/15'}`}
+      style={{
+        background: plan.featured
+          ? 'linear-gradient(165deg, hsl(224 28% 13%) 0%, hsl(224 26% 9%) 100%)'
           : 'hsl(224 28% 10%)',
         boxShadow: plan.featured ? '0 0 30px hsl(42 65% 52% / 0.04)' : 'none'
       }}
@@ -87,7 +90,7 @@ export const DealsSection = () => {
           </li>
         ))}
       </ul>
-    </div>
+    </motion.div>
   );
 
   return (
@@ -114,7 +117,13 @@ export const DealsSection = () => {
 
         {isMobile ? (
           <div className="relative">
-            <Button variant="outline" size="icon" className="absolute left-0 top-1/2 -translate-y-1/2 z-10 rounded-full h-8 w-8 bg-card/80 border-border/30" onClick={prevSlide}>
+            <Button
+              variant="outline"
+              size="icon"
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 rounded-full h-8 w-8 bg-card/80 border-border/30 hover:bg-card hover:border-border/50 transition-colors"
+              onClick={prevSlide}
+              aria-label="Previous commission plan"
+            >
               <ChevronLeft className="h-4 w-4" strokeWidth={1.5} />
             </Button>
             <div className="px-10 overflow-hidden" onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
@@ -124,13 +133,23 @@ export const DealsSection = () => {
                 </motion.div>
               </AnimatePresence>
             </div>
-            <Button variant="outline" size="icon" className="absolute right-0 top-1/2 -translate-y-1/2 z-10 rounded-full h-8 w-8 bg-card/80 border-border/30" onClick={nextSlide}>
+            <Button
+              variant="outline"
+              size="icon"
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 rounded-full h-8 w-8 bg-card/80 border-border/30 hover:bg-card hover:border-border/50 transition-colors"
+              onClick={nextSlide}
+              aria-label="Next commission plan"
+            >
               <ChevronRight className="h-4 w-4" strokeWidth={1.5} />
             </Button>
             <div className="flex justify-center gap-2 mt-6">
               {plans.map((_, index) => (
-                <button key={index} onClick={() => { setSlideDirection(index > currentSlide ? 1 : -1); setCurrentSlide(index); }}
-                  className={`w-1.5 h-1.5 rounded-full transition-colors ${index === currentSlide ? "bg-primary/70" : "bg-muted-foreground/15"}`}
+                <button
+                  key={index}
+                  onClick={() => { setSlideDirection(index > currentSlide ? 1 : -1); setCurrentSlide(index); }}
+                  className={`w-1.5 h-1.5 rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-ring/50 ${index === currentSlide ? "bg-primary/70" : "bg-muted-foreground/15"}`}
+                  aria-label={`Go to ${plans[index].name} plan`}
+                  aria-current={index === currentSlide ? "true" : "false"}
                 />
               ))}
             </div>

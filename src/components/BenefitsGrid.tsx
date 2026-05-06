@@ -53,11 +53,14 @@ export const BenefitsGrid = () => {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: index * 0.15 }}
               whileHover={{ y: -8, transition: { duration: 0.3 } }}
-              className="glass-card rounded-2xl p-8 group cursor-default"
+              className="glass-card rounded-2xl p-8 group cursor-default hover:border-primary/30 transition-colors"
             >
-              <div className="w-14 h-14 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+              <motion.div
+                className="w-14 h-14 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors"
+                whileHover={{ scale: 1.1 }}
+              >
                 <benefit.icon className="w-7 h-7 text-primary" />
-              </div>
+              </motion.div>
               <h3 className="font-display text-xl md:text-2xl text-foreground mb-3">
                 {benefit.title}
               </h3>

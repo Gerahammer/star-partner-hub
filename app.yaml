@@ -19,6 +19,21 @@ services:
     scope: RUN_TIME
   - key: ADMIN_PASSWORD
     scope: RUN_TIME
+  - key: DATABASE_URL
+    scope: RUN_TIME
+  - key: DO_SPACES_KEY
+    scope: RUN_TIME
+  - key: DO_SPACES_SECRET
+    scope: RUN_TIME
+  - key: DO_SPACES_BUCKET
+    scope: RUN_TIME
+  - key: DO_SPACES_REGION
+    scope: RUN_TIME
+    value: "fra1"
+  - key: DO_SPACES_ENDPOINT
+    scope: RUN_TIME
+  - key: DO_SPACES_CDN
+    scope: RUN_TIME
   http_port: 8080
   health_check:
     http_path: /health

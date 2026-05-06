@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { Gamepad2, Users, Shield, Headphones } from "lucide-react";
 import wintinoCharacter from "@/assets/wintino-character.png";
 import wintinoBrandMobile from "@/assets/wintino-brand-mobile.png";
+import wintinoLogo from "@/assets/wintino-logo.svg";
 
 const brandFeatures = [
   { icon: Gamepad2, label: "5,000+", desc: "Casino games & sportsbook" },

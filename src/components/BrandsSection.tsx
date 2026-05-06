@@ -51,9 +51,8 @@ export const BrandsSection = () => {
             <div className="grid lg:grid-cols-2 gap-0">
               {/* Content */}
               <div className="p-8 lg:p-12 flex flex-col justify-center order-2 lg:order-1">
-                <h3 className="font-display text-4xl md:text-5xl text-gradient-gold mb-4">
-                  WINTINO
-                </h3>
+                <img src={wintinoLogo} alt="Wintino" className="h-12 md:h-14 w-auto mb-4 self-start" />
+
                 <p className="text-lg text-muted-foreground mb-8">
                   Premium online casino with the best gaming experience. 
                   High player retention and lifetime value.

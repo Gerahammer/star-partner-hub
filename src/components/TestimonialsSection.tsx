@@ -18,6 +18,7 @@ interface Testimonial {
 
 export const TestimonialsSection = () => {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [adminPassword, setAdminPassword] = useState<string | null>(() => sessionStorage.getItem('adminPassword'));
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -34,7 +35,9 @@ export const TestimonialsSection = () => {
   const { toast } = useToast();
 
   const itemsToShow = isMobile ? 1 : 3;
+  const maxSlide = Math.max(0, testimonials.length - itemsToShow);
   const showCarousel = testimonials.length > itemsToShow;
+  const totalPages = showCarousel ? maxSlide + 1 : 1;
 
   useEffect(() => {
     fetchTestimonials();
@@ -46,7 +49,15 @@ export const TestimonialsSection = () => {
     return () => window.removeEventListener('adminPasswordChanged', handlePasswordChange);
   }, []);
 
+  // Clamp currentSlide if testimonials change (e.g., after delete)
+  useEffect(() => {
+    if (currentSlide > maxSlide) {
+      setCurrentSlide(maxSlide);
+    }
+  }, [maxSlide, currentSlide]);
+
   const fetchTestimonials = async () => {
+    setIsLoading(true);
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/testimonials`);
       if (!response.ok) throw new Error('Failed to fetch testimonials');
@@ -55,6 +66,8 @@ export const TestimonialsSection = () => {
     } catch (error) {
       console.error('Error fetching testimonials:', error);
       toast({ title: "Error", description: "Failed to load testimonials", variant: "destructive" });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -168,14 +181,18 @@ export const TestimonialsSection = () => {
 
   const resetForm = () => { setFormData({ site_name: "", content: "", site_url: "", logo_url: "" }); setEditingId(null); setIsDialogOpen(false); };
 
-  const nextSlide = () => { setSlideDirection(1); setCurrentSlide((p) => (p + 1) % testimonials.length); };
-  const prevSlide = () => { setSlideDirection(-1); setCurrentSlide((p) => (p - 1 + testimonials.length) % testimonials.length); };
+  const nextSlide = () => {
+    setSlideDirection(1);
+    setCurrentSlide((p) => (p >= maxSlide ? 0 : p + 1));
+  };
+  const prevSlide = () => {
+    setSlideDirection(-1);
+    setCurrentSlide((p) => (p <= 0 ? maxSlide : p - 1));
+  };
 
   const getVisibleTestimonials = () => {
     if (testimonials.length === 0) return [];
-    const result: Testimonial[] = [];
-    for (let i = 0; i < itemsToShow; i++) { result.push(testimonials[(currentSlide + i) % testimonials.length]); }
-    return result;
+    return testimonials.slice(currentSlide, currentSlide + itemsToShow);
   };
 
   const handleTouchStart = (e: TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
@@ -232,7 +249,9 @@ export const TestimonialsSection = () => {
           </div>
         )}
 
-        {testimonials.length === 0 ? (
+        {isLoading ? (
+          <div className="text-center py-16"><p className="text-muted-foreground/50 text-sm">Loading testimonials...</p></div>
+        ) : testimonials.length === 0 ? (
           <div className="text-center py-16"><p className="text-muted-foreground/50 text-sm">No testimonials yet.</p></div>
         ) : (
           <div className="relative">
@@ -252,9 +271,9 @@ export const TestimonialsSection = () => {
             <div className={`flex gap-5 px-8 md:px-0 justify-center ${isMobile ? 'flex-col' : 'flex-row'}`}
               onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
               <AnimatePresence mode="popLayout" initial={false}>
-                {getVisibleTestimonials().map((testimonial, index) => (
+                {getVisibleTestimonials().map((testimonial) => (
                   <motion.div
-                    key={`${testimonial.id}-${currentSlide}-${index}`}
+                    key={testimonial.id}
                     initial={{ opacity: 0, x: slideDirection * 50 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -slideDirection * 50 }}
@@ -264,20 +283,20 @@ export const TestimonialsSection = () => {
                     <motion.div
                       whileHover={{ y: -8, boxShadow: '0 20px 40px rgba(212, 175, 55, 0.15)' }}
                       transition={{ duration: 0.3 }}
-                      className="rounded-xl h-full flex flex-col min-h-[280px] border border-gradient-gold/30 backdrop-blur-sm overflow-hidden group"
+                      className="relative rounded-xl h-full flex flex-col min-h-[280px] border border-primary/20 backdrop-blur-sm overflow-hidden group"
                       style={{
                         background: 'linear-gradient(135deg, hsl(224 28% 12%) 0%, hsl(224 28% 10%) 100%)',
                         boxShadow: '0 4px 6px rgba(212, 175, 55, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.05)'
                       }}
                     >
                       {/* Decorative gradient accent */}
-                      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/10 to-transparent blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="pointer-events-none absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/10 to-transparent blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                       {/* Quote mark decoration */}
-                      <div className="absolute top-4 right-4 text-primary/10 text-4xl font-serif">„</div>
+                      <div className="pointer-events-none absolute top-3 right-4 text-primary/15 text-5xl font-serif leading-none select-none">"</div>
 
                       {adminPassword && (
-                        <div className="flex justify-end gap-1.5 p-4 pb-0">
+                        <div className="relative z-10 flex justify-end gap-1.5 p-4 pb-0">
                           <motion.button
                             onClick={() => handleEdit(testimonial)}
                             className="p-2 rounded-lg hover:bg-primary/10 transition-all focus-visible:ring-2 focus-visible:ring-ring/50"
@@ -340,12 +359,12 @@ export const TestimonialsSection = () => {
                   <ChevronRight className="h-4 w-4 text-muted-foreground/50" strokeWidth={1.5} />
                 </Button>
                 <div className="flex justify-center gap-1.5 mt-8">
-                  {testimonials.map((testimonial, index) => (
+                  {Array.from({ length: totalPages }).map((_, index) => (
                     <button
                       key={index}
                       onClick={() => { setSlideDirection(index > currentSlide ? 1 : -1); setCurrentSlide(index); }}
-                      className={`w-1.5 h-1.5 rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-ring/50 ${index === currentSlide ? "bg-primary/60" : "bg-muted-foreground/15"}`}
-                      aria-label={`Go to testimonial from ${testimonial.site_name}`}
+                      className={`h-1.5 rounded-full transition-all focus-visible:ring-2 focus-visible:ring-ring/50 ${index === currentSlide ? "bg-primary/60 w-4" : "bg-muted-foreground/15 w-1.5"}`}
+                      aria-label={`Go to page ${index + 1}`}
                       aria-current={index === currentSlide ? "true" : "false"}
                     />
                   ))}

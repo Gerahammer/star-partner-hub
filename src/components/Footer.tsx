@@ -93,9 +93,14 @@ export const Footer = () => {
           <p className="text-muted-foreground/40 text-xs">
             © {new Date().getFullYear()} Partnerstar. All rights reserved.
           </p>
-          <p className="text-muted-foreground/40 text-xs">
-            18+ | Gamble Responsibly
-          </p>
+          <div className="flex items-center gap-4">
+            <p className="text-muted-foreground/40 text-xs">
+              18+ | Gamble Responsibly
+            </p>
+            <a href="https://ro-affiliate.partnerstar.com/login" target="_blank" rel="noopener noreferrer" className="text-muted-foreground/60 hover:text-foreground transition-colors text-xs focus-visible:ring-2 focus-visible:ring-ring/50 rounded px-1 py-0.5">
+              Log In
+            </a>
+          </div>
         </div>
       </div>
       <ContactFormModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />

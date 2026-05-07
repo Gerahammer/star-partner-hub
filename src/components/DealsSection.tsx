@@ -80,7 +80,7 @@ export const DealsSection = () => {
       )}
       <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-foreground/60 mb-4">{plan.name}</h3>
       <p
-        className="text-6xl lg:text-7xl font-black mb-2 tracking-tight"
+        className="text-5xl sm:text-6xl lg:text-7xl font-black mb-2 tracking-tight whitespace-nowrap"
         style={{
           background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #9a7322 100%)",
           WebkitBackgroundClip: "text",

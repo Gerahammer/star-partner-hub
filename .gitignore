@@ -28,3 +28,6 @@ testimonials.db
 *.njsproj
 *.sln
 *.sw?
+.env.migrate
+.migrate-state.json
+.env.new-app

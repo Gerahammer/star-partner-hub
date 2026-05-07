@@ -18,7 +18,7 @@ export const BrandsSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="brands" className="py-20 md:py-28 relative overflow-hidden">
+    <section id="brands" className="py-20 md:py-28 relative overflow-hidden bg-background">
       <div className="container mx-auto px-4 md:px-8">
         <motion.div
           ref={ref}
@@ -27,15 +27,16 @@ export const BrandsSection = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="text-primary text-sm font-medium uppercase tracking-widest mb-4 block">
+          <span className="text-primary text-xs font-bold uppercase tracking-[0.25em] mb-5 block">
             Our Brands
           </span>
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl mb-4">
-            <span className="text-liquid-silver">PARTNER WITH</span>
-            <br />
-            <span className="text-gradient-gold">PREMIUM BRANDS</span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-4 leading-tight">
+            <span className="text-foreground">Partner With </span>
+            <span style={{ background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #9a7322 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+              Premium Brands
+            </span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mt-4">
+          <p className="text-base md:text-lg text-foreground/65 max-w-2xl mx-auto mt-4">
             Working with top-tier iGaming brands that convert and retain players
           </p>
         </motion.div>

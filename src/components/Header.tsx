@@ -29,9 +29,9 @@ export const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
-      <div className="absolute inset-0 border-b border-border/10"
+      <div className="absolute inset-0 border-b border-primary/10"
         style={{
-          background: 'hsl(225 35% 6% / 0.95)',
+          background: 'rgba(8, 6, 2, 0.92)',
           backdropFilter: 'blur(12px)',
         }}
       />

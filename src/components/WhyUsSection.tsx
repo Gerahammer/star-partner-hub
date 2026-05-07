@@ -1,36 +1,16 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { TrendingUp, Wallet, BarChart3, UserCheck } from "lucide-react";
+import { TrendingUp, Wallet, BarChart3, UserCheck, Trophy, Zap, RefreshCw, Lock } from "lucide-react";
+import { GoldParticles } from "./GoldParticles";
+import { DiamondIcon } from "./DiamondIcon";
 
-const features = [
-  {
-    icon: TrendingUp,
-    title: "High Conversion",
-    stat: "3.2%",
-    statLabel: "avg. CR",
-    description: "Optimized funnels and premium brands that turn traffic into revenue",
-  },
-  {
-    icon: BarChart3,
-    title: "Real-Time Tracking",
-    stat: "0ms",
-    statLabel: "data lag",
-    description: "Live analytics, API integrations, and post-back tracking",
-  },
-  {
-    icon: Wallet,
-    title: "Fast Payments",
-    stat: "7",
-    statLabel: "day cycle",
-    description: "Weekly payouts via wire, crypto, and e-wallets",
-  },
-  {
-    icon: UserCheck,
-    title: "Dedicated Manager",
-    stat: "1:1",
-    statLabel: "support",
-    description: "Personal account manager for your campaign ROI",
-  },
+const benefits = [
+  { icon: Trophy, title: "High Commissions", desc: "Up to 50% RevShare. CPA, hybrid and tailored deals for serious affiliates." },
+  { icon: Zap, title: "Quick Payouts", desc: "No delays. No excuses. Weekly cycle via wire, crypto and e-wallets." },
+  { icon: RefreshCw, title: "No Negative Carryover", desc: "A bad month shouldn't cost you the next. You start fresh, every time." },
+  { icon: BarChart3, title: "Real-Time Tracking", desc: "Live analytics, API integrations and postback tracking — zero data lag." },
+  { icon: Lock, title: "Lifetime Ownership", desc: "Your players. Your profits. For life." },
+  { icon: UserCheck, title: "Dedicated Managers", desc: "1:1 support from a real person who knows your account." },
 ];
 
 export const WhyUsSection = () => {
@@ -38,12 +18,9 @@ export const WhyUsSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="why-us" className="py-28 md:py-36 relative overflow-hidden">
-      <div className="absolute inset-0"
-        style={{ background: 'linear-gradient(180deg, hsl(225 35% 6%) 0%, hsl(224 30% 8%) 50%, hsl(225 35% 6%) 100%)' }}
-      />
-      
-      <div className="container mx-auto px-4 md:px-8 relative">
+    <section id="why-us" className="relative py-28 md:py-36 overflow-hidden bg-background">
+      <GoldParticles density="medium" />
+      <div className="container mx-auto px-4 md:px-8 relative z-10">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 40 }}
@@ -51,33 +28,36 @@ export const WhyUsSection = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="text-primary/80 font-medium uppercase tracking-[0.2em] text-xs mb-5 block">
-            Why Choose Us
-          </span>
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl">
+          <span className="text-primary font-bold uppercase tracking-[0.25em] text-xs mb-5 block">Why Choose Us</span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black">
             <span className="text-foreground">Built for </span>
-            <span className="text-gradient-gold">Performance</span>
+            <span
+              style={{
+                background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #9a7322 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              Performance
+            </span>
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
-          {features.map((feature, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12 max-w-4xl mx-auto">
+          {benefits.map((b, index) => (
             <motion.div
-              key={feature.title}
-              initial={{ opacity: 0, y: 30 }}
+              key={b.title}
+              initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="glass-card p-6 rounded-2xl group cursor-default text-center"
+              transition={{ duration: 0.5, delay: index * 0.06 }}
+              className="flex items-start gap-5"
             >
-              <div className="w-10 h-10 mx-auto mb-4 rounded-xl flex items-center justify-center border border-border/20"
-                style={{ background: 'hsl(224 28% 12%)' }}
-              >
-                <feature.icon className="w-5 h-5 text-muted-foreground" strokeWidth={1.5} />
+              <DiamondIcon icon={b.icon} size={70} />
+              <div className="flex-1 pt-2">
+                <h3 className="text-xl font-bold text-foreground mb-2">{b.title}</h3>
+                <p className="text-sm leading-relaxed text-foreground/60">{b.desc}</p>
               </div>
-              <p className="font-mono text-2xl text-foreground font-bold tracking-tight mb-0.5">{feature.stat}</p>
-              <p className="text-muted-foreground/50 text-[10px] uppercase tracking-[0.15em] mb-3 font-medium">{feature.statLabel}</p>
-              <h3 className="font-display text-sm text-foreground mb-1.5">{feature.title}</h3>
-              <p className="text-muted-foreground text-xs leading-relaxed">{feature.description}</p>
             </motion.div>
           ))}
         </div>

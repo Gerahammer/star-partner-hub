@@ -3,6 +3,7 @@ import { useRef, useState, TouchEvent } from "react";
 import { Check, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { GoldParticles } from "./GoldParticles";
 
 const plans = [
   {
@@ -65,27 +66,36 @@ export const DealsSection = () => {
     <motion.div
       whileHover={{ y: -8 }}
       transition={{ duration: 0.3 }}
-      className={`rounded-2xl p-6 lg:p-8 h-full flex flex-col border ${plan.featured ? 'border-primary/20' : 'border-border/15'}`}
+      className="rounded-2xl p-8 lg:p-10 h-full flex flex-col text-center"
       style={{
         background: plan.featured
-          ? 'linear-gradient(165deg, hsl(224 28% 13%) 0%, hsl(224 26% 9%) 100%)'
-          : 'hsl(224 28% 10%)',
-        boxShadow: plan.featured ? '0 0 30px hsl(42 65% 52% / 0.04)' : 'none'
+          ? "linear-gradient(180deg, rgba(212, 166, 74, 0.15) 0%, rgba(20, 14, 4, 0.6) 100%)"
+          : "rgba(20, 14, 4, 0.4)",
+        border: "1px solid rgba(212, 166, 74, 0.25)",
+        transform: plan.featured ? "scale(1.03)" : "none",
       }}
     >
       {plan.featured && (
-        <span className="text-[10px] uppercase tracking-[0.2em] text-primary/70 font-medium mb-4">Most Popular</span>
+        <span className="text-[10px] uppercase tracking-[0.25em] text-primary font-bold mb-4">Most Popular</span>
       )}
-      <h3 className="font-display text-lg text-foreground mb-2">{plan.name}</h3>
-      <p className="font-mono text-3xl lg:text-4xl text-foreground mb-2 font-bold tracking-tight">
+      <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-foreground/60 mb-4">{plan.name}</h3>
+      <p
+        className="text-6xl lg:text-7xl font-black mb-2 tracking-tight"
+        style={{
+          background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #9a7322 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+        }}
+      >
         {plan.highlight}
       </p>
-      <p className="text-muted-foreground/60 mb-6 text-sm">{plan.description}</p>
-      
-      <ul className="space-y-3 mt-auto">
+      <p className="text-foreground/70 mb-8 text-sm">{plan.description}</p>
+
+      <ul className="space-y-3 mt-auto text-left">
         {plan.features.map((feature) => (
-          <li key={feature} className="flex items-center gap-2.5 text-muted-foreground text-sm">
-            <Check className="w-3.5 h-3.5 text-muted-foreground/50 shrink-0" strokeWidth={1.5} />
+          <li key={feature} className="flex items-center gap-3 text-foreground/80 text-sm">
+            <Check className="w-4 h-4 text-primary shrink-0" strokeWidth={2} />
             {feature}
           </li>
         ))}
@@ -94,8 +104,9 @@ export const DealsSection = () => {
   );
 
   return (
-    <section id="deals" className="py-28 md:py-36 relative overflow-hidden">
-      <div className="container mx-auto px-4 md:px-8">
+    <section id="deals" className="relative py-28 md:py-36 overflow-hidden bg-background">
+      <GoldParticles density="low" />
+      <div className="relative container mx-auto px-4 md:px-8 z-10">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 40 }}
@@ -103,14 +114,23 @@ export const DealsSection = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="text-primary/80 font-medium uppercase tracking-[0.2em] text-xs mb-5 block">
+          <span className="text-primary font-bold uppercase tracking-[0.25em] text-xs mb-5 block">
             Commission Plans
           </span>
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-4">
             <span className="text-foreground">Choose Your </span>
-            <span className="text-gradient-gold">Deal</span>
+            <span
+              style={{
+                background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #9a7322 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              Deal
+            </span>
           </h2>
-          <p className="text-muted-foreground text-sm max-w-md mx-auto">
+          <p className="text-foreground/60 text-sm max-w-md mx-auto">
             Pick the model that works best for your traffic
           </p>
         </motion.div>

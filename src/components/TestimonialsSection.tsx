@@ -205,13 +205,15 @@ export const TestimonialsSection = () => {
   };
 
   return (
-    <section className="py-24 md:py-32 relative overflow-hidden">
+    <section className="py-24 md:py-32 relative overflow-hidden bg-background">
       <div className="container mx-auto px-4 md:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="text-center mb-14">
-          <span className="text-primary/80 font-medium uppercase tracking-[0.2em] text-xs mb-5 block">Testimonials</span>
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl mb-4">
+          <span className="text-primary font-bold uppercase tracking-[0.25em] text-xs mb-5 block">Testimonials</span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-4">
             <span className="text-foreground">What Partners </span>
-            <span className="text-gradient-gold">Say</span>
+            <span style={{ background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #9a7322 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+              Say
+            </span>
           </h2>
         </motion.div>
 

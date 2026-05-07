@@ -6,15 +6,15 @@
 
 @layer base {
   :root {
-    /* True dark navy — near black */
-    --background: 225 35% 6%;
-    --foreground: 210 25% 93%;
+    /* Near-black with warm gold-tinted hue (Strong Affiliates direction) */
+    --background: 40 30% 3%;
+    --foreground: 45 20% 96%;
 
-    --card: 224 30% 10%;
-    --card-foreground: 210 25% 93%;
+    --card: 40 25% 6%;
+    --card-foreground: 45 20% 96%;
 
-    --popover: 224 30% 10%;
-    --popover-foreground: 210 25% 93%;
+    --popover: 40 25% 6%;
+    --popover-foreground: 45 20% 96%;
 
     /* Muted gold — warm, not yellow */
     --primary: 42 65% 52%;
@@ -23,8 +23,8 @@
     --secondary: 40 45% 38%;
     --secondary-foreground: 0 0% 4%;
 
-    --muted: 224 22% 13%;
-    --muted-foreground: 218 12% 68%;
+    --muted: 40 20% 8%;
+    --muted-foreground: 45 15% 70%;
 
     --accent: 42 65% 52%;
     --accent-foreground: 0 0% 4%;
@@ -32,8 +32,8 @@
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 224 18% 16%;
-    --input: 224 18% 16%;
+    --border: 40 25% 12%;
+    --input: 40 25% 12%;
     --ring: 42 65% 52%;
 
     --radius: 0.875rem;
@@ -46,11 +46,11 @@
     --silver-muted: 220 8% 50%;
 
     /* Glass */
-    --glass-bg: 224 30% 10%;
-    --glass-border: 224 20% 16%;
+    --glass-bg: 40 25% 6%;
+    --glass-border: 40 25% 12%;
     --glass-glow: 42 65% 52%;
 
-    --sidebar-background: 225 35% 6%;
+    --sidebar-background: 40 30% 3%;
     --sidebar-foreground: 210 25% 93%;
     --sidebar-primary: 42 65% 52%;
     --sidebar-primary-foreground: 0 0% 4%;

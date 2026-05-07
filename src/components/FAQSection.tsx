@@ -6,6 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { GoldParticles } from "./GoldParticles";
 
 const faqs = [
   {
@@ -39,12 +40,10 @@ export const FAQSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="faq" className="py-28 md:py-36 relative overflow-hidden">
-      <div className="absolute inset-0"
-        style={{ background: 'linear-gradient(180deg, hsl(225 35% 6%) 0%, hsl(224 30% 8%) 50%, hsl(225 35% 6%) 100%)' }}
-      />
+    <section id="faq" className="relative py-28 md:py-36 overflow-hidden bg-background">
+      <GoldParticles density="low" />
 
-      <div className="container mx-auto px-4 md:px-8 relative">
+      <div className="container mx-auto px-4 md:px-8 relative z-10">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 40 }}
@@ -52,13 +51,22 @@ export const FAQSection = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-14"
         >
-          <span className="text-primary/80 font-medium uppercase tracking-[0.2em] text-xs mb-5 block">
+          <span className="text-primary font-bold uppercase tracking-[0.25em] text-xs mb-5 block">
             Got Questions?
           </span>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-foreground">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-foreground">
             Frequently Asked
             <br />
-            <span className="text-gradient-gold">Questions</span>
+            <span
+              style={{
+                background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #9a7322 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              Questions
+            </span>
           </h2>
         </motion.div>
 

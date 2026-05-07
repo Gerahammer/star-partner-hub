@@ -66,7 +66,7 @@ export const DealsSection = () => {
     <motion.div
       whileHover={{ y: -8 }}
       transition={{ duration: 0.3 }}
-      className="rounded-2xl p-8 lg:p-10 h-full flex flex-col text-center"
+      className="relative rounded-2xl p-8 lg:p-10 h-full flex flex-col text-center"
       style={{
         background: plan.featured
           ? "linear-gradient(180deg, rgba(212, 166, 74, 0.15) 0%, rgba(20, 14, 4, 0.6) 100%)"
@@ -76,15 +76,16 @@ export const DealsSection = () => {
       }}
     >
       {plan.featured && (
-        <span className="text-[10px] uppercase tracking-[0.25em] text-primary font-bold mb-4">Most Popular</span>
+        <span
+          className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-[10px] uppercase tracking-[0.25em] font-bold text-black whitespace-nowrap"
+          style={{ background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #b8862b 100%)" }}
+        >
+          Most Popular
+        </span>
       )}
       <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-foreground/60 mb-4">{plan.name}</h3>
       <p
-        className={`font-black mb-2 tracking-tight whitespace-nowrap ${
-          plan.highlight.length > 6
-            ? "text-3xl sm:text-4xl lg:text-5xl"
-            : "text-5xl sm:text-6xl lg:text-7xl"
-        }`}
+        className="font-black mb-2 tracking-tight whitespace-nowrap text-4xl sm:text-5xl lg:text-6xl min-h-[3.5rem] sm:min-h-[4rem] lg:min-h-[5rem] flex items-center justify-center"
         style={{
           background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #9a7322 100%)",
           WebkitBackgroundClip: "text",

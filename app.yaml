@@ -1,12 +1,12 @@
-name: seashell-app
+name: plankton-app
 services:
-- name: api
+- name: star-partner-hub
   github:
     repo: Gerahammer/star-partner-hub
     branch: main
     deploy_on_push: true
   source_dir: /
-  build_command: npm ci --also=dev && npm run build
+  build_command: npm ci --include=dev && npm run build
   run_command: npm start
   envs:
   - key: NODE_ENV

@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
-  ArrowRight,
-  TrendingUp,
+  Trophy,
   Zap,
-  Shield,
+  RefreshCw,
   Handshake,
-  Crown,
-  UserCheck,
+  Lock,
+  Target,
   Globe,
   Search,
   Smartphone,
@@ -16,36 +15,88 @@ import {
   Music,
   Megaphone,
   AppWindow,
+  type LucideIcon,
 } from "lucide-react";
 import partnerstarLogo from "@/assets/partnerstar-full-logo.png";
 
 /**
  * Preview page — visual direction inspired by strongaffiliates.com
- * Light theme · navy primary · green CTA · clean minimal layout
+ * Dark theme · gold accents · diamond motif · big bold typography · subtle gold particles
  */
 
-const navy = "hsl(220 65% 18%)"; // primary text / brand
-const navyDeep = "hsl(220 70% 12%)";
-const green = "hsl(140 70% 45%)"; // CTA accent
-const greenHover = "hsl(140 70% 38%)";
-const surface = "hsl(220 20% 98%)";
+// Diamond shape SVG container with icon inside (Strong's signature)
+const DiamondIcon = ({ icon: Icon, size = 80 }: { icon: LucideIcon; size?: number }) => (
+  <div className="relative inline-flex items-center justify-center" style={{ width: size, height: size }}>
+    <svg width={size} height={size} viewBox="0 0 80 80" className="absolute inset-0">
+      <defs>
+        <linearGradient id="goldStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#f5d27c" />
+          <stop offset="50%" stopColor="#d4a64a" />
+          <stop offset="100%" stopColor="#9a7322" />
+        </linearGradient>
+        <linearGradient id="diamondFill" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="rgba(212, 166, 74, 0.15)" />
+          <stop offset="100%" stopColor="rgba(0, 0, 0, 0.4)" />
+        </linearGradient>
+      </defs>
+      <polygon
+        points="40,4 76,40 40,76 4,40"
+        fill="url(#diamondFill)"
+        stroke="url(#goldStroke)"
+        strokeWidth="1.5"
+      />
+    </svg>
+    <Icon className="relative w-7 h-7" style={{ color: "#e8c878" }} strokeWidth={1.75} />
+  </div>
+);
 
-const tiers = [
-  { level: "1st level", percent: "45%", range: "0–10 depositors" },
-  { level: "2nd level", percent: "55%", range: "10–25 depositors", featured: true },
-  { level: "3rd level", percent: "60%", range: "25+ depositors" },
+// Diamond rank badge (used for Top 3 leaderboard)
+const DiamondRank = ({ number, size = 140 }: { number: number; size?: number }) => (
+  <div className="relative inline-flex items-center justify-center" style={{ width: size, height: size }}>
+    <svg width={size} height={size} viewBox="0 0 140 140" className="absolute inset-0">
+      <defs>
+        <linearGradient id={`rankFill-${number}`} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#fce8a8" />
+          <stop offset="50%" stopColor="#d4a64a" />
+          <stop offset="100%" stopColor="#7a5a18" />
+        </linearGradient>
+        <linearGradient id={`rankStroke-${number}`} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#f5d27c" />
+          <stop offset="100%" stopColor="#9a7322" />
+        </linearGradient>
+      </defs>
+      <polygon
+        points="70,8 132,70 70,132 8,70"
+        fill="rgba(20, 16, 8, 0.6)"
+        stroke={`url(#rankStroke-${number})`}
+        strokeWidth="2"
+      />
+      <text
+        x="70"
+        y="92"
+        textAnchor="middle"
+        fontFamily="Space Grotesk, sans-serif"
+        fontSize="68"
+        fontWeight="900"
+        fill={`url(#rankFill-${number})`}
+        style={{ filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.5))" }}
+      >
+        {number}
+      </text>
+    </svg>
+  </div>
+);
+
+const benefits: { icon: LucideIcon; title: string; desc: string }[] = [
+  { icon: Trophy, title: "High Commissions", desc: "Big brands. Bigger conversions. Earn more with every deal." },
+  { icon: Zap, title: "Quick Payouts", desc: "No delays. No excuses. Get paid on time, every time." },
+  { icon: RefreshCw, title: "No Negative Carryover", desc: "A bad month shouldn't cost you the next. You start fresh, every time." },
+  { icon: Handshake, title: "Win-Win", desc: "Your traffic earns. Your deal pays. No catch." },
+  { icon: Lock, title: "Lifetime Ownership", desc: "Your players. Your profits. For life." },
+  { icon: Target, title: "Dedicated Managers", desc: "You're getting your own personal manager, available 24/7." },
 ];
 
-const benefits = [
-  { icon: TrendingUp, title: "High Commissions", desc: "Up to 60% RevShare. CPA, hybrid and tailored deals." },
-  { icon: Zap, title: "Quick Payouts", desc: "Get paid on time, every time. Fast & reliable." },
-  { icon: Shield, title: "No Negative Carryover", desc: "Start each month at zero. No bag to dig out of." },
-  { icon: Handshake, title: "Win-Win Partnership", desc: "Aligned incentives and transparent reporting." },
-  { icon: Crown, title: "Lifetime Ownership", desc: "Your players, your earnings — for life." },
-  { icon: UserCheck, title: "Dedicated Managers", desc: "Direct line to a real person who knows your account." },
-];
-
-const traffic = [
+const traffic: { icon: LucideIcon; label: string }[] = [
   { icon: Globe, label: "iGaming Sites" },
   { icon: Megaphone, label: "Facebook / TikTok Ads" },
   { icon: Search, label: "Google Search" },
@@ -56,37 +107,75 @@ const traffic = [
   { icon: Music, label: "TikTok" },
 ];
 
+const tiers = [
+  { level: "1st Level", percent: "45%", range: "0–10 depositors" },
+  { level: "2nd Level", percent: "55%", range: "10–25 depositors", featured: true },
+  { level: "3rd Level", percent: "60%", range: "25+ depositors" },
+];
+
+const topPayouts = [
+  { rank: 1, amount: "€1,279,670" },
+  { rank: 2, amount: "€987,664" },
+  { rank: 3, amount: "€567,566" },
+];
+
+// Subtle gold-particle background
+const GoldParticles = () => (
+  <div className="pointer-events-none absolute inset-0 overflow-hidden">
+    <div
+      className="absolute inset-0 opacity-40"
+      style={{
+        background:
+          "radial-gradient(ellipse at 20% 30%, rgba(212, 166, 74, 0.18) 0%, transparent 50%), radial-gradient(ellipse at 80% 70%, rgba(212, 166, 74, 0.12) 0%, transparent 50%), radial-gradient(ellipse at 50% 100%, rgba(212, 166, 74, 0.08) 0%, transparent 60%)",
+      }}
+    />
+    {[...Array(40)].map((_, i) => (
+      <div
+        key={i}
+        className="absolute rounded-full"
+        style={{
+          left: `${(i * 7919) % 100}%`,
+          top: `${(i * 3779) % 100}%`,
+          width: `${1 + ((i * 3) % 3)}px`,
+          height: `${1 + ((i * 3) % 3)}px`,
+          background: "#d4a64a",
+          opacity: 0.3 + ((i * 13) % 5) / 10,
+          boxShadow: "0 0 6px rgba(212, 166, 74, 0.6)",
+        }}
+      />
+    ))}
+  </div>
+);
+
 const PreviewHeader = () => (
   <header
     className="sticky top-0 z-50 border-b"
-    style={{ background: "rgba(255,255,255,0.92)", borderColor: "hsl(220 20% 90%)", backdropFilter: "blur(12px)" }}
+    style={{ background: "rgba(8, 6, 2, 0.85)", borderColor: "rgba(212, 166, 74, 0.15)", backdropFilter: "blur(12px)" }}
   >
     <nav className="container mx-auto flex items-center justify-between px-4 md:px-8 py-4">
-      <Link to="/preview" className="flex items-center" aria-label="Partnerstar home">
-        <img src={partnerstarLogo} alt="Partnerstar" className="h-8 md:h-10 w-auto" style={{ filter: "invert(0.15) hue-rotate(190deg)" }} />
+      <Link to="/preview" aria-label="Partnerstar home">
+        <img src={partnerstarLogo} alt="Partnerstar" className="h-10 w-auto" />
       </Link>
-      <div className="hidden lg:flex items-center gap-7 text-sm" style={{ color: navyDeep }}>
-        <a href="#commissions" className="hover:opacity-70 transition-opacity">Commissions</a>
-        <a href="#benefits" className="hover:opacity-70 transition-opacity">Benefits</a>
-        <a href="#traffic" className="hover:opacity-70 transition-opacity">Traffic</a>
-        <a href="#contact" className="hover:opacity-70 transition-opacity">Contact</a>
+      <div className="hidden lg:flex items-center gap-7 text-sm text-white/80">
+        <Link to="/" className="hover:text-white transition-colors">Home</Link>
+        <a href="#commissions" className="hover:text-white transition-colors">Commissions</a>
+        <a href="#benefits" className="hover:text-white transition-colors">Benefits</a>
+        <a href="#payouts" className="hover:text-white transition-colors">Payouts</a>
+        <a href="#contact" className="hover:text-white transition-colors">Contact</a>
       </div>
       <div className="flex items-center gap-3">
         <a
           href="https://ro-affiliate.partnerstar.com/login"
-          className="text-sm font-medium hover:opacity-70"
-          style={{ color: navyDeep }}
+          className="rounded-full border border-white/20 px-5 py-2 text-sm font-semibold text-white hover:bg-white/5 transition-colors"
         >
           Login
         </a>
         <a
           href="https://ro-affiliate.partnerstar.com/registration"
-          className="rounded-full px-5 py-2 text-sm font-semibold text-white shadow-sm transition-colors"
-          style={{ background: green }}
-          onMouseEnter={(e) => (e.currentTarget.style.background = greenHover)}
-          onMouseLeave={(e) => (e.currentTarget.style.background = green)}
+          className="rounded-full px-5 py-2 text-sm font-bold text-black shadow-lg transition-transform hover:scale-105"
+          style={{ background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #b8862b 100%)" }}
         >
-          Sign Up
+          Sign up
         </a>
       </div>
     </nav>
@@ -94,83 +183,50 @@ const PreviewHeader = () => (
 );
 
 const Hero = () => (
-  <section className="relative overflow-hidden" style={{ background: "white" }}>
-    <div className="container mx-auto px-4 md:px-8 py-24 md:py-32">
-      <div className="max-w-4xl">
-        <motion.span
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="inline-block rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wider"
-          style={{ background: "hsl(140 70% 95%)", color: green }}
+  <section className="relative overflow-hidden" style={{ background: "#080602" }}>
+    <GoldParticles />
+    <div className="container mx-auto relative z-10 px-4 md:px-8 py-32 md:py-44">
+      <motion.h1
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center mx-auto max-w-4xl text-5xl md:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tight text-white"
+      >
+        Some Affiliate Programs Like to Talk.{" "}
+        <span style={{ background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #9a7322 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+          Partner Pays.
+        </span>
+      </motion.h1>
+      <motion.p
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15 }}
+        className="mt-6 text-center text-base md:text-lg text-white/65 italic"
+      >
+        Top Brands. High Conversions. Fast Payouts.
+      </motion.p>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="mt-12 flex justify-center"
+      >
+        <a
+          href="https://ro-affiliate.partnerstar.com/registration"
+          className="rounded-full px-10 py-4 text-base font-bold text-black shadow-2xl transition-transform hover:scale-105"
+          style={{ background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #b8862b 100%)" }}
         >
-          Premium iGaming Affiliate Program
-        </motion.span>
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="mt-6 text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight"
-          style={{ color: navyDeep }}
-        >
-          Some Affiliate Programs Like to Talk.
-          <br />
-          <span style={{ color: green }}>Partner Pays.</span>
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="mt-6 text-lg md:text-xl max-w-2xl"
-          style={{ color: "hsl(220 15% 35%)" }}
-        >
-          Top brands. High conversions. Fast payouts. Built for affiliates who actually want to win.
-        </motion.p>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="mt-10 flex flex-col sm:flex-row gap-4"
-        >
-          <a
-            href="https://ro-affiliate.partnerstar.com/registration"
-            className="inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-base font-semibold text-white shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5"
-            style={{ background: green }}
-          >
-            Register Now <ArrowRight className="w-4 h-4" />
-          </a>
-          <a
-            href="#commissions"
-            className="inline-flex items-center justify-center gap-2 rounded-full border-2 px-7 py-3.5 text-base font-semibold transition-colors"
-            style={{ borderColor: navyDeep, color: navyDeep }}
-          >
-            View Commissions
-          </a>
-        </motion.div>
-      </div>
+          Register Now
+        </a>
+      </motion.div>
     </div>
-
-    {/* Subtle decorative gradient */}
-    <div
-      className="pointer-events-none absolute right-0 top-0 h-full w-1/2 opacity-30"
-      style={{
-        background: `radial-gradient(circle at 70% 40%, hsl(140 70% 90%) 0%, transparent 60%)`,
-      }}
-    />
   </section>
 );
 
 const Commissions = () => (
-  <section id="commissions" className="py-20 md:py-28" style={{ background: surface }}>
-    <div className="container mx-auto px-4 md:px-8">
-      <div className="text-center mb-14">
-        <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: green }}>
-          Commissions
-        </span>
-        <h2 className="mt-3 text-4xl md:text-5xl font-bold" style={{ color: navyDeep }}>
-          Tiered RevShare. The more you bring, the more you earn.
-        </h2>
-      </div>
-
+  <section id="commissions" className="relative py-24 md:py-32" style={{ background: "#080602" }}>
+    <GoldParticles />
+    <div className="container mx-auto relative z-10 px-4 md:px-8">
+      <h2 className="text-center text-4xl md:text-5xl font-black text-white mb-14">Commissions</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
         {tiers.map((tier, i) => (
           <motion.div
@@ -179,19 +235,29 @@ const Commissions = () => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.1 }}
-            className={`rounded-2xl p-8 text-center ${tier.featured ? "shadow-2xl scale-105" : "shadow-md"}`}
+            className="rounded-2xl p-10 text-center"
             style={{
-              background: tier.featured ? navyDeep : "white",
-              color: tier.featured ? "white" : navyDeep,
-              border: tier.featured ? "none" : "1px solid hsl(220 20% 90%)",
+              background: tier.featured
+                ? "linear-gradient(180deg, rgba(212, 166, 74, 0.15) 0%, rgba(20, 14, 4, 0.6) 100%)"
+                : "rgba(20, 14, 4, 0.4)",
+              border: "1px solid rgba(212, 166, 74, 0.25)",
+              transform: tier.featured ? "scale(1.05)" : "none",
             }}
           >
-            <p className="text-xs font-semibold uppercase tracking-wider opacity-70 mb-3">{tier.level}</p>
-            <p className="text-6xl md:text-7xl font-bold mb-2" style={{ color: tier.featured ? green : navyDeep }}>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-white/60 mb-4">{tier.level}</p>
+            <p
+              className="text-7xl md:text-8xl font-black mb-2"
+              style={{
+                background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #9a7322 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
               {tier.percent}
             </p>
-            <p className="text-sm font-medium opacity-90 mb-5">Revenue Share</p>
-            <p className="text-sm opacity-70">{tier.range}</p>
+            <p className="text-sm font-semibold text-white/80 mb-4">Revenue Share</p>
+            <p className="text-sm text-white/50">{tier.range}</p>
           </motion.div>
         ))}
       </div>
@@ -200,36 +266,25 @@ const Commissions = () => (
 );
 
 const Benefits = () => (
-  <section id="benefits" className="py-20 md:py-28" style={{ background: "white" }}>
-    <div className="container mx-auto px-4 md:px-8">
-      <div className="text-center mb-14">
-        <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: green }}>
-          Benefits
-        </span>
-        <h2 className="mt-3 text-4xl md:text-5xl font-bold" style={{ color: navyDeep }}>
-          Built for affiliates who mean business
-        </h2>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+  <section id="benefits" className="relative py-24 md:py-32" style={{ background: "#080602" }}>
+    <GoldParticles />
+    <div className="container mx-auto relative z-10 px-4 md:px-8">
+      <h2 className="text-center text-4xl md:text-5xl font-black text-white mb-14">Benefits</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12 max-w-4xl mx-auto">
         {benefits.map((b, i) => (
           <motion.div
             key={b.title}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: i * 0.05 }}
-            className="rounded-2xl p-7 transition-all hover:shadow-lg hover:-translate-y-1"
-            style={{ background: surface, border: "1px solid hsl(220 20% 92%)" }}
+            transition={{ delay: i * 0.06 }}
+            className="flex items-start gap-5"
           >
-            <div
-              className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
-              style={{ background: "hsl(140 70% 95%)" }}
-            >
-              <b.icon className="w-6 h-6" style={{ color: green }} strokeWidth={2} />
+            <DiamondIcon icon={b.icon} size={70} />
+            <div className="flex-1 pt-2">
+              <h3 className="text-xl font-bold text-white mb-2">{b.title}</h3>
+              <p className="text-sm leading-relaxed text-white/60">{b.desc}</p>
             </div>
-            <h3 className="text-xl font-bold mb-2" style={{ color: navyDeep }}>{b.title}</h3>
-            <p className="text-sm leading-relaxed" style={{ color: "hsl(220 15% 40%)" }}>{b.desc}</p>
           </motion.div>
         ))}
       </div>
@@ -237,19 +292,62 @@ const Benefits = () => (
   </section>
 );
 
-const Traffic = () => (
-  <section id="traffic" className="py-20 md:py-28" style={{ background: surface }}>
-    <div className="container mx-auto px-4 md:px-8">
-      <div className="text-center mb-14">
-        <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: green }}>
-          Traffic Sources
-        </span>
-        <h2 className="mt-3 text-4xl md:text-5xl font-bold" style={{ color: navyDeep }}>
-          Every channel welcome
-        </h2>
+const TopPayouts = () => (
+  <section id="payouts" className="relative py-24 md:py-32" style={{ background: "#080602" }}>
+    <GoldParticles />
+    <div className="container mx-auto relative z-10 px-4 md:px-8">
+      <h2 className="text-center text-4xl md:text-5xl font-black text-white mb-20">Top 3 Affiliate Payouts</h2>
+      <div className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-20">
+        {/* 2nd place - left */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          className="flex items-center gap-5 md:order-1"
+        >
+          <DiamondRank number={2} size={120} />
+          <div>
+            <p className="text-sm font-semibold text-white/60 mb-1">2nd place</p>
+            <p className="text-2xl md:text-3xl font-bold text-white">{topPayouts[1].amount}</p>
+          </div>
+        </motion.div>
+        {/* 1st place - center, larger */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex items-center gap-5 md:order-2 md:-mt-12"
+        >
+          <DiamondRank number={1} size={160} />
+          <div>
+            <p className="text-sm font-semibold text-white/60 mb-1">1st place</p>
+            <p className="text-3xl md:text-4xl font-bold text-white">{topPayouts[0].amount}</p>
+          </div>
+        </motion.div>
+        {/* 3rd place - right */}
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          className="flex items-center gap-5 md:order-3"
+        >
+          <DiamondRank number={3} size={120} />
+          <div>
+            <p className="text-sm font-semibold text-white/60 mb-1">3rd place</p>
+            <p className="text-2xl md:text-3xl font-bold text-white">{topPayouts[2].amount}</p>
+          </div>
+        </motion.div>
       </div>
+    </div>
+  </section>
+);
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+const Traffic = () => (
+  <section className="relative py-24 md:py-32" style={{ background: "#080602" }}>
+    <GoldParticles />
+    <div className="container mx-auto relative z-10 px-4 md:px-8">
+      <h2 className="text-center text-4xl md:text-5xl font-black text-white mb-14">Traffic We Accept</h2>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
         {traffic.map((t, i) => (
           <motion.div
             key={t.label}
@@ -257,11 +355,11 @@ const Traffic = () => (
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.04 }}
-            className="rounded-xl p-5 flex flex-col items-center text-center transition-colors hover:bg-white"
-            style={{ background: "white", border: "1px solid hsl(220 20% 92%)" }}
+            className="flex flex-col items-center text-center p-6 rounded-xl"
+            style={{ background: "rgba(20, 14, 4, 0.5)", border: "1px solid rgba(212, 166, 74, 0.2)" }}
           >
-            <t.icon className="w-7 h-7 mb-3" style={{ color: green }} strokeWidth={1.75} />
-            <p className="text-sm font-semibold" style={{ color: navyDeep }}>{t.label}</p>
+            <DiamondIcon icon={t.icon} size={56} />
+            <p className="text-sm font-semibold text-white mt-4">{t.label}</p>
           </motion.div>
         ))}
       </div>
@@ -270,43 +368,49 @@ const Traffic = () => (
 );
 
 const FinalCTA = () => (
-  <section id="contact" className="py-20 md:py-28" style={{ background: navyDeep }}>
-    <div className="container mx-auto px-4 md:px-8 text-center">
-      <h2 className="text-4xl md:text-5xl font-bold text-white mb-5 max-w-3xl mx-auto leading-tight">
-        Ready to partner with the brands that <span style={{ color: green }}>actually convert</span>?
+  <section id="contact" className="relative py-24 md:py-32" style={{ background: "#080602" }}>
+    <GoldParticles />
+    <div className="container mx-auto relative z-10 px-4 md:px-8 text-center">
+      <h2 className="text-4xl md:text-5xl font-black text-white mb-5 max-w-3xl mx-auto leading-tight">
+        Ready to{" "}
+        <span style={{ background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #9a7322 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+          partner with the best
+        </span>
+        ?
       </h2>
-      <p className="text-lg max-w-xl mx-auto mb-10" style={{ color: "hsl(220 20% 75%)" }}>
+      <p className="text-lg max-w-xl mx-auto mb-10 text-white/65">
         Sign up in minutes. Get a dedicated manager. Start earning today.
       </p>
       <a
         href="https://ro-affiliate.partnerstar.com/registration"
-        className="inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-semibold text-white shadow-lg transition-all hover:shadow-xl hover:-translate-y-0.5"
-        style={{ background: green }}
+        className="inline-block rounded-full px-10 py-4 text-base font-bold text-black shadow-2xl transition-transform hover:scale-105"
+        style={{ background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #b8862b 100%)" }}
       >
-        Register Now <ArrowRight className="w-4 h-4" />
+        Register Now
       </a>
     </div>
   </section>
 );
 
 const PreviewFooter = () => (
-  <footer className="py-10 border-t" style={{ background: "white", borderColor: "hsl(220 20% 92%)" }}>
-    <div className="container mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm" style={{ color: "hsl(220 15% 45%)" }}>
+  <footer className="py-10 border-t" style={{ background: "#050402", borderColor: "rgba(212, 166, 74, 0.15)" }}>
+    <div className="container mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/50">
       <p>© {new Date().getFullYear()} Partnerstar. All rights reserved.</p>
       <p>18+ | Gamble Responsibly</p>
-      <Link to="/" className="underline hover:opacity-70">← Back to current site</Link>
+      <Link to="/" className="underline hover:text-white">← Back to current site</Link>
     </div>
   </footer>
 );
 
 const Preview = () => {
   return (
-    <div className="min-h-screen" style={{ background: "white", color: navyDeep, fontFamily: "Inter, system-ui, sans-serif" }}>
+    <div className="min-h-screen text-white" style={{ background: "#080602", fontFamily: "Inter, system-ui, sans-serif" }}>
       <PreviewHeader />
       <main>
         <Hero />
         <Commissions />
         <Benefits />
+        <TopPayouts />
         <Traffic />
         <FinalCTA />
       </main>

@@ -1,13 +1,12 @@
 import { useState, useEffect, useRef, TouchEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Trash2, Edit2, ChevronLeft, ChevronRight, Upload } from "lucide-react";
+import { Plus, Trash2, Edit2, ChevronLeft, ChevronRight, Upload, ExternalLink } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
-import partnerstarLogo from "@/assets/partnerstar-full-logo.png";
 
 interface Testimonial {
   id: string;
@@ -286,86 +285,95 @@ export const TestimonialsSection = () => {
                     <motion.div
                       whileHover={{ y: -6 }}
                       transition={{ duration: 0.3 }}
-                      className="relative h-full flex flex-col min-h-[320px] group"
+                      className="relative h-full flex flex-col min-h-[320px] rounded-xl group"
                       style={{
                         background: 'hsl(40 25% 6%)',
                         border: '1px solid rgba(212, 166, 74, 0.18)',
-                        // Folded corner: clip top-right with a diagonal cut
-                        clipPath: 'polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%)',
                       }}
                     >
-                      {/* Folded-corner triangle accent (subtle gold) */}
-                      <div
-                        className="pointer-events-none absolute top-0 right-0"
-                        style={{
-                          width: 28,
-                          height: 28,
-                          background: 'linear-gradient(225deg, rgba(212, 166, 74, 0.25) 0%, transparent 50%)',
-                          clipPath: 'polygon(100% 0, 100% 100%, 0 100%)',
-                        }}
-                      />
-
-                      {/* Header: two logos top-left + admin buttons top-right */}
-                      <div className="relative z-10 flex items-center justify-between px-6 pt-6 pb-4 border-b border-primary/15">
-                        <div className="flex items-center gap-3">
-                          <img src={partnerstarLogo} alt="Partnerstar" loading="lazy" className="h-7 w-auto opacity-90" />
-                          {testimonial.logo_url ? (
-                            <img src={testimonial.logo_url} alt={`${testimonial.site_name} logo`} loading="lazy" className="h-9 w-auto max-w-[110px] object-contain flex-shrink-0" />
-                          ) : (
-                            <div className="h-9 w-9 rounded-md border border-primary/20 flex items-center justify-center flex-shrink-0" style={{ background: 'hsl(40 25% 10%)' }}>
-                              <span className="text-primary/70 font-bold text-sm">{testimonial.site_name.charAt(0).toUpperCase()}</span>
-                            </div>
-                          )}
+                      {/* Admin buttons - absolute top-right */}
+                      {adminPassword && (
+                        <div className="absolute top-3 right-3 flex gap-1 z-10">
+                          <motion.button
+                            onClick={() => handleEdit(testimonial)}
+                            className="p-1.5 rounded-md hover:bg-primary/10 transition-all focus-visible:ring-2 focus-visible:ring-ring/50"
+                            whileHover={{ scale: 1.1 }}
+                            aria-label={`Edit testimonial from ${testimonial.site_name}`}
+                          >
+                            <Edit2 className="w-3.5 h-3.5 text-muted-foreground/60 hover:text-primary" strokeWidth={1.5} />
+                          </motion.button>
+                          <motion.button
+                            onClick={() => handleDelete(testimonial.id)}
+                            className="p-1.5 rounded-md hover:bg-destructive/10 transition-all focus-visible:ring-2 focus-visible:ring-ring/50"
+                            whileHover={{ scale: 1.1 }}
+                            aria-label={`Delete testimonial from ${testimonial.site_name}`}
+                          >
+                            <Trash2 className="w-3.5 h-3.5 text-muted-foreground/60 hover:text-destructive" strokeWidth={1.5} />
+                          </motion.button>
                         </div>
+                      )}
 
-                        {adminPassword && (
-                          <div className="flex gap-1">
-                            <motion.button
-                              onClick={() => handleEdit(testimonial)}
-                              className="p-1.5 rounded-md hover:bg-primary/10 transition-all focus-visible:ring-2 focus-visible:ring-ring/50"
-                              whileHover={{ scale: 1.1 }}
-                              aria-label={`Edit testimonial from ${testimonial.site_name}`}
-                            >
-                              <Edit2 className="w-3.5 h-3.5 text-muted-foreground/60 hover:text-primary" strokeWidth={1.5} />
-                            </motion.button>
-                            <motion.button
-                              onClick={() => handleDelete(testimonial.id)}
-                              className="p-1.5 rounded-md hover:bg-destructive/10 transition-all focus-visible:ring-2 focus-visible:ring-ring/50"
-                              whileHover={{ scale: 1.1 }}
-                              aria-label={`Delete testimonial from ${testimonial.site_name}`}
-                            >
-                              <Trash2 className="w-3.5 h-3.5 text-muted-foreground/60 hover:text-destructive" strokeWidth={1.5} />
-                            </motion.button>
-                          </div>
-                        )}
+                      {/* Top: site name centered, bigger and bold */}
+                      <div className="px-6 pt-7 pb-3 text-center">
+                        <h3
+                          className="text-xl md:text-2xl font-bold leading-tight"
+                          style={{
+                            background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #9a7322 100%)",
+                            WebkitBackgroundClip: "text",
+                            WebkitTextFillColor: "transparent",
+                            backgroundClip: "text",
+                          }}
+                        >
+                          {testimonial.site_name}
+                        </h3>
                       </div>
 
-                      {/* Quote text */}
-                      <div className="flex-1 px-6 pt-6 pb-4">
-                        <p className="text-foreground/75 leading-relaxed text-sm">{testimonial.content}</p>
+                      {/* Center: content */}
+                      <div className="flex-1 px-6 pb-6 flex items-center">
+                        <p className="text-foreground/75 leading-relaxed text-sm text-center w-full">
+                          {testimonial.content}
+                        </p>
                       </div>
 
-                      {/* URL at bottom */}
-                      <div className="px-6 pb-6">
+                      {/* Footer: visit site (left) + logo (right) */}
+                      <div className="px-5 py-4 border-t border-primary/15 flex items-center justify-between gap-3">
                         {testimonial.site_url ? (
                           <a
                             href={testimonial.site_url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-sm font-medium hover:underline transition-colors"
+                            className="flex items-center gap-1.5 text-xs font-semibold hover:underline transition-colors min-w-0"
                             style={{ color: '#d4a64a' }}
                             aria-label={`Visit ${testimonial.site_name}`}
                           >
-                            {(() => {
-                              try {
-                                return new URL(testimonial.site_url).hostname.replace(/^www\./, '');
-                              } catch {
-                                return testimonial.site_name;
-                              }
-                            })()}
+                            <ExternalLink className="w-3.5 h-3.5 flex-shrink-0" strokeWidth={2} />
+                            <span className="truncate">
+                              Visit {(() => {
+                                try {
+                                  return new URL(testimonial.site_url).hostname.replace(/^www\./, '');
+                                } catch {
+                                  return 'site';
+                                }
+                              })()}
+                            </span>
                           </a>
                         ) : (
-                          <p className="text-sm font-medium text-foreground/60">{testimonial.site_name}</p>
+                          <span className="text-xs font-medium text-foreground/40">No link</span>
+                        )}
+
+                        {testimonial.logo_url ? (
+                          <img
+                            src={testimonial.logo_url}
+                            alt={`${testimonial.site_name} logo`}
+                            loading="lazy"
+                            className="h-9 w-auto max-w-[100px] object-contain flex-shrink-0"
+                          />
+                        ) : (
+                          <div className="h-9 w-9 rounded-md border border-primary/20 flex items-center justify-center flex-shrink-0" style={{ background: 'hsl(40 25% 10%)' }}>
+                            <span className="text-primary/70 font-bold text-sm">
+                              {testimonial.site_name.charAt(0).toUpperCase()}
+                            </span>
+                          </div>
                         )}
                       </div>
                     </motion.div>

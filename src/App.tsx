@@ -10,6 +10,7 @@ import { ErrorBoundary } from "./components/ErrorBoundary";
 
 const Terms = lazy(() => import("./pages/Terms"));
 const Privacy = lazy(() => import("./pages/Privacy"));
+const Preview = lazy(() => import("./pages/Preview"));
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
+              <Route path="/preview" element={<Preview />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

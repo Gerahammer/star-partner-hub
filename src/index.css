@@ -225,18 +225,30 @@
     to { box-shadow: 0 0 40px hsl(42 65% 52% / 0.3); }
   }
 
-  /* Slow gold shimmer that crosses gradient text */
+  /* Diagonal metallic shimmer — narrow bright band sweeps diagonally across gold text */
   .animate-gold-shimmer {
-    background: linear-gradient(110deg, #fce8a8 0%, #d4a64a 30%, #fff8d6 50%, #d4a64a 70%, #9a7322 100%);
-    background-size: 200% auto;
+    background: linear-gradient(
+      60deg,
+      #b8862b 0%,
+      #d4a64a 30%,
+      #fce8a8 45%,
+      #ffffff 50%,
+      #fce8a8 55%,
+      #d4a64a 70%,
+      #9a7322 100%
+    );
+    background-size: 220% 220%;
+    background-position: 0% 0%;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: gold-shimmer 5s linear infinite;
+    color: transparent;
+    animation: gold-shimmer 4.5s ease-in-out infinite;
   }
   @keyframes gold-shimmer {
-    0% { background-position: 0% center; }
-    100% { background-position: 200% center; }
+    0%   { background-position: 0% 0%; }
+    50%  { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
   }
 
   /* Soft pulsing badge — for "Most Popular" pill */

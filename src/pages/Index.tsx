@@ -10,12 +10,14 @@ import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { FAQSection } from "@/components/FAQSection";
 import { CTASection } from "@/components/CTASection";
 import { Footer } from "@/components/Footer";
+import { BackgroundFX } from "@/components/BackgroundFX";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background noise-bg">
+    <div className="min-h-screen bg-background noise-bg relative">
+      <BackgroundFX />
       <Header />
-      <main>
+      <main className="relative z-10">
         <HeroSection />
         <Marquee />
         <TrustBadges />

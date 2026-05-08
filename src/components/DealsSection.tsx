@@ -3,7 +3,6 @@ import { useRef, useState, TouchEvent } from "react";
 import { Check, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { GoldParticles } from "./GoldParticles";
 
 const plans = [
   {
@@ -109,8 +108,7 @@ export const DealsSection = () => {
   );
 
   return (
-    <section id="deals" className="relative py-28 md:py-36 overflow-hidden bg-background">
-      <GoldParticles density="low" />
+    <section id="deals" className="relative py-28 md:py-36 overflow-hidden">
       <div className="relative container mx-auto px-4 md:px-8 z-10">
         <motion.div
           ref={ref}

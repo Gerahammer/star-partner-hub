@@ -1,7 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { TrendingUp, Wallet, BarChart3, UserCheck, Trophy, Zap, RefreshCw, Lock } from "lucide-react";
-import { GoldParticles } from "./GoldParticles";
+import { BarChart3, UserCheck, Trophy, Zap, RefreshCw, Lock } from "lucide-react";
 import { DiamondIcon } from "./DiamondIcon";
 
 const benefits = [
@@ -18,8 +17,7 @@ export const WhyUsSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="why-us" className="relative py-28 md:py-36 overflow-hidden bg-background">
-      <GoldParticles density="medium" />
+    <section id="why-us" className="relative py-28 md:py-36 overflow-hidden">
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         <motion.div
           ref={ref}

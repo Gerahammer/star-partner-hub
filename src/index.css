@@ -286,6 +286,46 @@
   .btn-shine:hover::after {
     transform: translateX(100%);
   }
+
+  /* Slow aurora glow blob — drifts in a soft loop */
+  .aurora-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    will-change: transform;
+    animation: aurora-drift var(--aurora-duration, 32s) ease-in-out infinite;
+  }
+  @keyframes aurora-drift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33%      { transform: translate(var(--ax, 60px), var(--ay, -40px)) scale(1.1); }
+    66%      { transform: translate(calc(var(--ax, 60px) * -1), calc(var(--ay, -40px) * 0.6)) scale(0.95); }
+  }
+
+  /* Floating diamond — drifts upward with rotation */
+  .floating-diamond {
+    position: absolute;
+    will-change: transform, opacity;
+    animation: diamond-float var(--diamond-duration, 22s) linear infinite;
+  }
+  @keyframes diamond-float {
+    0%   { transform: translate(0, 0) rotate(45deg); opacity: 0; }
+    10%  { opacity: var(--diamond-opacity, 0.18); }
+    90%  { opacity: var(--diamond-opacity, 0.18); }
+    100% { transform: translate(var(--diamond-x, 30px), -120vh) rotate(225deg); opacity: 0; }
+  }
+
+  /* Faint moving grid for depth */
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(212, 166, 74, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(212, 166, 74, 0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+    animation: grid-drift 60s linear infinite;
+  }
+  @keyframes grid-drift {
+    0% { background-position: 0 0, 0 0; }
+    100% { background-position: 80px 80px, 80px 80px; }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

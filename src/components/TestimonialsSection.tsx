@@ -205,7 +205,7 @@ export const TestimonialsSection = () => {
   };
 
   return (
-    <section className="py-24 md:py-32 relative overflow-hidden bg-background">
+    <section className="py-24 md:py-32 relative overflow-hidden">
       <div className="container mx-auto px-4 md:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="text-center mb-14">
           <span className="text-primary font-bold uppercase tracking-[0.25em] text-xs mb-5 block">Testimonials</span>

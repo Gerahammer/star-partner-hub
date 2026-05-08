@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Eye } from "lucide-react";
-import { GoldParticles } from "./GoldParticles";
 import { AnimatedCounter } from "./AnimatedCounter";
 
 interface HeroStat {
@@ -20,9 +19,7 @@ const heroStats: HeroStat[] = [
 
 export const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
-      <GoldParticles density="high" />
-
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="relative container mx-auto px-4 md:px-8 pt-28 pb-20 text-center z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

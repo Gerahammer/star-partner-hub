@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ContactFormModal } from "./ContactFormModal";
-import { Send, Lock } from "lucide-react";
+import { Lock } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import partnerstarLogo from "@/assets/partnerstar-full-logo.png";
@@ -111,25 +111,13 @@ export const Footer = () => {
           
           <div className="col-span-2 md:col-span-1">
             <h4 className="font-medium text-foreground/80 text-xs uppercase tracking-[0.15em] mb-4">Support</h4>
-            <a
-              href="https://t.me/partnerstar"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-muted-foreground/60 hover:text-foreground transition-colors text-sm mb-4 focus-visible:ring-2 focus-visible:ring-ring/50 rounded px-1 py-0.5 group"
-              aria-label="Telegram support channel"
+            <Button
+              className="btn-gold-gradient rounded-full text-xs px-4"
+              size="sm"
+              onClick={() => setIsContactOpen(true)}
             >
-              <Send className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" strokeWidth={1.5} />
-              Telegram
-            </a>
-            <div className="mt-3">
-              <Button 
-                className="btn-gold-gradient rounded-full text-xs px-4"
-                size="sm"
-                onClick={() => setIsContactOpen(true)}
-              >
-                Contact Us
-              </Button>
-            </div>
+              Contact Us
+            </Button>
           </div>
         </div>
 

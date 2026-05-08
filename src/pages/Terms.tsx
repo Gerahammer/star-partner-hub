@@ -1,8 +1,24 @@
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
 const Terms = () => {
+  useEffect(() => {
+    const previousTitle = document.title;
+    document.title = "Affiliate Terms & Conditions | Partnerstar";
+    const meta = document.querySelector('meta[name="description"]');
+    const previousDesc = meta?.getAttribute("content") ?? "";
+    meta?.setAttribute(
+      "content",
+      "Partnerstar affiliate program — full terms and conditions including commission, payment, fraud, and data-processing terms."
+    );
+    return () => {
+      document.title = previousTitle;
+      if (previousDesc) meta?.setAttribute("content", previousDesc);
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <Header />

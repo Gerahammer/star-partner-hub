@@ -6,10 +6,10 @@ import { Button } from "@/components/ui/button";
 import partnerstarLogo from "@/assets/partnerstar-full-logo.png";
 
 const navLinks = [
-  { name: "Brands", href: "#brands" },
-  { name: "Commissions", href: "#deals" },
-  { name: "Why Us", href: "#why-us" },
-  { name: "FAQ", href: "#faq" },
+  { name: "Brands", anchor: "brands" },
+  { name: "Commissions", anchor: "deals" },
+  { name: "Why Us", anchor: "why-us" },
+  { name: "FAQ", anchor: "faq" },
 ];
 
 export const Header = () => {
@@ -24,6 +24,23 @@ export const Header = () => {
     } else {
       navigate("/");
       setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 100);
+    }
+  };
+
+  const scrollToAnchor = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleNavClick = (e: React.MouseEvent, anchor: string) => {
+    e.preventDefault();
+    setIsMenuOpen(false);
+    if (location.pathname === "/") {
+      scrollToAnchor(anchor);
+    } else {
+      // Navigate home first, then scroll once the home page mounts
+      navigate("/");
+      setTimeout(() => scrollToAnchor(anchor), 120);
     }
   };
 
@@ -46,7 +63,8 @@ export const Header = () => {
             {navLinks.map((link) => (
               <a
                 key={link.name}
-                href={link.href}
+                href={`/#${link.anchor}`}
+                onClick={(e) => handleNavClick(e, link.anchor)}
                 className="text-muted-foreground/60 hover:text-foreground transition-colors duration-300 text-[12px] font-medium tracking-[0.1em] uppercase focus-visible:ring-2 focus-visible:ring-ring/50 rounded px-2 py-1"
               >
                 {link.name}
@@ -85,9 +103,9 @@ export const Header = () => {
                 {navLinks.map((link) => (
                   <a
                     key={link.name}
-                    href={link.href}
+                    href={`/#${link.anchor}`}
+                    onClick={(e) => handleNavClick(e, link.anchor)}
                     className="text-muted-foreground/60 hover:text-foreground transition-colors text-base font-medium uppercase tracking-wide py-2"
-                    onClick={() => setIsMenuOpen(false)}
                   >
                     {link.name}
                   </a>

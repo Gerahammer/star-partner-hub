@@ -6,28 +6,62 @@ import { useMemo } from "react";
  * Layers (back → front):
  *   1. Faint moving gold grid (depth)
  *   2. 3 large aurora glow blobs that slowly drift
- *   3. ~10 small gold diamonds floating upward
+ *   3. ~10 floating gold stars that rise across the viewport
+ *   4. ~14 small twinkling stars (sparkle accents)
  *
  * Sits at z-0 so all content (z-10+) renders above it.
  * `pointer-events-none` so it never blocks clicks.
  * Honours prefers-reduced-motion via the global rule already in index.css.
  */
+
+const StarSvg = ({ size, opacity }: { size: number; opacity: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id={`star-grad-${size}-${Math.round(opacity * 100)}`} x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#fce8a8" />
+        <stop offset="50%" stopColor="#d4a64a" />
+        <stop offset="100%" stopColor="#9a7322" />
+      </linearGradient>
+    </defs>
+    <path
+      d="M12 2 L14.39 8.36 L21 9.27 L16 13.97 L17.45 20.5 L12 17.27 L6.55 20.5 L8 13.97 L3 9.27 L9.61 8.36 Z"
+      fill={`url(#star-grad-${size}-${Math.round(opacity * 100)})`}
+      stroke="rgba(212, 166, 74, 0.4)"
+      strokeWidth="0.5"
+    />
+  </svg>
+);
+
 export const BackgroundFX = () => {
-  // Deterministic diamond positions/sizes
-  const diamonds = useMemo(
+  // Larger floating stars (drift up across viewport)
+  const floatingStars = useMemo(
     () =>
       Array.from({ length: 10 }, (_, i) => {
-        const size = 12 + ((i * 7) % 18); // 12–30 px
+        const size = 16 + ((i * 7) % 18); // 16–34 px
         return {
           left: `${(i * 9.7 + 5) % 95}%`,
-          bottom: `-${10 + (i * 5) % 30}vh`, // start below viewport
+          bottom: `-${10 + (i * 5) % 30}vh`,
           size,
-          duration: 18 + ((i * 5) % 14), // 18–32s
-          delay: (i * 2.5) % 12,
-          opacity: 0.12 + ((i * 3) % 4) / 30,
+          duration: 22 + ((i * 5) % 18), // 22–40s (slow!)
+          delay: (i * 3) % 14,
+          opacity: 0.18 + ((i * 3) % 4) / 30,
           driftX: ((i * 17) % 80) - 40,
         };
       }),
+    []
+  );
+
+  // Smaller twinkling stars (static position, just sparkle)
+  const twinklingStars = useMemo(
+    () =>
+      Array.from({ length: 14 }, (_, i) => ({
+        left: `${(i * 7919 + 113) % 100}%`,
+        top: `${(i * 4513 + 71) % 100}%`,
+        size: 6 + ((i * 3) % 6),
+        duration: 2.5 + ((i * 7) % 30) / 10,
+        delay: (i * 0.7) % 4,
+        opacity: 0.25 + ((i * 11) % 5) / 20,
+      })),
     []
   );
 
@@ -79,27 +113,42 @@ export const BackgroundFX = () => {
         }}
       />
 
-      {/* Layer 3: floating diamonds */}
-      {diamonds.map((d, i) => (
+      {/* Layer 3: floating stars rising */}
+      {floatingStars.map((s, i) => (
         <div
-          key={i}
-          className="floating-diamond"
+          key={`float-${i}`}
+          className="floating-star"
           style={
             {
-              left: d.left,
-              bottom: d.bottom,
-              width: `${d.size}px`,
-              height: `${d.size}px`,
-              background: "linear-gradient(135deg, rgba(252, 232, 168, 0.5) 0%, rgba(212, 166, 74, 0.25) 50%, rgba(154, 115, 34, 0.08) 100%)",
-              border: "1px solid rgba(212, 166, 74, 0.3)",
-              boxShadow: "0 0 18px rgba(212, 166, 74, 0.15)",
-              ["--diamond-duration" as any]: `${d.duration}s`,
-              ["--diamond-opacity" as any]: d.opacity,
-              ["--diamond-x" as any]: `${d.driftX}px`,
-              animationDelay: `${d.delay}s`,
+              left: s.left,
+              bottom: s.bottom,
+              filter: "drop-shadow(0 0 6px rgba(212, 166, 74, 0.5))",
+              ["--star-duration" as any]: `${s.duration}s`,
+              ["--star-opacity" as any]: s.opacity,
+              ["--star-x" as any]: `${s.driftX}px`,
+              animationDelay: `${s.delay}s`,
             } as React.CSSProperties
           }
-        />
+        >
+          <StarSvg size={s.size} opacity={s.opacity} />
+        </div>
+      ))}
+
+      {/* Layer 4: small twinkling stars */}
+      {twinklingStars.map((s, i) => (
+        <div
+          key={`twink-${i}`}
+          className="absolute star-twinkle"
+          style={{
+            left: s.left,
+            top: s.top,
+            animationDuration: `${s.duration}s`,
+            animationDelay: `${s.delay}s`,
+            filter: "drop-shadow(0 0 4px rgba(252, 232, 168, 0.7))",
+          }}
+        >
+          <StarSvg size={s.size} opacity={s.opacity} />
+        </div>
       ))}
     </div>
   );

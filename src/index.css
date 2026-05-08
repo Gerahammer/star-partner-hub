@@ -301,17 +301,26 @@
     66%      { transform: translate(calc(var(--ax, 60px) * -1), calc(var(--ay, -40px) * 0.6)) scale(0.95); }
   }
 
-  /* Floating diamond — drifts upward with rotation */
-  .floating-diamond {
+  /* Floating star — drifts upward with rotation */
+  .floating-star {
     position: absolute;
     will-change: transform, opacity;
-    animation: diamond-float var(--diamond-duration, 22s) linear infinite;
+    animation: star-float var(--star-duration, 22s) linear infinite;
   }
-  @keyframes diamond-float {
-    0%   { transform: translate(0, 0) rotate(45deg); opacity: 0; }
-    10%  { opacity: var(--diamond-opacity, 0.18); }
-    90%  { opacity: var(--diamond-opacity, 0.18); }
-    100% { transform: translate(var(--diamond-x, 30px), -120vh) rotate(225deg); opacity: 0; }
+  @keyframes star-float {
+    0%   { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+    10%  { opacity: var(--star-opacity, 0.4); }
+    90%  { opacity: var(--star-opacity, 0.4); }
+    100% { transform: translate(var(--star-x, 30px), -120vh) rotate(180deg); opacity: 0; }
+  }
+
+  /* Twinkle pulse for added stars */
+  .star-twinkle {
+    animation: star-twinkle 3s ease-in-out infinite;
+  }
+  @keyframes star-twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50%      { opacity: 1;   transform: scale(1.2); }
   }
 
   /* Faint moving grid for depth */

@@ -99,26 +99,20 @@ export const FAQSection = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="max-w-2xl mx-auto"
         >
-          <Accordion type="single" collapsible defaultValue="item-0" className="space-y-2.5">
+          <Accordion type="multiple" className="space-y-2.5">
             {faqs.map((faq, index) => (
-              <motion.div
+              <AccordionItem
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.2 + index * 0.05 }}
+                value={`item-${index}`}
+                className="glass-card rounded-xl px-5 sm:px-6 border border-border/15 transition-all data-[state=open]:border-primary/20 hover:border-border/30"
               >
-                <AccordionItem
-                  value={`item-${index}`}
-                  className="glass-card rounded-xl px-5 sm:px-6 transition-all data-[state=open]:border-primary/20 hover:border-border/30"
-                >
-                  <AccordionTrigger className="text-left text-sm sm:text-base font-semibold text-foreground/90 hover:text-foreground py-4 sm:py-5 [&[data-state=open]]:text-primary transition-colors">
-                    {faq.question}
-                  </AccordionTrigger>
+                <AccordionTrigger className="text-left text-sm sm:text-base font-semibold text-foreground/90 hover:text-foreground py-5 [&[data-state=open]]:text-primary transition-colors">
+                  {faq.question}
+                </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground text-sm leading-relaxed pb-5">
                   {faq.answer}
                 </AccordionContent>
-                </AccordionItem>
-              </motion.div>
+              </AccordionItem>
             ))}
           </Accordion>
         </motion.div>

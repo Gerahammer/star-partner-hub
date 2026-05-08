@@ -175,13 +175,65 @@ function adminOnly(req: Request, res: Response, next: NextFunction) {
 }
 
 // Rate limiters
-const contactLimiter = rateLimit({
+// Layer 1: very strict short-window cooldown — at most 1 contact per IP per 60s
+const contactCooldown = rateLimit({
+  windowMs: 60 * 1000,
+  max: 1,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too soon', message: 'Please wait at least a minute before sending another message.' },
+});
+// Layer 2: hourly cap — at most 5 per IP per hour
+const contactHourly = rateLimit({
   windowMs: 60 * 60 * 1000,
   max: 5,
   standardHeaders: true,
   legacyHeaders: false,
-  message: { error: 'Too many requests', message: 'Please try again later. Maximum 5 requests per hour.' },
+  message: { error: 'Too many requests', message: 'Please try again later. Maximum 5 messages per hour.' },
 });
+
+// Layer 3: per-email + per-content de-duplication (catches IP-rotation spam)
+// Stores hash → timestamp; drops requests that match an existing entry within the window
+const recentSubmissions = new Map<string, number>();
+const DEDUPE_WINDOW_MS = 10 * 60 * 1000; // 10 minutes
+const PER_EMAIL_COOLDOWN_MS = 2 * 60 * 1000; // 2 minutes
+
+function dedupeKey(email: string, message: string): string {
+  // Simple hash — small surface, just need a stable, low-collision identifier
+  let h = 0;
+  const s = `${email.toLowerCase().trim()}|${message.trim().slice(0, 500)}`;
+  for (let i = 0; i < s.length; i++) {
+    h = (h * 31 + s.charCodeAt(i)) | 0;
+  }
+  return h.toString(36);
+}
+
+function checkSpamGuards(email: string, message: string): { ok: true } | { ok: false; reason: string } {
+  const now = Date.now();
+
+  // Garbage-collect expired entries
+  for (const [k, ts] of recentSubmissions) {
+    if (now - ts > DEDUPE_WINDOW_MS) recentSubmissions.delete(k);
+  }
+
+  // 1. Per-email cooldown — block if same email submitted in last 2 min
+  const emailKey = `email:${email.toLowerCase().trim()}`;
+  const lastFromEmail = recentSubmissions.get(emailKey);
+  if (lastFromEmail && now - lastFromEmail < PER_EMAIL_COOLDOWN_MS) {
+    return { ok: false, reason: 'per-email-cooldown' };
+  }
+
+  // 2. Duplicate-content check — same email+message within 10 min = drop
+  const contentKey = `content:${dedupeKey(email, message)}`;
+  if (recentSubmissions.has(contentKey)) {
+    return { ok: false, reason: 'duplicate-content' };
+  }
+
+  // Record both
+  recentSubmissions.set(emailKey, now);
+  recentSubmissions.set(contentKey, now);
+  return { ok: true };
+}
 
 const adminAuthLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -296,7 +348,7 @@ app.post('/api/auth/check-password', adminAuthLimiter, (req: Request, res: Respo
   }
 });
 
-app.post('/api/contact', contactLimiter, async (req: Request, res: Response) => {
+app.post('/api/contact', contactCooldown, contactHourly, async (req: Request, res: Response) => {
   try {
     const parsed = contactSchema.safeParse(req.body);
     if (!parsed.success) {
@@ -307,6 +359,22 @@ app.post('/api/contact', contactLimiter, async (req: Request, res: Response) => 
     }
 
     const { name, email, company = '', telegram = '', teams = '', message } = parsed.data;
+
+    // Per-email cooldown + duplicate-content de-dupe (catches IP-rotation spam)
+    const guard = checkSpamGuards(email, message);
+    if (!guard.ok) {
+      console.log(`Contact form blocked by spam guard: ${guard.reason}`);
+      if (guard.reason === 'duplicate-content') {
+        return res.status(409).json({
+          error: 'Duplicate message',
+          message: 'You already sent this message recently. Please wait before resending.',
+        });
+      }
+      return res.status(429).json({
+        error: 'Too soon',
+        message: 'Please wait a couple of minutes before sending another message.',
+      });
+    }
 
     const safeName = escapeHtml(name);
     const safeEmail = escapeHtml(email);

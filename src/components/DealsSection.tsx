@@ -149,7 +149,7 @@ export const DealsSection = () => {
             >
               <ChevronLeft className="h-4 w-4" strokeWidth={1.5} />
             </Button>
-            <div className="px-10 overflow-hidden" onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
+            <div className="px-10 pt-5 overflow-x-hidden overflow-y-visible" onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div key={currentSlide} initial={{ opacity: 0, x: slideDirection * 100 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -slideDirection * 100 }} transition={{ duration: 0.3 }}>
                   {renderCard(plans[currentSlide])}

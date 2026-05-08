@@ -12,9 +12,9 @@ interface HeroStat {
 }
 
 const heroStats: HeroStat[] = [
-  { value: 12.5, prefix: "€", suffix: "M+", decimals: 1, label: "Total Payouts" },
+  { value: 1.5, prefix: "€", suffix: "M+", decimals: 1, label: "Monthly Payouts" },
   { value: 3200, suffix: "+", label: "Active Affiliates" },
-  { value: 45, suffix: "+", label: "Supported GEOs" },
+  { value: 20, suffix: "+", label: "Supported GEOs" },
 ];
 
 export const HeroSection = () => {

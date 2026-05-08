@@ -165,7 +165,7 @@ const Privacy = () => {
                 </p>
                 <ul className="list-disc pl-6 mt-4 space-y-2 text-muted-foreground">
                   <li>Other Partnerstar group entities involved in operating the affiliate program</li>
-                  <li>Affiliate-tracking platform providers (used to attribute referrals and calculate commissions)</li>
+                  <li>The third-party affiliate-tracking platform we work with (ReferOn) — used to attribute referrals and calculate commissions</li>
                   <li>Payment processors and financial institutions used to pay your commissions</li>
                   <li>KYC/AML verification providers</li>
                   <li>IT, hosting, and infrastructure providers</li>

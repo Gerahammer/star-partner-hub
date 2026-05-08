@@ -39,7 +39,7 @@ export const CTASection = () => {
           </p>
 
           <Button
-            className="btn-gold-gradient rounded-full px-12 py-7 text-base font-bold uppercase tracking-wider group"
+            className="btn-gold-gradient btn-shine rounded-full px-12 py-7 text-base font-bold uppercase tracking-wider group"
             size="lg"
             asChild
           >

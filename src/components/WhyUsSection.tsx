@@ -51,11 +51,17 @@ export const WhyUsSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.06 }}
-              className="flex items-start gap-5"
+              whileHover={{ x: 4 }}
+              className="flex items-start gap-5 group"
             >
-              <DiamondIcon icon={b.icon} size={70} />
+              <motion.div
+                whileHover={{ rotate: 8, scale: 1.08 }}
+                transition={{ type: "spring", stiffness: 300, damping: 15 }}
+              >
+                <DiamondIcon icon={b.icon} size={70} />
+              </motion.div>
               <div className="flex-1 pt-2">
-                <h3 className="text-xl font-bold text-foreground mb-2">{b.title}</h3>
+                <h3 className="text-xl font-bold text-foreground mb-2 transition-colors group-hover:text-primary">{b.title}</h3>
                 <p className="text-sm leading-relaxed text-foreground/60">{b.desc}</p>
               </div>
             </motion.div>

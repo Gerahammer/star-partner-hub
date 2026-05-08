@@ -2,11 +2,20 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Eye } from "lucide-react";
 import { GoldParticles } from "./GoldParticles";
+import { AnimatedCounter } from "./AnimatedCounter";
 
-const heroStats = [
-  { value: "€12.5M+", label: "Total Payouts" },
-  { value: "3,200+", label: "Active Affiliates" },
-  { value: "45+", label: "Supported GEOs" },
+interface HeroStat {
+  value: number;
+  prefix?: string;
+  suffix?: string;
+  decimals?: number;
+  label: string;
+}
+
+const heroStats: HeroStat[] = [
+  { value: 12.5, prefix: "€", suffix: "M+", decimals: 1, label: "Total Payouts" },
+  { value: 3200, suffix: "+", label: "Active Affiliates" },
+  { value: 45, suffix: "+", label: "Supported GEOs" },
 ];
 
 export const HeroSection = () => {
@@ -23,17 +32,7 @@ export const HeroSection = () => {
         >
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] xl:text-[6.5rem] font-black leading-[1.05] tracking-tight mb-7">
             <span className="text-foreground block">Where Affiliates</span>
-            <span
-              className="block mt-3"
-              style={{
-                background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #9a7322 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              Become Stars
-            </span>
+            <span className="block mt-3 animate-gold-shimmer">Become Stars</span>
           </h1>
 
           <motion.p
@@ -52,7 +51,7 @@ export const HeroSection = () => {
             className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20"
           >
             <Button
-              className="btn-gold-gradient rounded-full px-10 py-6 text-sm md:text-base font-bold uppercase tracking-wider group"
+              className="btn-gold-gradient btn-shine rounded-full px-10 py-6 text-sm md:text-base font-bold uppercase tracking-wider group"
               size="lg"
               asChild
             >
@@ -83,16 +82,13 @@ export const HeroSection = () => {
                 key={stat.label}
                 className={`text-center px-8 sm:px-10 ${i < heroStats.length - 1 ? "sm:border-r sm:border-primary/15" : ""}`}
               >
-                <p
-                  className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight"
-                  style={{
-                    background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #9a7322 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
-                >
-                  {stat.value}
+                <p className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight animate-gold-shimmer">
+                  <AnimatedCounter
+                    value={stat.value}
+                    prefix={stat.prefix}
+                    suffix={stat.suffix}
+                    decimals={stat.decimals}
+                  />
                 </p>
                 <p className="text-foreground/50 text-[10px] uppercase tracking-[0.2em] mt-2 font-semibold">{stat.label}</p>
               </div>

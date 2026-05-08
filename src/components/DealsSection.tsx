@@ -77,7 +77,7 @@ export const DealsSection = () => {
     >
       {plan.featured && (
         <span
-          className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-[10px] uppercase tracking-[0.25em] font-bold text-black whitespace-nowrap"
+          className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-[10px] uppercase tracking-[0.25em] font-bold text-black whitespace-nowrap animate-badge-pulse"
           style={{ background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #b8862b 100%)" }}
         >
           Most Popular

@@ -99,7 +99,7 @@ export const FAQSection = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="max-w-2xl mx-auto"
         >
-          <Accordion type="multiple" className="space-y-2.5">
+          <Accordion type="single" collapsible className="space-y-2.5">
             {faqs.map((faq, index) => (
               <AccordionItem
                 key={index}

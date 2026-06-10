@@ -5,7 +5,7 @@ import { DiamondIcon } from "./DiamondIcon";
 
 const benefits = [
   { icon: Trophy, title: "High Commissions", desc: "Up to 50% RevShare. CPA, hybrid and tailored deals for serious affiliates." },
-  { icon: Zap, title: "Quick Payouts", desc: "No delays. No excuses. Weekly cycle via wire, crypto and e-wallets." },
+  { icon: Zap, title: "Quick Payouts", desc: "No delays. No excuses. Monthly cycle via wire, crypto and e-wallets." },
   { icon: RefreshCw, title: "No Negative Carryover", desc: "A bad month shouldn't cost you the next. You start fresh, every time." },
   { icon: BarChart3, title: "Real-Time Tracking", desc: "Live analytics, API integrations and postback tracking — zero data lag." },
   { icon: Lock, title: "Lifetime Ownership", desc: "Your players. Your profits. For life." },

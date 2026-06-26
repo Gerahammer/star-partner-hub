@@ -145,15 +145,10 @@ if (NODE_ENV === 'production') {
 }
 
 // Utility functions
-function escapeHtml(text: string): string {
-  const map: { [key: string]: string } = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#039;'
-  };
-  return text.replace(/[&<>"']/g, (m) => map[m]);
+// Telegram HTML parse mode only requires escaping these 3 characters.
+// Escaping ' or " would render literally as &#039;/&quot; because Telegram doesn't decode them.
+function escapeTelegramHtml(text: string): string {
+  return text.replace(/[&<>]/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m]!));
 }
 
 function checkAdminPassword(req: Request): boolean {
@@ -281,14 +276,14 @@ async function sendTelegramMessage(
     const telegramMessage = `
 📬 <b>New Partnership Inquiry</b>
 
-👤 <b>Name:</b> ${escapeHtml(name)}
-📧 <b>Email:</b> ${escapeHtml(email)}
-${company ? `🏢 <b>Company:</b> ${escapeHtml(company)}` : ''}
-${telegram ? `📱 <b>Telegram:</b> ${escapeHtml(telegram)}` : ''}
-${teams ? `💼 <b>Teams:</b> ${escapeHtml(teams)}` : ''}
+👤 <b>Name:</b> ${escapeTelegramHtml(name)}
+📧 <b>Email:</b> ${escapeTelegramHtml(email)}
+${company ? `🏢 <b>Company:</b> ${escapeTelegramHtml(company)}` : ''}
+${telegram ? `📱 <b>Telegram:</b> ${escapeTelegramHtml(telegram)}` : ''}
+${teams ? `💼 <b>Teams:</b> ${escapeTelegramHtml(teams)}` : ''}
 
 💬 <b>Message:</b>
-${escapeHtml(message)}
+${escapeTelegramHtml(message)}
     `.trim();
 
     const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
@@ -376,17 +371,11 @@ app.post('/api/contact', contactCooldown, contactHourly, async (req: Request, re
       });
     }
 
-    const safeName = escapeHtml(name);
-    const safeEmail = escapeHtml(email);
-    const safeCompany = company ? escapeHtml(company) : '';
-    const safeTelegram = telegram ? escapeHtml(telegram) : '';
-    const safeTeams = teams ? escapeHtml(teams) : '';
-    const safeMessage = escapeHtml(message);
-
     console.log('Processing contact form');
 
+    // Pass raw values — sendTelegramMessage escapes once for Telegram HTML mode
     const telegramSent = await sendTelegramMessage(
-      safeName, safeEmail, safeCompany, safeTelegram, safeTeams, safeMessage
+      name, email, company, telegram, teams, message
     );
 
     if (!telegramSent) {

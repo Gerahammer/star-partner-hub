@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef, TouchEvent } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
+import { motion, useMotionValue, animate, useReducedMotion } from "framer-motion";
 import { Plus, Trash2, Edit2, ChevronLeft, ChevronRight, Upload, ExternalLink } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -25,19 +25,25 @@ export const TestimonialsSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [slideDirection, setSlideDirection] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const touchStartX = useRef<number | null>(null);
-  const touchEndX = useRef<number | null>(null);
   const submissionInProgressRef = useRef(false);
   const isMobile = useIsMobile();
   const [formData, setFormData] = useState({ site_name: "", content: "", site_url: "", logo_url: "" });
   const { toast } = useToast();
 
+  // Sliding-track carousel geometry
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const [viewportWidth, setViewportWidth] = useState(0);
+  const x = useMotionValue(0);
+  const prefersReducedMotion = useReducedMotion();
+  const GAP = 20; // matches gap-5
+
   const itemsToShow = isMobile ? 1 : 3;
   const maxSlide = Math.max(0, testimonials.length - itemsToShow);
   const showCarousel = testimonials.length > itemsToShow;
   const totalPages = showCarousel ? maxSlide + 1 : 1;
+  const cardWidth = viewportWidth > 0 ? (viewportWidth - GAP * (itemsToShow - 1)) / itemsToShow : 0;
+  const step = cardWidth + GAP;
 
   useEffect(() => {
     fetchTestimonials();
@@ -55,6 +61,27 @@ export const TestimonialsSection = () => {
       setCurrentSlide(maxSlide);
     }
   }, [maxSlide, currentSlide]);
+
+  // Measure the viewport so the track knows how wide each card should be.
+  // useLayoutEffect measures before paint to avoid a width flash.
+  useLayoutEffect(() => {
+    const el = viewportRef.current;
+    if (!el) return;
+    const measure = () => setViewportWidth(el.clientWidth);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [isLoading, testimonials.length]);
+
+  // Glide the track to the active slide with a spring for a flowing feel.
+  useEffect(() => {
+    const target = showCarousel ? -currentSlide * step : 0;
+    const controls = animate(x, target, prefersReducedMotion
+      ? { duration: 0 }
+      : { type: "spring", stiffness: 260, damping: 34, mass: 0.9 });
+    return controls.stop;
+  }, [currentSlide, step, showCarousel, prefersReducedMotion, x]);
 
   const fetchTestimonials = async () => {
     setIsLoading(true);
@@ -181,27 +208,22 @@ export const TestimonialsSection = () => {
 
   const resetForm = () => { setFormData({ site_name: "", content: "", site_url: "", logo_url: "" }); setEditingId(null); setIsDialogOpen(false); };
 
-  const nextSlide = () => {
-    setSlideDirection(1);
-    setCurrentSlide((p) => (p >= maxSlide ? 0 : p + 1));
-  };
-  const prevSlide = () => {
-    setSlideDirection(-1);
-    setCurrentSlide((p) => (p <= 0 ? maxSlide : p - 1));
-  };
+  const goToSlide = (index: number) => setCurrentSlide(Math.max(0, Math.min(maxSlide, index)));
+  const nextSlide = () => setCurrentSlide((p) => (p >= maxSlide ? 0 : p + 1));
+  const prevSlide = () => setCurrentSlide((p) => (p <= 0 ? maxSlide : p - 1));
 
-  const getVisibleTestimonials = () => {
-    if (testimonials.length === 0) return [];
-    return testimonials.slice(currentSlide, currentSlide + itemsToShow);
-  };
-
-  const handleTouchStart = (e: TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
-  const handleTouchMove = (e: TouchEvent) => { touchEndX.current = e.touches[0].clientX; };
-  const handleTouchEnd = () => {
-    if (touchStartX.current === null || touchEndX.current === null) return;
-    const diff = touchStartX.current - touchEndX.current;
-    if (Math.abs(diff) > 50) { diff > 0 ? nextSlide() : prevSlide(); }
-    touchStartX.current = null; touchEndX.current = null;
+  // Snap to the nearest slide after a drag, honouring flick velocity.
+  const handleDragEnd = (
+    _e: MouseEvent | TouchEvent | PointerEvent,
+    info: { offset: { x: number }; velocity: { x: number } }
+  ) => {
+    if (!step) return;
+    let moved = Math.round(-info.offset.x / step);
+    if (moved === 0) {
+      if (info.velocity.x < -400) moved = 1;
+      else if (info.velocity.x > 400) moved = -1;
+    }
+    goToSlide(currentSlide + moved);
   };
 
   return (
@@ -270,22 +292,35 @@ export const TestimonialsSection = () => {
               </Button>
             )}
 
-            <div className={`flex gap-5 px-8 md:px-0 justify-center ${isMobile ? 'flex-col' : 'flex-row'}`}
-              onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
-              <AnimatePresence mode="popLayout" initial={false}>
-                {getVisibleTestimonials().map((testimonial) => (
+            <div ref={viewportRef} className="overflow-hidden px-8 md:px-0">
+              <motion.div
+                className="flex gap-5"
+                style={{
+                  x,
+                  cursor: showCarousel ? 'grab' : 'default',
+                  justifyContent: showCarousel ? 'flex-start' : 'center',
+                }}
+                drag={showCarousel ? 'x' : false}
+                dragConstraints={{ left: -(maxSlide * step), right: 0 }}
+                dragElastic={0.12}
+                dragDirectionLock
+                onDragEnd={handleDragEnd}
+                whileTap={showCarousel ? { cursor: 'grabbing' } : undefined}
+              >
+                {testimonials.map((testimonial, i) => (
                   <motion.div
                     key={testimonial.id}
-                    initial={{ opacity: 0, x: slideDirection * 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -slideDirection * 50 }}
-                    transition={{ duration: 0.3 }}
-                    className={isMobile ? 'w-full' : 'flex-1 max-w-[320px]'}
+                    className="flex-shrink-0"
+                    style={{ width: cardWidth ? `${cardWidth}px` : undefined }}
+                    initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-40px' }}
+                    transition={{ duration: 0.5, delay: Math.min(i, itemsToShow - 1) * 0.08, ease: [0.22, 1, 0.36, 1] }}
                   >
                     <motion.div
                       whileHover={{ y: -6 }}
-                      transition={{ duration: 0.3 }}
-                      className="relative h-full flex flex-col min-h-[320px] rounded-xl group"
+                      transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+                      className="relative h-full flex flex-col min-h-[320px] rounded-xl group select-none"
                       style={{
                         background: 'hsl(40 25% 6%)',
                         border: '1px solid rgba(212, 166, 74, 0.18)',
@@ -379,7 +414,7 @@ export const TestimonialsSection = () => {
                     </motion.div>
                   </motion.div>
                 ))}
-              </AnimatePresence>
+              </motion.div>
             </div>
 
             {showCarousel && (
@@ -398,7 +433,7 @@ export const TestimonialsSection = () => {
                   {Array.from({ length: totalPages }).map((_, index) => (
                     <button
                       key={index}
-                      onClick={() => { setSlideDirection(index > currentSlide ? 1 : -1); setCurrentSlide(index); }}
+                      onClick={() => goToSlide(index)}
                       className={`h-1.5 rounded-full transition-all focus-visible:ring-2 focus-visible:ring-ring/50 ${index === currentSlide ? "bg-primary/60 w-4" : "bg-muted-foreground/15 w-1.5"}`}
                       aria-label={`Go to page ${index + 1}`}
                       aria-current={index === currentSlide ? "true" : "false"}

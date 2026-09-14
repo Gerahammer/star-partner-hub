@@ -31,3 +31,7 @@ testimonials.db
 .env.migrate
 .migrate-state.json
 .env.new-app
+
+# Deployment uses npm; avoid conflicting package-manager lockfiles
+bun.lock
+bun.lockb

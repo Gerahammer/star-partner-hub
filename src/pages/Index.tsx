@@ -4,7 +4,6 @@ import { Marquee } from "@/components/Marquee";
 import { TrustBadges } from "@/components/TrustBadges";
 import { WhyUsSection } from "@/components/WhyUsSection";
 import { DashboardMockup } from "@/components/DashboardMockup";
-import { BrandsSection } from "@/components/BrandsSection";
 import { DealsSection } from "@/components/DealsSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { FAQSection } from "@/components/FAQSection";
@@ -23,7 +22,6 @@ const Index = () => {
         <TrustBadges />
         <WhyUsSection />
         <DashboardMockup />
-        <BrandsSection />
         <DealsSection />
         <TestimonialsSection />
         <FAQSection />

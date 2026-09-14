@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import partnerstarLogo from "@/assets/partnerstar-full-logo.png";
 
 const navLinks = [
-  { name: "Brands", anchor: "brands" },
   { name: "Commissions", anchor: "deals" },
   { name: "Why Us", anchor: "why-us" },
   { name: "FAQ", anchor: "faq" },

@@ -61,10 +61,10 @@ export const HeroSection = () => {
               variant="outline"
               size="lg"
               className="rounded-full px-8 py-6 border-primary/30 text-foreground/80 hover:text-foreground hover:border-primary/60 hover:bg-primary/5 transition-all duration-300"
-              onClick={() => document.getElementById("brands")?.scrollIntoView({ behavior: "smooth" })}
+              onClick={() => document.getElementById("deals")?.scrollIntoView({ behavior: "smooth" })}
             >
               <Eye className="w-4 h-4 mr-2" strokeWidth={2} />
-              View Brands
+              View Commissions
             </Button>
           </motion.div>
 

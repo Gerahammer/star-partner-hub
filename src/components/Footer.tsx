@@ -14,7 +14,6 @@ const footerLinks = [
   {
     title: "Company",
     links: [
-      { name: "Our Brands", href: "#brands", isRoute: false },
       { name: "Commissions", href: "#deals", isRoute: false },
       { name: "Why Us", href: "#why-us", isRoute: false },
     ],

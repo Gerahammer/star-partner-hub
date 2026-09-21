@@ -23,7 +23,7 @@ const Terms = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      <main className="pt-32 pb-24">
+      <main id="main-content" className="pt-32 pb-24">
         <div className="container mx-auto px-4 md:px-8 max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -34,7 +34,7 @@ const Terms = () => {
               TERMS & <span className="text-gradient-gold">CONDITIONS</span>
             </h1>
 
-            <div className="prose prose-invert prose-lg max-w-none space-y-8">
+            <div className="prose prose-lg max-w-none space-y-8">
               <section>
                 <h2 className="font-display text-3xl text-foreground mb-4">Partnerstar Affiliate Program Agreement</h2>
                 

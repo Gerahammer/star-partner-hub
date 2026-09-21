@@ -1,197 +1,156 @@
-import { motion, AnimatePresence, useInView } from "framer-motion";
-import { useRef, useState, TouchEvent } from "react";
-import { Check, ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useState } from "react";
+import { ArrowUpRight, Check } from "lucide-react";
+import * as Tabs from "@radix-ui/react-tabs";
+import { motion, useReducedMotion } from "framer-motion";
+import { Reveal } from "./Reveal";
 
 const plans = [
   {
-    name: "RevShare",
-    highlight: "25-50%",
-    description: "Lifetime revenue share on all player activity",
+    id: "revenue",
+    name: "Revenue share",
+    type: "For the long game",
+    value: "25–50",
+    suffix: "%",
+    description: "Build recurring revenue from the players you introduce.",
     features: [
-      "Up to 50% revenue share",
       "Lifetime player tracking",
       "No negative carryover",
-      "Monthly payments",
+      "Monthly settlements",
     ],
+    cta: "Choose revenue share",
   },
   {
+    id: "cpa",
     name: "CPA",
-    highlight: "Custom",
-    description: "Fixed commission per qualified player",
+    type: "For every acquisition",
+    value: "Your",
+    suffix: "rate.",
+    description:
+      "A fixed commission for each qualified player. A deal built for your traffic.",
     features: [
-      "High CPA rates",
-      "Flexible qualification",
-      "Fast payouts",
-      "Scalable deals",
+      "Individually agreed rates",
+      "Clear player qualifications",
+      "Room to scale",
     ],
-    featured: true,
+    cta: "Discuss a CPA deal",
   },
   {
+    id: "hybrid",
     name: "Hybrid",
-    highlight: "Best Deal",
-    description: "Combine RevShare with CPA benefits",
+    type: "The best of both",
+    value: "Your",
+    suffix: "mix.",
+    description: "Combine an upfront CPA with ongoing revenue share.",
     features: [
-      "CPA + RevShare combo",
-      "Tailored to your traffic",
-      "Maximum earnings",
-      "Premium partner status",
+      "CPA + revenue share",
+      "Tailored to your strategy",
+      "Long-term earning potential",
     ],
+    cta: "Build your hybrid deal",
   },
 ];
-
 export const DealsSection = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const isMobile = useIsMobile();
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [slideDirection, setSlideDirection] = useState(0);
-  const touchStartX = useRef<number | null>(null);
-  const touchEndX = useRef<number | null>(null);
-
-  const nextSlide = () => { setSlideDirection(1); setCurrentSlide((p) => (p + 1) % plans.length); };
-  const prevSlide = () => { setSlideDirection(-1); setCurrentSlide((p) => (p - 1 + plans.length) % plans.length); };
-  const handleTouchStart = (e: TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
-  const handleTouchMove = (e: TouchEvent) => { touchEndX.current = e.touches[0].clientX; };
-  const handleTouchEnd = () => {
-    if (touchStartX.current === null || touchEndX.current === null) return;
-    const diff = touchStartX.current - touchEndX.current;
-    if (Math.abs(diff) > 50) { diff > 0 ? nextSlide() : prevSlide(); }
-    touchStartX.current = null; touchEndX.current = null;
-  };
-
-  const renderCard = (plan: typeof plans[0]) => (
-    <motion.div
-      whileHover={{ y: -8 }}
-      transition={{ duration: 0.3 }}
-      className="relative rounded-2xl p-8 lg:p-10 h-full flex flex-col text-center"
-      style={{
-        background: plan.featured
-          ? "linear-gradient(180deg, rgba(212, 166, 74, 0.15) 0%, rgba(20, 14, 4, 0.6) 100%)"
-          : "rgba(20, 14, 4, 0.4)",
-        border: "1px solid rgba(212, 166, 74, 0.25)",
-        transform: plan.featured ? "scale(1.03)" : "none",
-      }}
-    >
-      {plan.featured && (
-        <span
-          className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-[10px] uppercase tracking-[0.25em] font-bold text-black whitespace-nowrap animate-badge-pulse"
-          style={{ background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #b8862b 100%)" }}
-        >
-          Most Popular
-        </span>
-      )}
-      <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-foreground/60 mb-4">{plan.name}</h3>
-      <p
-        className="font-black mb-2 tracking-tight whitespace-nowrap text-4xl sm:text-5xl min-h-[3.5rem] sm:min-h-[4rem] flex items-center justify-center"
-        style={{
-          background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #9a7322 100%)",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-          backgroundClip: "text",
-        }}
-      >
-        {plan.highlight}
-      </p>
-      <p className="text-foreground/70 mb-8 text-sm">{plan.description}</p>
-
-      <ul className="space-y-3 mt-auto text-left">
-        {plan.features.map((feature) => (
-          <li key={feature} className="flex items-center gap-3 text-foreground/80 text-sm">
-            <Check className="w-4 h-4 text-primary shrink-0" strokeWidth={2} />
-            {feature}
-          </li>
-        ))}
-      </ul>
-    </motion.div>
-  );
-
+  const [selected, setSelected] = useState("revenue");
+  const reduceMotion = useReducedMotion();
   return (
-    <section id="deals" className="relative py-28 md:py-36 overflow-hidden">
-      <div className="relative container mx-auto px-4 md:px-8 z-10">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <span className="text-primary font-bold uppercase tracking-[0.25em] text-xs mb-5 block">
-            Commission Plans
-          </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-4">
-            <span className="text-foreground">Choose Your </span>
-            <span
-              style={{
-                background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #9a7322 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              Deal
-            </span>
+    <section id="deals" className="deals-section section-space">
+      <div className="shell">
+        <Reveal className="deals-heading">
+          <span className="eyebrow">02 / Make it work for you</span>
+          <h2>
+            Your business.
+            <br />
+            Your upside.
           </h2>
-          <p className="text-foreground/60 text-sm max-w-md mx-auto">
-            Pick the model that works best for your traffic
+          <p>
+            Three ways to earn.
+            <br />
+            Choose the way you want to grow.
           </p>
-        </motion.div>
-
-        {isMobile ? (
-          <div className="relative">
-            <Button
-              variant="outline"
-              size="icon"
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 rounded-full h-8 w-8 bg-card/80 border-border/30 hover:bg-card hover:border-border/50 transition-colors"
-              onClick={prevSlide}
-              aria-label="Previous commission plan"
-            >
-              <ChevronLeft className="h-4 w-4" strokeWidth={1.5} />
-            </Button>
-            <div className="px-10 pt-5 overflow-x-hidden overflow-y-visible" onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div key={currentSlide} initial={{ opacity: 0, x: slideDirection * 100 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -slideDirection * 100 }} transition={{ duration: 0.3 }}>
-                  {renderCard(plans[currentSlide])}
-                </motion.div>
-              </AnimatePresence>
-            </div>
-            <Button
-              variant="outline"
-              size="icon"
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 rounded-full h-8 w-8 bg-card/80 border-border/30 hover:bg-card hover:border-border/50 transition-colors"
-              onClick={nextSlide}
-              aria-label="Next commission plan"
-            >
-              <ChevronRight className="h-4 w-4" strokeWidth={1.5} />
-            </Button>
-            <div className="flex justify-center gap-2 mt-6">
-              {plans.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => { setSlideDirection(index > currentSlide ? 1 : -1); setCurrentSlide(index); }}
-                  className={`w-1.5 h-1.5 rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-ring/50 ${index === currentSlide ? "bg-primary/70" : "bg-muted-foreground/15"}`}
-                  aria-label={`Go to ${plans[index].name} plan`}
-                  aria-current={index === currentSlide ? "true" : "false"}
-                />
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div className="flex gap-4 max-w-5xl mx-auto justify-center">
-            {plans.map((plan, index) => (
-              <motion.div
-                key={plan.name}
-                initial={{ opacity: 0, y: 40 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: index * 0.12 }}
-                className="flex-1 max-w-[340px]"
+        </Reveal>
+        <Tabs.Root
+          value={selected}
+          onValueChange={setSelected}
+          className="commission-selector"
+        >
+          <Tabs.List className="commission-tabs" aria-label="Commission models">
+            {plans.map((plan, i) => (
+              <Tabs.Trigger
+                className="commission-tab"
+                key={plan.id}
+                value={plan.id}
               >
-                {renderCard(plan)}
-              </motion.div>
+                <span className="tab-index">0{i + 1}</span>
+                {plan.name}
+                {selected === plan.id && (
+                  <motion.span
+                    className="tab-line"
+                    layoutId="commission-indicator"
+                    transition={{
+                      type: "spring",
+                      stiffness: 380,
+                      damping: 36,
+                      duration: reduceMotion ? 0 : undefined,
+                    }}
+                  />
+                )}
+              </Tabs.Trigger>
             ))}
-          </div>
-        )}
+          </Tabs.List>
+          {plans.map((plan) => (
+            <Tabs.Content
+              key={plan.id}
+              value={plan.id}
+              className="commission-panel"
+            >
+              <motion.div
+                className="commission-content"
+                initial={reduceMotion ? false : { opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: reduceMotion ? 0 : 0.4,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              >
+                <div className="commission-offer">
+                  <span className="eyebrow">{plan.type}</span>
+                  <div
+                    className={`commission-value ${plan.id !== "revenue" ? "commission-value-words" : ""}`}
+                  >
+                    {plan.value}
+                    <span>{plan.suffix}</span>
+                  </div>
+                  <p>{plan.description}</p>
+                </div>
+                <div className="commission-details">
+                  <ul>
+                    {plan.features.map((feature) => (
+                      <li key={feature}>
+                        <Check size={18} strokeWidth={1.5} />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                  <a
+                    className="button"
+                    href="https://ro-affiliate.partnerstar.com/registration"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {plan.cta}
+                    <ArrowUpRight size={19} />
+                  </a>
+                </div>
+              </motion.div>
+            </Tabs.Content>
+          ))}
+        </Tabs.Root>
+        <p className="deal-footnote">
+          Final terms are agreed with your account manager.
+          <a href="/terms">
+            View affiliate terms <ArrowUpRight size={15} />
+          </a>
+        </p>
       </div>
     </section>
   );

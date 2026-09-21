@@ -1,97 +1,128 @@
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Eye } from "lucide-react";
-import { AnimatedCounter } from "./AnimatedCounter";
-
-interface HeroStat {
-  value: number;
-  prefix?: string;
-  suffix?: string;
-  decimals?: number;
-  label: string;
-}
-
-const heroStats: HeroStat[] = [
-  { value: 1.5, prefix: "€", suffix: "M+", decimals: 1, label: "Monthly Payouts" },
-  { value: 3200, suffix: "+", label: "Active Affiliates" },
-  { value: 20, suffix: "+", label: "Supported GEOs" },
-];
+import { useRef, type PointerEvent } from "react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
+import sculpture from "@/assets/partnerstar-sculpture.jpg";
 
 export const HeroSection = () => {
+  const section = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: section,
+    offset: ["start start", "end start"],
+  });
+  const drift = useTransform(scrollYProgress, [0, 1], [0, 100]);
+  const rotation = useTransform(scrollYProgress, [0, 1], [0, 8]);
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const x = useSpring(pointerX, { stiffness: 65, damping: 24 });
+  const y = useSpring(pointerY, { stiffness: 65, damping: 24 });
+  const move = (event: PointerEvent<HTMLElement>) => {
+    if (reduceMotion || event.pointerType !== "mouse") return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    pointerX.set(((event.clientX - rect.left) / rect.width - 0.5) * 28);
+    pointerY.set(((event.clientY - rect.top) / rect.height - 0.5) * 20);
+  };
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div className="relative container mx-auto px-4 md:px-8 pt-28 pb-20 text-center z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="max-w-5xl mx-auto"
-        >
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] xl:text-[6.5rem] font-black leading-[1.05] tracking-tight mb-7">
-            <span className="text-foreground block">Where Affiliates</span>
-            <span className="block mt-3 animate-gold-shimmer">Become Stars</span>
-          </h1>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-base md:text-lg text-foreground/70 italic max-w-xl mx-auto mb-12"
+    <section
+      className="hero"
+      ref={section}
+      aria-labelledby="hero-title"
+      onPointerMove={move}
+      onPointerLeave={() => {
+        pointerX.set(0);
+        pointerY.set(0);
+      }}
+    >
+      <div className="shell">
+        <div className="hero-topline">
+          <span className="eyebrow">Independent minds. Shared ambition.</span>
+          <span className="hero-edition">iGaming affiliate partnerships</span>
+        </div>
+        <div className="hero-stage">
+          <h1
+            id="hero-title"
+            className="hero-title"
+            aria-label="In it for the long game."
           >
-            High Conversions. Top Payouts. Fast Settlements.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20"
-          >
-            <Button
-              className="btn-gold-gradient btn-shine rounded-full px-10 py-6 text-sm md:text-base font-bold uppercase tracking-wider group"
-              size="lg"
-              asChild
-            >
-              <a href="https://ro-affiliate.partnerstar.com/registration" target="_blank" rel="noopener noreferrer">
-                Register Now
-                <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" strokeWidth={2} />
-              </a>
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="rounded-full px-8 py-6 border-primary/30 text-foreground/80 hover:text-foreground hover:border-primary/60 hover:bg-primary/5 transition-all duration-300"
-              onClick={() => document.getElementById("deals")?.scrollIntoView({ behavior: "smooth" })}
-            >
-              <Eye className="w-4 h-4 mr-2" strokeWidth={2} />
-              View Commissions
-            </Button>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
-            className="flex flex-col sm:flex-row justify-center items-center gap-8 sm:gap-0"
-          >
-            {heroStats.map((stat, i) => (
-              <div
-                key={stat.label}
-                className={`text-center px-8 sm:px-10 ${i < heroStats.length - 1 ? "sm:border-r sm:border-primary/15" : ""}`}
-              >
-                <p className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight animate-gold-shimmer">
-                  <AnimatedCounter
-                    value={stat.value}
-                    prefix={stat.prefix}
-                    suffix={stat.suffix}
-                    decimals={stat.decimals}
-                  />
-                </p>
-                <p className="text-foreground/50 text-[10px] uppercase tracking-[0.2em] mt-2 font-semibold">{stat.label}</p>
-              </div>
+            {["In it for", "the long", "game."].map((line, index) => (
+              <span className="hero-line" key={line} aria-hidden="true">
+                <motion.span
+                  initial={reduceMotion ? false : { y: "110%", rotate: 3 }}
+                  animate={{ y: 0, rotate: 0 }}
+                  transition={{
+                    duration: reduceMotion ? 0 : 0.95,
+                    delay: reduceMotion ? 0 : 0.08 + index * 0.12,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                >
+                  {line}
+                </motion.span>
+              </span>
             ))}
+          </h1>
+          <motion.div
+            className="hero-object"
+            aria-hidden="true"
+            initial={reduceMotion ? false : { opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.3, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <motion.div
+              style={reduceMotion ? undefined : { y: drift, rotate: rotation }}
+            >
+              <motion.img
+                src={sculpture}
+                width="1254"
+                height="1254"
+                alt=""
+                fetchPriority="high"
+                draggable={false}
+                style={reduceMotion ? undefined : { x, y }}
+              />
+            </motion.div>
           </motion.div>
-        </motion.div>
+          <motion.div
+            className="hero-intro"
+            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: reduceMotion ? 0 : 0.6 }}
+          >
+            <p>
+              You bring the ambition. We bring the people, the platform, and a
+              deal worth building on.
+            </p>
+            <a
+              className="button button-gold"
+              href="https://ro-affiliate.partnerstar.com/registration"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Become a partner <ArrowUpRight size={20} />
+            </a>
+          </motion.div>
+          <div className="hero-stat">
+            <span>Revenue share up to</span>
+            <strong>
+              50<small>%</small>
+            </strong>
+            <a href="#deals">
+              Find your deal <ArrowDown size={16} />
+            </a>
+          </div>
+        </div>
+        <div className="hero-foot">
+          <span>Built on partnership. Measured in progress.</span>
+          <a href="#why-us">
+            Discover Partnerstar <ArrowDown size={18} />
+          </a>
+        </div>
       </div>
     </section>
   );

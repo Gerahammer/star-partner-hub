@@ -1,52 +1,58 @@
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
-
+import { useRef, useState } from "react";
+import { ArrowUpRight } from "lucide-react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import { ContactFormModal } from "./ContactFormModal";
+import { Reveal } from "./Reveal";
 export const CTASection = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
+  const [contactOpen, setContactOpen] = useState(false);
+  const section = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: section,
+    offset: ["start end", "end end"],
+  });
+  const x = useTransform(scrollYProgress, [0, 1], [-55, 0]);
   return (
-    <section className="relative py-28 md:py-36 overflow-hidden">
-      <div className="container mx-auto px-4 md:px-8 relative z-10">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="max-w-3xl mx-auto text-center"
-        >
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight">
-            <span className="text-foreground">Ready to partner with the </span>
-            <span
-              style={{
-                background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #9a7322 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              best?
-            </span>
-          </h2>
-
-          <p className="text-base md:text-lg text-foreground/65 mb-10 max-w-xl mx-auto leading-relaxed">
-            Sign up in minutes. Get a dedicated manager. Start earning today.
+    <section className="closing-section" ref={section}>
+      <div className="shell">
+        <div className="closing-top">
+          <span className="eyebrow">Ambition looks good on you.</span>
+          <span className="eyebrow">Let’s put it to work.</span>
+        </div>
+        <motion.h2 style={reduceMotion ? undefined : { x }}>
+          Your next
+          <br />
+          <span>big move.</span>
+        </motion.h2>
+        <Reveal className="closing-bottom">
+          <p>
+            A real conversation.
+            <br />A partnership built around you.
           </p>
-
-          <Button
-            className="btn-gold-gradient btn-shine rounded-full px-12 py-7 text-base font-bold uppercase tracking-wider group"
-            size="lg"
-            asChild
-          >
-            <a href="https://ro-affiliate.partnerstar.com/registration" target="_blank" rel="noopener noreferrer">
-              Register Now
-              <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" strokeWidth={2} />
+          <div>
+            <a
+              className="button button-gold"
+              href="https://ro-affiliate.partnerstar.com/registration"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Become a partner <ArrowUpRight size={19} />
             </a>
-          </Button>
-        </motion.div>
+            <button className="text-link" onClick={() => setContactOpen(true)}>
+              Let’s talk first <ArrowUpRight size={17} />
+            </button>
+          </div>
+        </Reveal>
       </div>
+      <ContactFormModal
+        isOpen={contactOpen}
+        onClose={() => setContactOpen(false)}
+      />
     </section>
   );
 };

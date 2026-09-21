@@ -1,3 +1,4 @@
+import { Reveal } from "./Reveal";
 import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { motion, useMotionValue, animate, useReducedMotion } from "framer-motion";
 import { Plus, Trash2, Edit2, ChevronLeft, ChevronRight, Upload, ExternalLink } from "lucide-react";
@@ -41,7 +42,6 @@ export const TestimonialsSection = () => {
   const itemsToShow = isMobile ? 1 : 3;
   const maxSlide = Math.max(0, testimonials.length - itemsToShow);
   const showCarousel = testimonials.length > itemsToShow;
-  const totalPages = showCarousel ? maxSlide + 1 : 1;
   const cardWidth = viewportWidth > 0 ? (viewportWidth - GAP * (itemsToShow - 1)) / itemsToShow : 0;
   const step = cardWidth + GAP;
 
@@ -227,18 +227,9 @@ export const TestimonialsSection = () => {
   };
 
   return (
-    <section className="py-24 md:py-32 relative overflow-hidden">
-      <div className="container mx-auto px-4 md:px-8">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="text-center mb-14">
-          <span className="text-primary font-bold uppercase tracking-[0.25em] text-xs mb-5 block">Testimonials</span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-4">
-            <span className="text-foreground">What Partners </span>
-            <span style={{ background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #9a7322 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-              Say
-            </span>
-          </h2>
-        </motion.div>
-
+    <section className="testimonials-section section-space">
+      <div className="shell">
+        <Reveal className="section-heading"><span className="eyebrow">04 / In good company</span><h2>Word gets around.</h2><p>Meet the people building their next chapter with us.</p></Reveal>
         {adminPassword && (
           <div className="flex justify-end mb-8">
             <Dialog open={isDialogOpen} onOpenChange={(open) => { if (!open) resetForm(); setIsDialogOpen(open); }}>
@@ -274,25 +265,25 @@ export const TestimonialsSection = () => {
         )}
 
         {isLoading ? (
-          <div className="text-center py-16"><p className="text-muted-foreground/50 text-sm">Loading testimonials...</p></div>
+          <div className="text-center py-16"><p className="text-muted-foreground text-sm">Loading testimonials...</p></div>
         ) : testimonials.length === 0 ? (
-          <div className="text-center py-16"><p className="text-muted-foreground/50 text-sm">No testimonials yet.</p></div>
+          <div className="text-center py-16"><p className="text-muted-foreground text-sm">No testimonials yet.</p></div>
         ) : (
-          <div className="relative">
+          <div className={`relative ${showCarousel ? "mb-16" : ""}`}>
             {showCarousel && (
               <Button
                 variant="outline"
                 size="icon"
-                className="absolute -left-2 md:-left-12 top-1/2 -translate-y-1/2 z-10 rounded-full h-9 w-9 border-border/15 hover:border-border/30 transition-colors"
-                style={{ background: 'hsl(224 28% 10%)' }}
+                className="absolute left-0 -bottom-16 z-10 rounded-none h-11 w-11 border-border hover:bg-muted transition-colors"
+                style={{ background: '#f5f2eb' }}
                 onClick={prevSlide}
                 aria-label="Previous testimonial"
               >
-                <ChevronLeft className="h-4 w-4 text-muted-foreground/50" strokeWidth={1.5} />
+                <ChevronLeft className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
               </Button>
             )}
 
-            <div ref={viewportRef} className="overflow-hidden px-8 md:px-0">
+            <div ref={viewportRef} className="overflow-hidden">
               <motion.div
                 className="flex gap-5"
                 style={{
@@ -310,6 +301,8 @@ export const TestimonialsSection = () => {
                 {testimonials.map((testimonial, i) => (
                   <motion.div
                     key={testimonial.id}
+                    aria-hidden={i < currentSlide || i >= currentSlide + itemsToShow}
+                    {...(i < currentSlide || i >= currentSlide + itemsToShow ? { inert: "" } : {})}
                     className="flex-shrink-0"
                     style={{ width: cardWidth ? `${cardWidth}px` : undefined }}
                     initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
@@ -320,10 +313,10 @@ export const TestimonialsSection = () => {
                     <motion.div
                       whileHover={{ y: -6 }}
                       transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-                      className="relative h-full flex flex-col min-h-[320px] rounded-xl group select-none"
+                      className="testimonial-card relative h-full flex flex-col min-h-[320px] group select-none"
                       style={{
-                        background: 'hsl(40 25% 6%)',
-                        border: '1px solid rgba(212, 166, 74, 0.18)',
+                        background: 'transparent',
+                        border: '1px solid #d7d2c6',
                       }}
                     >
                       {/* Admin buttons - absolute top-right */}
@@ -349,23 +342,18 @@ export const TestimonialsSection = () => {
                       )}
 
                       {/* Top: site name centered, bigger and bold */}
-                      <div className="px-6 pt-7 pb-3 text-center">
+                      <div className="px-7 pt-7 pb-4">
                         <h3
-                          className="text-xl md:text-2xl font-bold leading-tight"
-                          style={{
-                            background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #9a7322 100%)",
-                            WebkitBackgroundClip: "text",
-                            WebkitTextFillColor: "transparent",
-                            backgroundClip: "text",
-                          }}
+                          className="testimonial-name text-base font-semibold leading-tight"
+
                         >
                           {testimonial.site_name}
                         </h3>
                       </div>
 
                       {/* Center: content */}
-                      <div className="flex-1 px-6 pb-6 flex items-center">
-                        <p className="text-foreground/75 leading-relaxed text-sm text-center w-full">
+                      <div className="flex-1 px-7 pb-8 flex items-center">
+                        <p className="testimonial-quote text-foreground leading-relaxed w-full">
                           {testimonial.content}
                         </p>
                       </div>
@@ -378,7 +366,7 @@ export const TestimonialsSection = () => {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-1.5 text-xs font-semibold hover:underline transition-colors min-w-0"
-                            style={{ color: '#d4a64a' }}
+                            style={{ color: '#6b561e' }}
                             aria-label={`Visit ${testimonial.site_name}`}
                           >
                             <ExternalLink className="w-3.5 h-3.5 flex-shrink-0" strokeWidth={2} />
@@ -404,7 +392,7 @@ export const TestimonialsSection = () => {
                             className="h-9 w-auto max-w-[100px] object-contain flex-shrink-0"
                           />
                         ) : (
-                          <div className="h-9 w-9 rounded-md border border-primary/20 flex items-center justify-center flex-shrink-0" style={{ background: 'hsl(40 25% 10%)' }}>
+                          <div className="h-9 w-9 rounded-md border border-primary/20 flex items-center justify-center flex-shrink-0" style={{ background: '#e8e3d7' }}>
                             <span className="text-primary/70 font-bold text-sm">
                               {testimonial.site_name.charAt(0).toUpperCase()}
                             </span>
@@ -422,24 +410,14 @@ export const TestimonialsSection = () => {
                 <Button
                   variant="outline"
                   size="icon"
-                  className="absolute -right-2 md:-right-12 top-1/2 -translate-y-1/2 z-10 rounded-full h-9 w-9 border-border/15 hover:border-border/30 transition-colors"
-                  style={{ background: 'hsl(224 28% 10%)' }}
+                  className="absolute right-0 -bottom-16 z-10 rounded-none h-11 w-11 border-border hover:bg-muted transition-colors"
+                  style={{ background: '#f5f2eb' }}
                   onClick={nextSlide}
                   aria-label="Next testimonial"
                 >
-                  <ChevronRight className="h-4 w-4 text-muted-foreground/50" strokeWidth={1.5} />
+                  <ChevronRight className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
                 </Button>
-                <div className="flex justify-center gap-1.5 mt-8">
-                  {Array.from({ length: totalPages }).map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => goToSlide(index)}
-                      className={`h-1.5 rounded-full transition-all focus-visible:ring-2 focus-visible:ring-ring/50 ${index === currentSlide ? "bg-primary/60 w-4" : "bg-muted-foreground/15 w-1.5"}`}
-                      aria-label={`Go to page ${index + 1}`}
-                      aria-current={index === currentSlide ? "true" : "false"}
-                    />
-                  ))}
-                </div>
+                <p className="absolute inset-x-14 -bottom-16 h-11 flex items-center justify-center text-xs text-muted-foreground" role="status" aria-live="polite">{String(currentSlide + 1).padStart(2,"0")}–{String(Math.min(currentSlide + itemsToShow, testimonials.length)).padStart(2,"0")} <span className="mx-3">/</span> {testimonials.length} partners</p>
               </>
             )}
           </div>

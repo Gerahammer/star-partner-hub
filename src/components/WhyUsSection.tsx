@@ -1,71 +1,55 @@
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { BarChart3, UserCheck, Trophy, Zap, RefreshCw, Lock } from "lucide-react";
-import { DiamondIcon } from "./DiamondIcon";
-
+import { Reveal } from "./Reveal";
 const benefits = [
-  { icon: Trophy, title: "High Commissions", desc: "Up to 50% RevShare. CPA, hybrid and tailored deals for serious affiliates." },
-  { icon: Zap, title: "Quick Payouts", desc: "No delays. No excuses. Monthly cycle via wire, crypto and e-wallets." },
-  { icon: RefreshCw, title: "No Negative Carryover", desc: "A bad month shouldn't cost you the next. You start fresh, every time." },
-  { icon: BarChart3, title: "Real-Time Tracking", desc: "Live analytics, API integrations and postback tracking — zero data lag." },
-  { icon: Lock, title: "Lifetime Ownership", desc: "Your players. Your profits. For life." },
-  { icon: UserCheck, title: "Dedicated Managers", desc: "1:1 support from a real person who knows your account." },
+  [
+    "Your traffic. Your terms.",
+    "Revenue share, CPA or a blend of both. We shape your agreement around how you acquire players, not the other way around.",
+  ],
+  [
+    "Someone who picks up.",
+    "A dedicated account manager who knows your business. From creatives to your next market, you have someone to call.",
+  ],
+  [
+    "A fresh start every month.",
+    "No negative carryover. A difficult month stays in that month, so you can keep your focus on what comes next.",
+  ],
+  [
+    "Value that stays with you.",
+    "Lifetime player tracking and transparent reporting. Build lasting revenue from the audience you worked hard to earn.",
+  ],
 ];
-
-export const WhyUsSection = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  return (
-    <section id="why-us" className="relative py-28 md:py-36 overflow-hidden">
-      <div className="container mx-auto px-4 md:px-8 relative z-10">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <span className="text-primary font-bold uppercase tracking-[0.25em] text-xs mb-5 block">Why Choose Us</span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black">
-            <span className="text-foreground">Built for </span>
-            <span
-              style={{
-                background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #9a7322 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              Performance
-            </span>
+export const WhyUsSection = () => (
+  <section className="partnership section-space" id="why-us">
+    <div className="shell partnership-grid">
+      <div className="partnership-intro">
+        <Reveal>
+          <span className="eyebrow">01 / People before platforms</span>
+          <h2>
+            Big on ambition.
+            <br />
+            <span className="muted-heading">Personal by design.</span>
           </h2>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12 max-w-4xl mx-auto">
-          {benefits.map((b, index) => (
-            <motion.div
-              key={b.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.06 }}
-              whileHover={{ x: 4 }}
-              className="flex items-start gap-5 group"
-            >
-              <motion.div
-                whileHover={{ rotate: 8, scale: 1.08 }}
-                transition={{ type: "spring", stiffness: 300, damping: 15 }}
-              >
-                <DiamondIcon icon={b.icon} size={70} />
-              </motion.div>
-              <div className="flex-1 pt-2">
-                <h3 className="text-xl font-bold text-foreground mb-2 transition-colors group-hover:text-primary">{b.title}</h3>
-                <p className="text-sm leading-relaxed text-foreground/60">{b.desc}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+          <p>
+            There’s a business behind every click. We take the time to
+            understand yours.
+          </p>
+          <a className="text-link" href="#deals">
+            Find your arrangement <span aria-hidden="true">↓</span>
+          </a>
+        </Reveal>
       </div>
-    </section>
-  );
-};
+      <div className="benefit-list">
+        {benefits.map(([title, description], i) => (
+          <Reveal key={title}>
+            <article className="benefit-row">
+              <span className="row-number">0{i + 1}</span>
+              <div>
+                <h3>{title}</h3>
+                <p>{description}</p>
+              </div>
+            </article>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+);

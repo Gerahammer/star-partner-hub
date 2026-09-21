@@ -1,17 +1,15 @@
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
+import { Reveal } from "./Reveal";
 const faqs = [
   {
     question: "How do I sign up?",
     answer:
-      "Click any “Register Now” button on this site to open the affiliate application. We review every application manually — most are approved within 24–48 hours, after which you get login credentials and a dedicated account manager who reaches out to set up your first deal.",
+      "Click any “Become a partner” button on this site to open the affiliate application. We review every application manually — most are approved within 24–48 hours, after which you get login credentials and a dedicated account manager who reaches out to set up your first deal.",
   },
   {
     question: "What commission models do you offer?",
@@ -60,63 +58,40 @@ const faqs = [
   },
 ];
 
-export const FAQSection = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  return (
-    <section id="faq" className="relative py-28 md:py-36 overflow-hidden">
-      <div className="container mx-auto px-4 md:px-8 relative z-10">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-14"
-        >
-          <span className="text-primary font-bold uppercase tracking-[0.25em] text-xs mb-5 block">
-            Got Questions?
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-foreground">
-            Frequently Asked
-            <br />
-            <span
-              style={{
-                background: "linear-gradient(135deg, #fce8a8 0%, #d4a64a 50%, #9a7322 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              Questions
-            </span>
-          </h2>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-2xl mx-auto"
-        >
-          <Accordion type="single" collapsible className="space-y-2.5">
-            {faqs.map((faq, index) => (
-              <AccordionItem
-                key={index}
-                value={`item-${index}`}
-                className="glass-card rounded-xl px-5 sm:px-6 border border-border/15 transition-all data-[state=open]:border-primary/20 hover:border-border/30"
-              >
-                <AccordionTrigger className="text-left text-sm sm:text-base font-semibold text-foreground/90 hover:text-foreground py-5 [&[data-state=open]]:text-primary transition-colors">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground text-sm leading-relaxed pb-5">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </motion.div>
-      </div>
-    </section>
-  );
-};
+export const FAQSection = () => (
+  <section id="faq" className="faq-section section-space">
+    <div className="shell faq-grid">
+      <Reveal className="faq-intro">
+        <span className="eyebrow">05 / The details</span>
+        <h2>
+          Before we
+          <br />
+          get started.
+        </h2>
+        <p>Everything else you need to know before we get started.</p>
+        <a className="text-link" href="mailto:affiliates@partnerstar.com">
+          Ask our team ↗
+        </a>
+      </Reveal>
+      <Accordion type="single" collapsible className="faq-list">
+        {faqs.map((faq, i) => (
+          <AccordionItem
+            value={`faq-${i}`}
+            key={faq.question}
+            className="faq-item"
+          >
+            <AccordionTrigger className="faq-question">
+              <span>
+                <small>{String(i + 1).padStart(2, "0")}</small>
+                {faq.question}
+              </span>
+            </AccordionTrigger>
+            <AccordionContent className="faq-answer">
+              {faq.answer}
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </div>
+  </section>
+);

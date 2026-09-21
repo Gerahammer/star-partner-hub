@@ -79,28 +79,28 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="border-t border-primary/10 relative z-10" style={{ background: 'hsl(40 30% 2%)' }}>
-      <div className="container mx-auto px-4 md:px-8 py-12 md:py-16">
+    <footer className="site-footer">
+      <div className="shell py-12 md:py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-10">
           <div className="col-span-2 md:col-span-1">
-            <Link to="/" className="mb-4 block group transition-transform hover:scale-105" aria-label="Back to Partnerstar home">
-              <img src={partnerstarLogo} alt="Partnerstar" className="h-10 w-auto" />
+            <Link to="/" className="mb-6 block" aria-label="Back to Partnerstar home">
+              <img src={partnerstarLogo} alt="Partnerstar" className="footer-logo" />
             </Link>
-            <p className="text-muted-foreground/60 text-xs leading-relaxed">
-              Premium iGaming affiliate program with industry-leading commission rates.
+            <p className="text-muted-foreground text-xs leading-relaxed">
+              Independent ambition. Shared success. Your iGaming affiliate partner.
             </p>
           </div>
           
           {footerLinks.map((section) => (
             <div key={section.title}>
-              <h4 className="font-medium text-foreground/80 text-xs uppercase tracking-[0.15em] mb-4">{section.title}</h4>
+              <h3 className="font-medium text-foreground/80 text-xs uppercase tracking-[0.15em] mb-4">{section.title}</h3>
               <ul className="space-y-2.5">
                 {section.links.map((link) => (
                   <li key={link.name}>
                     {link.isRoute ? (
-                      <Link to={link.href} className="text-muted-foreground/60 hover:text-foreground transition-colors text-sm focus-visible:ring-2 focus-visible:ring-ring/50 rounded px-1 py-0.5 inline-block">{link.name}</Link>
+                      <Link to={link.href} className="text-muted-foreground hover:text-foreground transition-colors text-sm focus-visible:ring-2 focus-visible:ring-ring/50 rounded px-1 py-0.5 inline-block">{link.name}</Link>
                     ) : (
-                      <a href={link.href} className="text-muted-foreground/60 hover:text-foreground transition-colors text-sm focus-visible:ring-2 focus-visible:ring-ring/50 rounded px-1 py-0.5 inline-block">{link.name}</a>
+                      <a href={`/${link.href}`} className="text-muted-foreground hover:text-foreground transition-colors text-sm focus-visible:ring-2 focus-visible:ring-ring/50 rounded px-1 py-0.5 inline-block">{link.name}</a>
                     )}
                   </li>
                 ))}
@@ -109,9 +109,9 @@ export const Footer = () => {
           ))}
           
           <div className="col-span-2 md:col-span-1">
-            <h4 className="font-medium text-foreground/80 text-xs uppercase tracking-[0.15em] mb-4">Support</h4>
+            <h3 className="font-medium text-foreground/80 text-xs uppercase tracking-[0.15em] mb-4">Support</h3>
             <Button
-              className="btn-gold-gradient rounded-full text-xs px-4"
+              className="button button-small"
               size="sm"
               onClick={() => setIsContactOpen(true)}
             >
@@ -123,21 +123,21 @@ export const Footer = () => {
         {/* Payment methods */}
         <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
           {paymentLabels.map((p) => (
-            <span key={p} className="text-[10px] text-muted-foreground/30 font-mono tracking-wider uppercase">{p}</span>
+            <span key={p} className="text-[10px] text-muted-foreground font-mono tracking-wider uppercase">{p}</span>
           ))}
         </div>
         
         <div className="pt-6 border-t border-border/10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-muted-foreground/40 text-xs">
+          <p className="text-muted-foreground text-xs">
             © {new Date().getFullYear()} Partnerstar. All rights reserved.
           </p>
           <div className="flex items-center gap-3">
-            <p className="text-muted-foreground/40 text-xs">
+            <p className="text-muted-foreground text-xs">
               18+ | Gamble Responsibly
             </p>
             <Dialog open={isPasswordDialogOpen} onOpenChange={setIsPasswordDialogOpen}>
               <DialogTrigger asChild>
-                <Button variant="ghost" size="sm" className="h-6 px-2 text-xs text-muted-foreground/60 hover:text-foreground">
+                <Button aria-label="Administrator sign in" variant="ghost" size="sm" className="h-6 px-2 text-xs text-muted-foreground hover:text-foreground">
                   <Lock className="w-3 h-3 mr-1" strokeWidth={1.5} />
                 </Button>
               </DialogTrigger>

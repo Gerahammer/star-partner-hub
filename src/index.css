@@ -308,14 +308,37 @@ p {
   width: 61%;
   max-width: 760px;
   z-index: 0;
-  mix-blend-mode: lighten;
   pointer-events: none;
 }
 .hero-object img {
   width: 100%;
   height: auto;
   user-select: none;
-  mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+  /* Follow the sculpture silhouette so the photo backdrop never moves with it.
+     These normalized points match partnerstar-sculpture.jpg. */
+  clip-path: polygon(
+    52.392% 5.024%,
+    52.711% 5.343%,
+    62.679% 34.848%,
+    63.078% 35.247%,
+    91.308% 37.959%,
+    91.467% 38.278%,
+    70.734% 57.018%,
+    70.494% 57.656%,
+    78.947% 87.321%,
+    78.628% 87.400%,
+    50.239% 72.089%,
+    24.003% 89.713%,
+    23.684% 89.713%,
+    20.494% 88.915%,
+    29.665% 57.018%,
+    29.585% 56.140%,
+    7.576% 33.174%,
+    7.496% 32.536%,
+    11.164% 31.260%,
+    38.198% 32.695%,
+    49.681% 6.140%
+  );
 }
 .hero-intro {
   position: relative;

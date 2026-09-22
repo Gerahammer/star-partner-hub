@@ -696,6 +696,13 @@ p {
 .testimonial-card {
   border-radius: 0;
 }
+.testimonial-footer {
+  background: var(--ink);
+  color: var(--gold);
+}
+.testimonial-footer a:hover {
+  color: var(--paper);
+}
 .testimonial-quote {
   font-family: Georgia, serif;
   font-size: 20px;

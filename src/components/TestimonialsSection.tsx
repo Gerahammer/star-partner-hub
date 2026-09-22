@@ -359,14 +359,13 @@ export const TestimonialsSection = () => {
                       </div>
 
                       {/* Footer: visit site (left) + logo (right) */}
-                      <div className="px-5 py-4 border-t border-primary/15 flex items-center justify-between gap-3">
+                      <div className="testimonial-footer px-5 py-4 border-t border-primary/15 flex items-center justify-between gap-3">
                         {testimonial.site_url ? (
                           <a
                             href={testimonial.site_url}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-1.5 text-xs font-semibold hover:underline transition-colors min-w-0"
-                            style={{ color: '#6b561e' }}
                             aria-label={`Visit ${testimonial.site_name}`}
                           >
                             <ExternalLink className="w-3.5 h-3.5 flex-shrink-0" strokeWidth={2} />
@@ -381,7 +380,7 @@ export const TestimonialsSection = () => {
                             </span>
                           </a>
                         ) : (
-                          <span className="text-xs font-medium text-foreground/40">No link</span>
+                          <span className="text-xs font-medium text-white/60">No link</span>
                         )}
 
                         {testimonial.logo_url ? (
@@ -392,8 +391,8 @@ export const TestimonialsSection = () => {
                             className="h-9 w-auto max-w-[100px] object-contain flex-shrink-0"
                           />
                         ) : (
-                          <div className="h-9 w-9 rounded-md border border-primary/20 flex items-center justify-center flex-shrink-0" style={{ background: '#e8e3d7' }}>
-                            <span className="text-primary/70 font-bold text-sm">
+                          <div className="h-9 w-9 rounded-md border border-white/20 flex items-center justify-center flex-shrink-0">
+                            <span className="font-bold text-sm">
                               {testimonial.site_name.charAt(0).toUpperCase()}
                             </span>
                           </div>
